@@ -18,6 +18,10 @@ public class GameObject {
 		this.width = width;
 		this.height = height;
 	}
+
+	public GameObject() {
+		this(0,0,0,0);
+	}
 	// Interface
 	public int getX() {
 		return posX;

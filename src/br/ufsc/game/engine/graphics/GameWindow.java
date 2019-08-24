@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.DisplayMode;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
@@ -33,11 +34,13 @@ public class GameWindow extends JFrame {
 	private Canvas canvas;
 	private Graphics2D graphics;
 	private BufferStrategy buffer;
+	private GraphicsConfiguration graphicsConfig;
 	
 	// Constructor
 	private GameWindow(GameSettings gs) {
 		this.gSettings = gs;
 		// Configure Window
+		setIgnoreRepaint(true);
 		setTitle(gs.getTitle());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(false);
@@ -54,6 +57,7 @@ public class GameWindow extends JFrame {
 		this.canvas.createBufferStrategy(2);
 		this.buffer = canvas.getBufferStrategy();
 		this.graphics = (Graphics2D) buffer.getDrawGraphics();
+		this.graphicsConfig = canvas.getGraphicsConfiguration();
 
 		// Singleton
 		singleton = this;
@@ -74,6 +78,10 @@ public class GameWindow extends JFrame {
 		buffer.show();
 		Toolkit.getDefaultToolkit().sync();
 		this.graphics = (Graphics2D) buffer.getDrawGraphics();
+	}
+
+	public GraphicsConfiguration getGraphicsConfiguration() {
+		return graphicsConfig;
 	}
 	// Methods
 	

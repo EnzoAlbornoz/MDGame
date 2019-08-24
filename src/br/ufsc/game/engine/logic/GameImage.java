@@ -1,7 +1,19 @@
 package br.ufsc.game.engine.logic;
 
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Transparency;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
+
+import br.ufsc.game.engine.graphics.GameWindow;
 import br.ufsc.game.engine.interfaces.Drawable;
 
 /**
@@ -9,17 +21,42 @@ import br.ufsc.game.engine.interfaces.Drawable;
  */
 public class GameImage extends GameObject implements Drawable {
 
-	// Variable
+	// Variables
+	protected BufferedImage image;
+	protected double rotation;
 	// Constructor
-	public GameImage() {
-		super(posX, posY, width, height)
+	public GameImage(String filePath) {
+		
 	}
 
 	// Interface
 	@Override
 	public void render(Graphics2D g) {
+		AffineTransform transform = new AffineTransform();
+
 		
+		transform.rotate(-rotation,this.width/2,this.height/2);
+		int newX = (int) (this.posX * Math.sin(rotation) + this.posY * Math.cos(rotation) );
+		int newY = (int) (this.posX * Math.cos(rotation) - this.posY * Math.sin(rotation) );
+
+		g.setTransform(transform);
+
+		g.drawImage(this.image,newX,newY,width,height,(ImageObserver) null);
 	}
 	
 	// Methods
+	public void loadImage(String filePath) throws IOException {
+		// Load Image
+		InputStream imageStream = getClass().getResourceAsStream(filePath);
+		BufferedImage source = ImageIO.read(imageStream);
+		// Create Optimized Image
+		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+		this.image = gc.createCompatibleImage(source.getWidth(), source.getHeight(), Transparency.BITMASK);
+		// Copy Source to Optimized Image
+		this.image.getGraphics().clearRect(0, 0, image.getWidth(), image.getHeight());
+		this.image.getGraphics().drawImage(source,0,0,null);
+		// Set Aux Info
+		this.width = source.getWidth();
+		this.height = source.getHeight();
+	}
 }
