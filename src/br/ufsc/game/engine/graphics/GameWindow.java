@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
@@ -35,9 +36,10 @@ public class GameWindow extends JFrame {
 	
 	// Constructor
 	private GameWindow(GameSettings gs) {
+		super(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration());
 		this.gSettings = gs;
 		// Configure Window
-		setIgnoreRepaint(true);
+		// setIgnoreRepaint(true);
 		setTitle(gs.getTitle());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(false);
