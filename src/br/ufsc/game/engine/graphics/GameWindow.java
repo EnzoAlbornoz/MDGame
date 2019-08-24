@@ -2,8 +2,6 @@ package br.ufsc.game.engine.graphics;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.DisplayMode;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.Toolkit;
@@ -17,7 +15,6 @@ import br.ufsc.game.engine.config.GameSettings;
  * GameWindow
  */
 public class GameWindow extends JFrame {
-	private static final long serialVersionUID = 1L;
 	// Singleton Pattern
 	private static GameWindow singleton;
 	public static GameWindow getInstance() {
@@ -47,12 +44,12 @@ public class GameWindow extends JFrame {
 		setResizable(false);
 		// Configure Content
 		this.canvas = new Canvas();
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		this.add(canvas);
 		canvas.setSize((int) gs.getWidth(), (int) gs.getHeight());
-		add(canvas);
-		pack();
 		
-		setLocationRelativeTo(null);
-		setVisible(true);
+		this.pack();
 		// Configure Graphics
 		this.canvas.createBufferStrategy(2);
 		this.buffer = canvas.getBufferStrategy();

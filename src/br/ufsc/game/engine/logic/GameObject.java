@@ -30,5 +30,13 @@ public class GameObject {
 	public int getY() {
 		return posY;
 	}
+
+	public void setX(int posX) {
+		this.posX = posX;
+	}
+
+	public void setY(int posY) {
+		this.posY = posY;
+	}
 	// Methods
 }

@@ -3,7 +3,6 @@ package br.ufsc.game.engine.logic;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
-import java.awt.Image;
 import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -13,7 +12,6 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-import br.ufsc.game.engine.graphics.GameWindow;
 import br.ufsc.game.engine.interfaces.Drawable;
 
 /**
@@ -26,15 +24,18 @@ public class GameImage extends GameObject implements Drawable {
 	protected double rotation;
 	// Constructor
 	public GameImage(String filePath) {
-		
+		try {
+			loadImage(filePath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// Interface
 	@Override
-	public void render(Graphics2D g) {
+	public void draw(Graphics2D g) {
 		AffineTransform transform = new AffineTransform();
 
-		
 		transform.rotate(-rotation,this.width/2,this.height/2);
 		int newX = (int) (this.posX * Math.sin(rotation) + this.posY * Math.cos(rotation) );
 		int newY = (int) (this.posX * Math.cos(rotation) - this.posY * Math.sin(rotation) );
