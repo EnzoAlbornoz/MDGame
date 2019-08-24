@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
@@ -36,22 +37,30 @@ public class GameWindow extends JFrame {
 	
 	// Constructor
 	private GameWindow(GameSettings gs) {
-		super(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration());
+		// GraphicsDevice ge = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		// System.out.println(ge.isDisplayChangeSupported());
+		// System.out.println(ge.getDisplayMode().getWidth());
+		// System.out.println(ge.getDisplayMode().getHeight());
+		// for (GraphicsConfiguration gc : ge.getConfigurations()) {
+		// 	System.out.println("GC - Width : " + gc.getBounds().getWidth());
+		// 	System.out.println("GC " + gc.getImageCapabilities().);
+		// }
 		this.gSettings = gs;
 		// Configure Window
 		// setIgnoreRepaint(true);
 		setTitle(gs.getTitle());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(false);
-		setResizable(false);
 		// Configure Content
 		this.canvas = new Canvas();
+		this.canvas.setSize((int) gs.getWidth(), (int) gs.getHeight());
+		this.add(canvas);
+		this.pack();
+		this.setResizable(false);
+		
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		this.add(canvas);
-		canvas.setSize((int) gs.getWidth(), (int) gs.getHeight());
 		
-		this.pack();
 		// Configure Graphics
 		this.canvas.createBufferStrategy(2);
 		this.buffer = canvas.getBufferStrategy();
@@ -79,7 +88,7 @@ public class GameWindow extends JFrame {
 		this.graphics = (Graphics2D) buffer.getDrawGraphics();
 	}
 
-	public GraphicsConfiguration getGraphicsConfiguration() {
+	public GraphicsConfiguration getGraphicsConfig() {
 		return graphicsConfig;
 	}
 	// Methods
