@@ -7,8 +7,8 @@ import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -48,8 +48,8 @@ public class GameImage extends GameObject implements Drawable {
 	// Methods
 	public void loadImage(String filePath) throws IOException {
 		// Load Image
-		InputStream imageStream = getClass().getResourceAsStream(filePath);
-		BufferedImage source = ImageIO.read(imageStream);
+		File fileSRC = new File(filePath);
+		BufferedImage source = ImageIO.read(fileSRC);
 		// Create Optimized Image
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 		this.image = gc.createCompatibleImage(source.getWidth(), source.getHeight(), Transparency.BITMASK);
@@ -59,5 +59,9 @@ public class GameImage extends GameObject implements Drawable {
 		// Set Aux Info
 		this.width = source.getWidth();
 		this.height = source.getHeight();
+	}
+
+	public BufferedImage getImage() {
+		return image;
 	}
 }

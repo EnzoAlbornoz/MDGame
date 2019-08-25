@@ -2,7 +2,7 @@ package br.ufsc.game;
 
 import br.ufsc.game.engine.Game;
 import br.ufsc.game.engine.config.GameSettings;
-
+import br.ufsc.game.scenes.*;
 /**
  * App
  */
@@ -12,7 +12,6 @@ public class App {
 		// Enable Better Rendering Performance
 		// System.setProperty("sun.java2d.opengl", "true");
 		GameSettings gs = new GameSettings("E-NGINE Game",1280,720,60);
-		Game.setGameSettings(gs);
-		Game.getGame().launch();
+		Game.setupGame(gs).launch(new MenuScene());
 	}
 }
