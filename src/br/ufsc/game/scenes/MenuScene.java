@@ -60,11 +60,12 @@ public class MenuScene extends GameScene {
             }
             
             if(gObject instanceof Updatable) {
+                System.out.println("Added Updatable");
                 this.gameUpdatables.add((Updatable) gObject);
             }
         });
         
-    	gameObjects.get("logo").setX(   (int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("logo").getWidth()     /2));
+    	gameObjects.get("logo").setX((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("logo").getWidth()     /2));
     	// gameObjects.get("playBtn").setX((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("playBtn").getWidth()  /2));
     	// gameObjects.get("playBtn").setY((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("playBtn").getHeight() /2));
     	
