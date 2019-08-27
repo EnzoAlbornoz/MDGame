@@ -35,17 +35,9 @@ public class GameWindow extends JFrame {
 	
 	// Constructor
 	private GameWindow(GameSettings gs) {
-		// GraphicsDevice ge = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		// System.out.println(ge.isDisplayChangeSupported());
-		// System.out.println(ge.getDisplayMode().getWidth());
-		// System.out.println(ge.getDisplayMode().getHeight());
-		// for (GraphicsConfiguration gc : ge.getConfigurations()) {
-		// 	System.out.println("GC - Width : " + gc.getBounds().getWidth());
-		// 	System.out.println("GC " + gc.getImageCapabilities().);
-		// }
 		this.gSettings = gs;
 		// Configure Window
-		// setIgnoreRepaint(true);
+		setIgnoreRepaint(true);
 		setTitle(gs.getTitle());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(false);
