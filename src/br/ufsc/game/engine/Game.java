@@ -3,6 +3,7 @@ package br.ufsc.game.engine;
 
 import br.ufsc.game.engine.config.GameSettings;
 import br.ufsc.game.engine.graphics.GameWindow;
+import br.ufsc.game.engine.inputs.Keyboard;
 import br.ufsc.game.engine.states.GameScene;
 import br.ufsc.game.engine.states.GameSceneManager;
 
@@ -22,6 +23,7 @@ public class Game {
 	// Variables
 	// Private
 	private GameWindow gWindow;
+	private Keyboard gKeyboard;
 	private GameSceneManager gStateManager;
 	private boolean isRunning;
 	// Constructor
@@ -29,6 +31,7 @@ public class Game {
 		this.gSettings = gSettings;
 		this.isRunning = false;
 		// Build Structs
+		this.gKeyboard = Keyboard.getInstance();
 		this.gWindow = GameWindow.createGameWindow(gSettings);
 		this.gStateManager = GameSceneManager.getInstance();
 		// Singleton Pattern
@@ -68,6 +71,7 @@ public class Game {
 			lastTime = now;
 
 			while (delta >= 1) {
+				gKeyboard.update();
 				gStateManager.peekState().update();
 				delta--;
 				updates++;

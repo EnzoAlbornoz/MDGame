@@ -1,8 +1,10 @@
 package br.ufsc.game.scenes;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 import br.ufsc.game.engine.Game;
+import br.ufsc.game.engine.inputs.Keyboard;
 import br.ufsc.game.engine.interfaces.Drawable;
 import br.ufsc.game.engine.interfaces.Updatable;
 import br.ufsc.game.engine.logic.GameImage;
@@ -44,6 +46,9 @@ public class MenuScene extends GameScene {
     @Override
     public void update() {
         gameUpdatables.forEach((uObject) -> uObject.update());
+        if(Keyboard.getInstance().isKeyPressing(KeyEvent.VK_SPACE)) {
+            System.out.println("Space Pressed!!!");
+        }
     }
 
     @Override
@@ -66,7 +71,8 @@ public class MenuScene extends GameScene {
         });
         
     	gameObjects.get("logo").setX((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("logo").getWidth()     /2));
-    	// gameObjects.get("playBtn").setX((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("playBtn").getWidth()  /2));
+        gameObjects.get("logo").setY(100);
+        // gameObjects.get("playBtn").setX((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("playBtn").getWidth()  /2));
     	// gameObjects.get("playBtn").setY((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("playBtn").getHeight() /2));
     	
 	}

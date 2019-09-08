@@ -10,6 +10,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 import br.ufsc.game.engine.config.GameSettings;
+import br.ufsc.game.engine.inputs.Keyboard;
 
 /**
  * GameWindow
@@ -41,13 +42,16 @@ public class GameWindow extends JFrame {
 		setTitle(gs.getTitle());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(false);
+		// Add Listeners
 		// Configure Content
 		this.canvas = new Canvas();
 		this.canvas.setSize((int) gs.getWidth(), (int) gs.getHeight());
 		this.add(canvas);
 		this.pack();
 		this.setResizable(false);
-		
+		this.canvas.addKeyListener(Keyboard.getInstance());
+		addKeyListener(Keyboard.getInstance());
+
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
