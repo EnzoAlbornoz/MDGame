@@ -37,8 +37,8 @@ public class GameImage extends GameObject implements Drawable {
 		AffineTransform transform = new AffineTransform();
 
 		transform.rotate(-rotation,this.width/2,this.height/2);
-		int newX = (int) (this.posX * Math.sin(rotation) + this.posY * Math.cos(rotation) );
-		int newY = (int) (this.posX * Math.cos(rotation) - this.posY * Math.sin(rotation) );
+		int newY = (int) (this.posX * Math.sin(rotation) + this.posY * Math.cos(rotation) );
+		int newX = (int) (this.posX * Math.cos(rotation) - this.posY * Math.sin(rotation) );
 
 		g.setTransform(transform);
 
