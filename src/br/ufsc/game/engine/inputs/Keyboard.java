@@ -6,10 +6,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 
+import br.ufsc.game.engine.interfaces.Updatable;
+
 /**
  * Keyboard
  */
-public class Keyboard implements KeyListener {
+public class Keyboard implements KeyListener,Updatable {
 	// Singleton
 	private static Keyboard singleton;
 	public static Keyboard getInstance() {

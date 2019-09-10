@@ -1,1 +1,5 @@
-bin/
+# Ignore Bin files
+bin
+# Ignore vpp.bak files
+docs/vpp/*.vpp.bak*
+docs/vpp/*.vpp.lck*
