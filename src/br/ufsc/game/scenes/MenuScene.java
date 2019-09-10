@@ -1,5 +1,6 @@
 package br.ufsc.game.scenes;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
@@ -9,6 +10,7 @@ import br.ufsc.game.engine.interfaces.Drawable;
 import br.ufsc.game.engine.interfaces.Updatable;
 import br.ufsc.game.engine.logic.GameImage;
 import br.ufsc.game.engine.states.GameScene;
+import br.ufsc.game.engine.states.GameSceneManager;
 
 /**
  * MenuScene
@@ -45,15 +47,18 @@ public class MenuScene extends GameScene {
 
     @Override
     public void update() {
-        gameUpdatables.forEach((uObject) -> uObject.update());
-        if(Keyboard.getInstance().isKeyPressing(KeyEvent.VK_SPACE)) {
-            System.out.println("Space Pressed!!!");
+        if(Keyboard.getInstance().isKeyPressing(KeyEvent.VK_ENTER)) {
+            System.out.println("Moving Scene");
+            GameSceneManager.getInstance().pushState(new LoginScene());
         }
+        gameUpdatables.forEach((uObject) -> uObject.update());
     }
 
     @Override
     public void draw(Graphics2D g) {
         gameDrawables.forEach((dObject) -> dObject.draw(g));
+        g.setColor(Color.WHITE);
+        g.drawString("Press Enter to Play",(int) (Game.getGame().getGameSettings().getWidth()/2), (int) (Game.getGame().getGameSettings().getHeight()/2));
     }
 
     @Override

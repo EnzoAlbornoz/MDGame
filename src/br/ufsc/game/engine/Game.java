@@ -31,8 +31,8 @@ public class Game {
 		this.gSettings = gSettings;
 		this.isRunning = false;
 		// Build Structs
-		this.gKeyboard = Keyboard.getInstance();
 		this.gWindow = GameWindow.createGameWindow(gSettings);
+		this.gKeyboard = Keyboard.getInstance();
 		this.gStateManager = GameSceneManager.getInstance();
 		// Singleton Pattern
 		singleton = this;
@@ -71,8 +71,8 @@ public class Game {
 			lastTime = now;
 
 			while (delta >= 1) {
-				gKeyboard.update();
 				gStateManager.peekState().update();
+				gKeyboard.update();
 				delta--;
 				updates++;
 			}

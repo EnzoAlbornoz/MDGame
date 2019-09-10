@@ -40,9 +40,6 @@ public class Keyboard implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		keysNow.computeIfPresent(e.getKeyCode(), (key,val) -> true);
-		// System.out.println(keysNow.get(e.getKeyCode()));
-		// System.out.println("Key '" + KeyEvent.getKeyText(e.getKeyCode()) + "' pressed --- "
-		// + keysNow.get(e.getKeyCode()).booleanValue() + " | " + keysLast.get(e.getKeyCode()).booleanValue());
 	}
 
 	@Override
