@@ -3,15 +3,21 @@ package br.ufsc.game.engine.logic;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
+import br.ufsc.game.App;
 import br.ufsc.game.engine.interfaces.Drawable;
 
 /**
@@ -48,8 +54,7 @@ public class GameImage extends GameObject implements Drawable {
 	// Methods
 	public void loadImage(String filePath) throws IOException {
 		// Load Image
-		File fileSRC = new File(filePath);
-		BufferedImage source = ImageIO.read(fileSRC);
+		BufferedImage source = ImageIO.read(getClass().getResource(filePath));
 		// Create Optimized Image
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 		this.image = gc.createCompatibleImage(source.getWidth(), source.getHeight(), Transparency.BITMASK);

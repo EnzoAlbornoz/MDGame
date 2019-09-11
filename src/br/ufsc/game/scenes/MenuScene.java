@@ -19,8 +19,8 @@ public class MenuScene extends GameScene {
 
     public MenuScene() {
         super();
-        this.gameObjects.put("backgroundImage", new GameImage("src/resources/images/BlackBackgroundFelt.jpg"));
-        this.gameObjects.put("logo", new GameImage("src/resources/images/Logo.png"));
+        this.gameObjects.put("backgroundImage", new GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
+        this.gameObjects.put("logo", new GameImage("/br/ufsc/game/resources/images/Logo.png"));
         // this.gameObjects.put("playBtn",new GameButton("src/resources/images/ButtonPlay.png"));
         this.loaded();
     }
