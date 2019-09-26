@@ -76,6 +76,7 @@ public class Game {
 			while (delta >= 1) {
 				gStateManager.peekState().update();
 				gKeyboard.update();
+				gMouse.update();
 				delta--;
 				updates++;
 			}
