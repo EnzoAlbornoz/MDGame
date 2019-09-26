@@ -4,6 +4,7 @@ package br.ufsc.game.engine;
 import br.ufsc.game.engine.config.GameSettings;
 import br.ufsc.game.engine.graphics.GameWindow;
 import br.ufsc.game.engine.inputs.Keyboard;
+import br.ufsc.game.engine.inputs.Mouse;
 import br.ufsc.game.engine.states.GameScene;
 import br.ufsc.game.engine.states.GameSceneManager;
 
@@ -24,6 +25,7 @@ public class Game {
 	// Private
 	private GameWindow gWindow;
 	private Keyboard gKeyboard;
+	private Mouse gMouse;
 	private GameSceneManager gStateManager;
 	private boolean isRunning;
 	// Constructor
@@ -33,6 +35,7 @@ public class Game {
 		// Build Structs
 		this.gWindow = GameWindow.createGameWindow(gSettings);
 		this.gKeyboard = Keyboard.getInstance();
+		this.gMouse = Mouse.getInstance();
 		this.gStateManager = GameSceneManager.getInstance();
 		// Singleton Pattern
 		singleton = this;

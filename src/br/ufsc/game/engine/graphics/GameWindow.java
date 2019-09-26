@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import br.ufsc.game.engine.config.GameSettings;
 import br.ufsc.game.engine.inputs.Keyboard;
+import br.ufsc.game.engine.inputs.Mouse;
 
 /**
  * GameWindow
@@ -49,9 +50,18 @@ public class GameWindow extends JFrame {
 		this.add(canvas);
 		this.pack();
 		this.setResizable(false);
+		// Add listeners
+			// Keyboard
 		this.canvas.addKeyListener(Keyboard.getInstance());
 		addKeyListener(Keyboard.getInstance());
-
+			// Mouse
+				// Mouse Keys
+		this.canvas.addMouseListener(Mouse.getInstance());
+		addMouseListener(Mouse.getInstance());
+				// Mouse Motion
+		this.canvas.addMouseMotionListener(Mouse.getInstance());
+		addMouseMotionListener(Mouse.getInstance());
+		
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
