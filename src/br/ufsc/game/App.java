@@ -13,6 +13,6 @@ public class App {
 		// System.setProperty("sun.java2d.opengl", "true");
 		GameSettings gs = new GameSettings("E-NGINE Game",1280,720,60);
 		//Game.setupGame(gs).launch(new MenuScene());
-		Game.setupGame(gs).launch(new CoreGame());
+		Game.setupGame(gs).launch(new MenuScene());
 	}
 }

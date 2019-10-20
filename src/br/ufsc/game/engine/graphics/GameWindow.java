@@ -90,7 +90,7 @@ public class GameWindow extends JFrame {
 		buffer.show();
 		Toolkit.getDefaultToolkit().sync();
 		this.graphics = (Graphics2D) buffer.getDrawGraphics();
-		clear(Color.RED);
+		clear(Color.BLACK);
 	}
 
 	public GraphicsConfiguration getGraphicsConfig() {

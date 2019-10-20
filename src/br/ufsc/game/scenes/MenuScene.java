@@ -1,16 +1,14 @@
 package br.ufsc.game.scenes;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 
 import br.ufsc.game.engine.Game;
-import br.ufsc.game.engine.inputs.Keyboard;
 import br.ufsc.game.engine.interfaces.Drawable;
 import br.ufsc.game.engine.interfaces.GameAction;
 import br.ufsc.game.engine.interfaces.Updatable;
-import br.ufsc.game.engine.logic.GameImage;
 import br.ufsc.game.engine.logic.GameButton;
+import br.ufsc.game.engine.logic.GameImage;
+import br.ufsc.game.engine.logic.GameObject;
 import br.ufsc.game.engine.states.GameScene;
 import br.ufsc.game.engine.states.GameSceneManager;
 
@@ -54,7 +52,7 @@ public class MenuScene extends GameScene {
 
     @Override
     public void draw(Graphics2D g) {
-        gameDrawables.forEach((dObject) -> dObject.draw(g));
+		gameDrawables.stream().sorted((d1,d2)->{return ((GameObject)d1).getZ() - ((GameObject)d2).getZ();}).forEach((dObject) -> dObject.draw(g));
     }
 
     @Override

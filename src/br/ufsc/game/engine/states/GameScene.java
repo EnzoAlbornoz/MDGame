@@ -16,12 +16,14 @@ public abstract class GameScene {
 		protected HashMap<String,GameObject> gameObjects;
 		protected ArrayList<Drawable> gameDrawables;
 		protected ArrayList<Updatable> gameUpdatables;
+		protected HashMap<String,Object> gameExtras;
 
 	// Constructor
 	protected GameScene() {
 		this.gameObjects = new HashMap<>();
 		this.gameDrawables = new ArrayList<>();
 		this.gameUpdatables = new ArrayList<>();
+		this.gameExtras = new HashMap<>();
 	}
 
 	// Class Interface
@@ -36,6 +38,8 @@ public abstract class GameScene {
 	public abstract void update();
 	
 	public abstract void draw(Graphics2D g);
+
 	// Methods
 	protected abstract void loaded();
+
 }

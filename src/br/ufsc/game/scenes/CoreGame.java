@@ -3,28 +3,25 @@ package br.ufsc.game.scenes;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 
-import br.ufsc.game.engine.Game;
-import br.ufsc.game.engine.inputs.Keyboard;
 import br.ufsc.game.engine.interfaces.Drawable;
-import br.ufsc.game.engine.interfaces.GameAction;
 import br.ufsc.game.engine.interfaces.Updatable;
-import br.ufsc.game.engine.logic.GameImage;
 import br.ufsc.game.engine.logic.GameButton;
+import br.ufsc.game.engine.logic.GameImage;
+import br.ufsc.game.engine.logic.GameObject;
 import br.ufsc.game.engine.states.GameScene;
-import br.ufsc.game.engine.states.GameSceneManager;
+import br.ufsc.game.network.NetGamesInterface;
 
 /**
  * MenuScene
  */
 public class CoreGame extends GameScene {
 
-    public CoreGame() {
+    public CoreGame(NetGamesInterface nGamesInterface) {
         super();
-        //this.gameObjects.put("backgroundImage", new GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
+        // this.gameObjects.put("backgroundImage", new GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
         //this.gameObjects.put("logo", new GameImage("/br/ufsc/game/resources/images/Logo.png"));
-        
+        this.gameExtras.put("ngInterface", nGamesInterface);
         this.gameObjects.put("lastUsedCard", new GameImage("/br/ufsc/game/resources/images/house.png"));
         this.gameObjects.put("endTurn",new GameButton("/br/ufsc/game/resources/images/endTurn.png"));
         for (int i =0; i < 7; i++) {
@@ -69,7 +66,7 @@ public class CoreGame extends GameScene {
     @Override
     public void draw(Graphics2D g) {
     	int x, y;
-        gameDrawables.forEach((dObject) -> dObject.draw(g));
+		gameDrawables.stream().sorted((d1,d2)->{return ((GameObject)d1).getZ() - ((GameObject)d2).getZ();}).forEach((dObject) -> dObject.draw(g));
 
         g.setColor(Color.black);
         g.setFont(new Font("ComicSans", Font.BOLD, 27));
