@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import javax.swing.JOptionPane;
+
 import br.ufsc.game.engine.interfaces.Drawable;
 import br.ufsc.game.engine.interfaces.Updatable;
 import br.ufsc.game.engine.logic.GameButton;
@@ -40,7 +42,7 @@ public class CoreGame extends GameScene {
 
     @Override
     public void entering() {
-
+        JOptionPane.showMessageDialog(null, "Jogo Iniciado");
     }
 
     @Override
