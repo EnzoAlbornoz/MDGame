@@ -1,0 +1,38 @@
+obs: Colocando entre parênteses quem deu o parecer e o momento.
+Em branco = não começou a ser feito
+
+Casos de uso: Ok (Cainã 21/10 18:35)
+
+Recuperar Diagrama de Classes (Cainã 21/10 18:35)
+Classes Netgames: ver com Enzo do PlayerPacket (Cainã 21/10 18:35)
+Dominio da Solução: ?
+
+Diagramas de Atividades (x/12):
+ViewPlayerFields
+UpdateUI - Pronto (Cainã 21/10 18:35)
+UseCard - Pronto (Cainã 21/10 18:35)
+EndTurn - Pronto (Cainã 21/10 18:35)
+BuyCards - Pronto, mas pode melhorar (Cainã 21/10 18:35)
+SendPlay - Pronto (Cainã 21/10 18:35)
+EndMatch
+ReceivePlay - Pronto (Cainã 21/10 18:35)
+BeginMatch
+RequestBeginning
+Disconnect - Pronto (Cainã 21/10 18:35)
+Connect - Pronto (Cainã 21/10 18:35)
+
+Diagramas de Sequencia (x/12):
+ViewPlayerFields
+UpdateUI
+UseCard - Incompleto (Cainã 21/10 18:35)
+EndTurn - Incompleto, falta domínio do problema (Cainã 21/10 18:35)
+BuyCards
+SendPlay
+EndMatch
+ReceivePlay
+BeginMatch - Incompleto (Cainã 21/10 18:35)
+RequestBeginning - aparentemente incompleto (Cainã 21/10 18:35)
+Disconnect - Aparentemente pronto (Cainã 21/10 18:35)
+Connect - Aparentemente pronto (Cainã 21/10 18:35)
+
+Diagrama Geral de interação - Pronto (Cainã 21/10 18:35)
