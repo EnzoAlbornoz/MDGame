@@ -8,16 +8,16 @@ Classes Netgames: ver com Enzo do PlayerPacket (Cainã 21/10 18:35)
 Dominio da Solução: ?
 
 Diagramas de Atividades (x/12):
-ViewPlayerFields
+ViewPlayerFields - Pronto (Ezequiel 21/10 20:30)  - Talvez parte do que eu fiz aqui seja parte de UpdateUI (Ezequiel 21/10 21:40)
 UpdateUI - Pronto (Cainã 21/10 18:35)
 UseCard - Pronto (Cainã 21/10 18:35)
 EndTurn - Pronto (Cainã 21/10 18:35)
-BuyCards - Pronto, mas pode melhorar (Cainã 21/10 18:35)
+BuyCards - Pronto, mas pode melhorar (Cainã 21/10 18:35)  - Tentei deixar mais completo (Ezequiel 21/10 21:30)
 SendPlay - Pronto (Cainã 21/10 18:35)
-EndMatch
+EndMatch - Pronto (Ezequiel 21/10 20:50)
 ReceivePlay - Pronto (Cainã 21/10 18:35)
-BeginMatch
-RequestBeginning
+BeginMatch - Aparentemente pronto (Ezequiel 21/10 21:15)
+RequestBeginning - Pronto (Ezequiel 21/10 21:00)
 Disconnect - Pronto (Cainã 21/10 18:35)
 Connect - Pronto (Cainã 21/10 18:35)
 
