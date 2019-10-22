@@ -8,8 +8,8 @@ Classes Netgames: ver com Enzo do PlayerPacket (Cainã 21/10 18:35)
 Dominio da Solução: ?
 
 Diagramas de Atividades (x/12):
-ViewPlayerFields - Pronto (Ezequiel 21/10 20:30)  - Talvez parte do que eu fiz aqui seja parte de UpdateUI (Ezequiel 21/10 21:40)
-UpdateUI - Pronto (Cainã 21/10 18:35)
+ViewPlayerFields - Pronto (Ezequiel 21/10 20:30)  - Atualizado e possivelmente pronto (Ezequiel 22/10 18:50)
+UpdateUI - Pronto (Cainã 21/10 18:35) Atualizado (Ezequiel 22/10 18:50)
 UseCard - Pronto (Cainã 21/10 18:35)
 EndTurn - Pronto (Cainã 21/10 18:35)
 BuyCards - Pronto, mas pode melhorar (Cainã 21/10 18:35)  - Tentei deixar mais completo (Ezequiel 21/10 21:30)
