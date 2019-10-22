@@ -25,14 +25,18 @@ Diagramas de Sequencia (x/12):
 ViewPlayerFields
 UpdateUI
 UseCard - Incompleto (Cainã 21/10 18:35)
-EndTurn - Incompleto, falta domínio do problema (Cainã 21/10 18:35)
-BuyCards
-SendPlay
-EndMatch
-ReceivePlay
+EndTurn - Incompleto, falta domínio do problema (Cainã 21/10 18:35) - Adicionei sendPlay ao fim (Ezequiel 21/10 23:10)
+BuyCards - Aparentemente pronto (Ezequiel 22/10 00:30)
+SendPlay - Aparentemente pronto (Ezequiel 21/10 23:45)
+EndMatch - Aparentemente pronto (Ezequiel 21/10 23:00)
+ReceivePlay - Aparentemente Incompleto (Ezequiel 21/10 22:30)
 BeginMatch - Incompleto (Cainã 21/10 18:35)
-RequestBeginning - aparentemente incompleto (Cainã 21/10 18:35)
+RequestBeginning - aparentemente incompleto (Cainã 21/10 18:35) - Atualizado, aparentemente pronto (Ezequiel 22/10 00:55)
 Disconnect - Aparentemente pronto (Cainã 21/10 18:35)
 Connect - Aparentemente pronto (Cainã 21/10 18:35)
 
-Diagrama Geral de interação - Pronto (Cainã 21/10 18:35)
+Diagrama Geral de interação - Pronto (Cainã 21/10 18:35) - Atualizado, faltava UpdateUI (Ezequiel 22/10 01:10)
+
+
+FSM de Classe 1
+FSM de Classe 2
