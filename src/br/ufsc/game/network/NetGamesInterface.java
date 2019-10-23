@@ -8,6 +8,7 @@ import br.ufsc.inf.leobr.cliente.Proxy;
 import br.ufsc.inf.leobr.cliente.exception.ArquivoMultiplayerException;
 import br.ufsc.inf.leobr.cliente.exception.JahConectadoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoConectadoException;
+import br.ufsc.inf.leobr.cliente.exception.NaoJogandoException;
 import br.ufsc.inf.leobr.cliente.exception.NaoPossivelConectarException;;
 
 /**
@@ -23,6 +24,7 @@ public class NetGamesInterface implements OuvidorProxy {
 	protected Proxy proxy;
 	protected boolean connected;
 	protected boolean matchRunning;
+	protected Integer playerId;
 
 	// Constructor
 	public NetGamesInterface() {
@@ -54,6 +56,24 @@ public class NetGamesInterface implements OuvidorProxy {
 		}
 	}
 
+	public void sendPlay(Jogada jogada) {
+		try {
+			this.proxy.enviaJogada(jogada);
+		} catch (NaoJogandoException e) {
+			String message = "Desculpe,você não está jogando.";
+			JOptionPane.showMessageDialog(null, message, "Erro - NetGames NRT", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
+	public void disconnect() {
+		if(isConnected()) {
+			try {
+				this.proxy.desconectar();
+			} catch (NaoConectadoException e) {}
+		}
+	}
+
 	/**
 	 * @return the connected
 	 */
@@ -72,6 +92,7 @@ public class NetGamesInterface implements OuvidorProxy {
 	@Override
 	public void iniciarNovaPartida(Integer posicao) {
 		this.matchRunning = true;		
+		this.playerId = posicao;
 		String message = "Partida Iniciada com Sucesso";
 		JOptionPane.showMessageDialog(null, message,
 			"Partida Iniciada", JOptionPane.INFORMATION_MESSAGE);
@@ -79,27 +100,29 @@ public class NetGamesInterface implements OuvidorProxy {
 
 	@Override
 	public void finalizarPartidaComErro(String message) {
-		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(null, message, "Partida Terminou com Erro", JOptionPane.ERROR_MESSAGE);
 		
 	}
 	@Override
 	public void receberMensagem(String msg) {
-		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(null, msg, "Server Message", JOptionPane.INFORMATION_MESSAGE);
 		
 	}
 	@Override
 	public void receberJogada(Jogada jogada) {
-		// TODO Auto-generated method stub
-		
+		// System.out.println(jogada);
+		// TODO
 	}
 	@Override
 	public void tratarConexaoPerdida() {
-		// TODO Auto-generated method stub
-		
+		JOptionPane.showMessageDialog(null, "Conexão Perdida!");
 	}
 	@Override
 	public void tratarPartidaNaoIniciada(String message) {
-		// TODO Auto-generated method stub
-		
+		JOptionPane.showMessageDialog(null, message, "Houve um erro ao iniciar partida", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public Integer getPlayerId() {
+		return this.playerId;
 	}
 }
