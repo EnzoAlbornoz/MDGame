@@ -35,8 +35,7 @@ RequestBeginning - Atualizado, aparentemente pronto (Ezequiel 22/10 00:55)
 Disconnect - Pronto (Cainã 21/10 18:35)
 Connect - Aparentemente pronto (Cainã 21/10 18:35)
 
-Diagrama Geral de interação - Pronto (Cainã 21/10 18:35) - Atualizado, faltava UpdateUI (Ezequiel 22/10 01:10)
-
+Diagrama Geral de interação - Pronto (23/10 12:40)
 
 FSM de Classe 1 FSMGame pronto (Caina 23/10 10:34)
 FSM de Classe 2
