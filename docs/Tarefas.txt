@@ -1,38 +1,38 @@
 obs: Colocando entre parênteses quem deu o parecer e o momento.
 Em branco = não começou a ser feito
 
-Casos de uso: Ok (Cainã 21/10 18:35)
+Casos de uso: Ok (Cainã 22/10 23:21)
 
-Recuperar Diagrama de Classes (Cainã 21/10 18:35)
-Classes Netgames: ver com Enzo do PlayerPacket (Cainã 21/10 18:35)
+Classes Domínio da Solução: faltam métodos (Cainã 22/10 23:19)
+Classes Netgames: Pronto (Cainã 22/10 23:19)
 Dominio da Solução: ?
 
-Diagramas de Atividades (x/12):
-ViewPlayerFields - Pronto (Ezequiel 21/10 20:30)  - Atualizado e possivelmente pronto (Ezequiel 22/10 18:50)
-UpdateUI - Pronto (Cainã 21/10 18:35) Atualizado (Ezequiel 22/10 18:50)
+Diagramas de Atividades (12/12):
+ViewPlayerFields - Pronto (Cainã 22/10 23:24)
+UpdateUI - Pronto (Cainã 23/10 00:03)
 UseCard - Pronto (Cainã 21/10 18:35)
 EndTurn - Pronto (Cainã 21/10 18:35)
-BuyCards - Pronto, mas pode melhorar (Cainã 21/10 18:35)  - Tentei deixar mais completo (Ezequiel 21/10 21:30)
+BuyCards - Pronto (Cainã 21/10 00:54)
 SendPlay - Pronto (Cainã 21/10 18:35)
 EndMatch - Pronto (Ezequiel 21/10 20:50)
 ReceivePlay - Pronto (Cainã 21/10 18:35)
-BeginMatch - Aparentemente pronto (Ezequiel 21/10 21:15)
+BeginMatch - Pronto (Cainã 22/10 01:39)
 RequestBeginning - Pronto (Ezequiel 21/10 21:00)
 Disconnect - Pronto (Cainã 21/10 18:35)
 Connect - Pronto (Cainã 21/10 18:35)
 
 Diagramas de Sequencia (x/12):
-ViewPlayerFields
-UpdateUI
-UseCard - Incompleto (Cainã 21/10 18:35)
-EndTurn - Incompleto, falta domínio do problema (Cainã 21/10 18:35) - Adicionei sendPlay ao fim (Ezequiel 21/10 23:10)
-BuyCards - Aparentemente pronto (Ezequiel 22/10 00:30)
-SendPlay - Aparentemente pronto (Ezequiel 21/10 23:45)
-EndMatch - Aparentemente pronto (Ezequiel 21/10 23:00)
-ReceivePlay - Aparentemente Incompleto (Ezequiel 21/10 22:30)
-BeginMatch - Incompleto (Cainã 21/10 18:35)
-RequestBeginning - aparentemente incompleto (Cainã 21/10 18:35) - Atualizado, aparentemente pronto (Ezequiel 22/10 00:55)
-Disconnect - Aparentemente pronto (Cainã 21/10 18:35)
+ViewPlayerFields - Pronto (Cainã 23/10 03:18)
+UpdateUI - Pronto (Cainã 23/10 04:18)
+UseCard - Pronto (Cainã 22/10 3:05)
+EndTurn - Pronto (Cainã 23/10 4:32)
+BuyCards - Pronto (Cainã 21/10 00:54)
+SendPlay - Pronto (Ezequiel 21/10 23:45)
+EndMatch - será q n eh uma boa desconectar também? (Cainã 23/10 1:03) Não eh melhor o método gatilho ser endMatch() e ele ser chamado pelo receivePlay? (Cainã 23/10 3:15)
+ReceivePlay - Pronto (Caina 23/10 01:17)
+BeginMatch - Pronto (Cainã 22/10 01:39)
+RequestBeginning - Atualizado, aparentemente pronto (Ezequiel 22/10 00:55)
+Disconnect - Pronto (Cainã 21/10 18:35)
 Connect - Aparentemente pronto (Cainã 21/10 18:35)
 
 Diagrama Geral de interação - Pronto (Cainã 21/10 18:35) - Atualizado, faltava UpdateUI (Ezequiel 22/10 01:10)
