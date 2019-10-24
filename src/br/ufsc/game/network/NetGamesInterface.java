@@ -18,7 +18,7 @@ public class NetGamesInterface implements OuvidorProxy {
 
 	// Variables
 	// Constants
-	protected final String SERVER_IP = "0.0.0.0";
+	// protected final String SERVER_IP = "0.0.0.0";
 	// Public
 	// Protected
 	protected Proxy proxy;
@@ -37,8 +37,11 @@ public class NetGamesInterface implements OuvidorProxy {
 
 	// Interface
 	public void joinSession(String playerName) {
+		// Adicionado para compatibilidade - Necessário alterar modelagem
+		String ip = JOptionPane.showInputDialog(null, "Insira o IP do Servidor", "Login", JOptionPane.QUESTION_MESSAGE);
 		try {
-			this.proxy.conectar(SERVER_IP, playerName);
+			this.proxy.conectar(ip, playerName);
+			// --------------------------------------
 			this.connected = true;
 		} catch (JahConectadoException e) {
 			String message = "Você já está conectado!";
