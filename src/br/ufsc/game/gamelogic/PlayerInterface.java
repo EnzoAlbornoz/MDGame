@@ -14,19 +14,6 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 
 	protected HashMap<String, GameObject> problemDomain;
 
-	// @Override
-	// public void draw(Graphics2D g) {
-	// 	problemDomain.forEach((var,obj)->{
-	// 		if(obj instanceof Drawable) {
-	// 			((Drawable) obj).draw(g);
-	// 		}
-	// 	});
-	// }
-
-	// @Override
-	// public void update() {
-		
-	// }
 
 	
 }
