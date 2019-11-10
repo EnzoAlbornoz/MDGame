@@ -13,6 +13,7 @@ public enum State {
 	SelectYourProperty,
 	SelectTargetPlayer,
 	SelectTargetProperty,
+	SelectPropertyColor,
 	ApplyCardEffects,
 	EndTurn,
 	WaitForPlays
