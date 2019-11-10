@@ -19,10 +19,7 @@ public class FSMGame {
     protected int clientId;
     protected int selectedPlayerId;
     protected boolean actionsEnabled;
-
-    public void setSelectedPlayer(int pid) {
-        selectedPlayerId = pid;
-    }
+    protected PlayerInterface playerInterface;
 
     public void buyCards(){
         this.gameField.setDeck(this.gameField.getPlayers().get(0).addCards(this.gameField.getDeck()));
@@ -33,9 +30,13 @@ public class FSMGame {
         ArrayList<Player> players = gameField.getPlayers();
         players.add(currentPlayer);
         this.gameField.setPlayers(players);
+        currentState = State.WaitForPlays;
+        //playerInterface.endTurn(); CHAMAR QUANDO ESTIVER IMPLEMENTADO
     }
     
-    //public void disableActions(boolean a){} // I suggest change name to ActionsEnable, since there is a boolean parameter
+    public void actionsEnable(boolean a){ //eu acho que eh melhor saber pelo estado se as ações estão habilitadas ou não, na verdade (Cainã)
+        actionsEnabled = a;
+    }
    
     public void updateInformation(PlayerPacket pc){
         this.gameField = pc.getGameField();
@@ -65,9 +66,17 @@ public class FSMGame {
         }
         return false;
     }
+
     //public PlayerPacket calculatePlay(PlayerPacket p){}   // acho que n precisa
-    //public boolean isIconSelected(String id){}
-    //public int calculateArrowPosition() informa a interface onde ela deve posicionar a seta (em pixels de y), de acordo com quem eh a vez
+
+    public boolean isIconSelected(String id){
+        return id.equals(""+selectedPlayerId);
+    }
+
+    //return player at position 0 index for the UI to calculate arrow position
+    public int calculateArrowPosition(){
+        return gameField.getPlayers().get(0).id;
+    }
 
     public int getPlayersMoney(int id){
         Player player = gameField.getPlayers()
@@ -77,7 +86,7 @@ public class FSMGame {
         if(player != null) {
             return player.getMoney();
         } 
-        return 0;
+        return -1;
     }
     public int howManyPropCards(int id) {
         // Feito :D
@@ -94,7 +103,9 @@ public class FSMGame {
         } 
         return 0;
     }
-    //public string witchCardIsThis(int index){} acho q repassa pro player
+    public String witchCardIsThis(int index){ //index could be called posInHand
+        return gameField.players.get(0).wichCardIsThis(index);
+    }
     public String getLastUsedCard(){
         return lastUsedCard.label;
     }
@@ -104,7 +115,14 @@ public class FSMGame {
     public boolean doesEndTurnButtonAppear(){
         return currentState == State.SelectCard;
     }
-    //public void useCard(int index){}
+    public void useCard(int index){
+        Card card = gameField.players.get(0).hand.getCards().get(index);
+        setLastUsedCard(card);
+
+        currentState = State.Store;
+        //playerInterface.useOrStoreCard(); TODO: CHAMAR ESSE METODO QUANDO ESTIVER IMPLEMENTADO
+
+    }
     public void setLastUsedCard(Card card){
         this.lastUsedCard = card;
     }
@@ -117,8 +135,8 @@ public class FSMGame {
     }
 
     // when I wanna go to the selectTatgetPlayer state and I just selected my propertyColor (if needed)
-    public void selectTargetPlayer(PropertyColor c){
-        //yourProperty = c;
+    public void selectTargetPlayer(PropertyColor c){ //could be called selectYourProperty
+        //saving myProperty selected
         ArrayList<PropertyGroup> properties = gameField.players.get(0).zone.getProperties();
         for (int i = 0; i < properties.size(); i++) {
             if(properties.get(i).getColor() == c){
@@ -126,13 +144,40 @@ public class FSMGame {
                 i = properties.size();
             }
         }
+        //updating state
         currentState = State.SelectTargetPlayer;
-        
-        //TODO: verificar se a carta precisa do próximo estado, para pular ele ou não, e talz... se puder deixem q eu faço (Cainã)
+        ArrayList<State> needed = lastUsedCard.neededStates;
+        boolean needs = needed.contains(State.SelectTargetPlayer);
+        if ( ! needs ){
+            selectTargetProperty(""+clientId); //select myself as target player once that it target isn't needed
+        }
+    }
+    // means i wanna go to selectTargetProperty state and I just selected my string targetPlayer==id (if needed)
+    public void selectTargetProperty(String id){ //maybe it could be always integer or always String
+        // saving player target selected
+        selectedPlayerId = Integer.parseInt(id);
+
+        //update state
+        ArrayList<State> needed = lastUsedCard.neededStates;
+        boolean needs = needed.contains(State.SelectTargetProperty);
+        if ( ! needs){
+            setTargetProperty(PropertyColor.joker); //select joker as targetProperty, since it isn't needed
+        }
     }
 
-    //public void selectTargetProperty(String id){} // means i wanna go to selectTargetProperty state and I just selected my string targetPlayer==id (if needed)
-    //public void setTargetProperty(PropertyColor c){}
+    public void setTargetProperty(PropertyColor c){
+        //saving targetProperty selected
+        ArrayList<PropertyGroup> properties = gameField.players.get(0).zone.getProperties();
+        for (int i = 0; i < properties.size(); i++) {
+            if(properties.get(i).getColor() == c){
+                targetsProperty = properties.get(i);
+                i = properties.size();
+            }
+        }
+
+        //TODO: should applyCardEffect now
+    }
+
     public void decreaseActions(){ 
         actionsQty -= 1;
         if (actionsQty > 0){
@@ -140,10 +185,12 @@ public class FSMGame {
             //enviarJogada()
         } else {
             currentState = State.EndTurn;
-            //endTurn() //jogada serah enviada no endTurn
+            endTurn();
         }
     }
-    //void setSelectedPlayer(int pid){}
+    public void setSelectedPlayer(int pid) {
+        selectedPlayerId = pid;
+    }
     boolean isItMyTurn(){
         return gameField.getPlayers().get(0).id == clientId;
     }
