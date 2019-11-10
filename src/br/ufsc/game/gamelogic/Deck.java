@@ -187,38 +187,38 @@ public class Deck {
         thisProperties = new ArrayList<Property>();
         property = new Property(PropertyColor.utility, "Water Works");
         thisProperties.add(property);
-        this.cards.add(new PropertyCard(cardId++, "propertyCard", 2, List.of(State), thisProperties));
+        this.cards.add(new PropertyCard(cardId++, "utilityProperty", 2, List.of(State), thisProperties));
         
         // Eletric Company
         thisProperties = new ArrayList<Property>();
         property = new Property(PropertyColor.utility, "Eletric Company");
         thisProperties.add(property);
-        this.cards.add(new PropertyCard(cardId++, "propertyCard", 2, List.of(State), thisProperties));
+        this.cards.add(new PropertyCard(cardId++, "utilityProperty", 2, List.of(State), thisProperties));
         
         // Títulos de ferrovias
         // Short Line
         thisProperties = new ArrayList<Property>();
         property = new Property(PropertyColor.railroad, "Short Line");
         thisProperties.add(property);
-        this.cards.add(new PropertyCard(cardId++, "propertyCard", 2, List.of(State), thisProperties));
+        this.cards.add(new PropertyCard(cardId++, "railroadProperty", 2, List.of(State), thisProperties));
         
         // B. & O. Railroad
         thisProperties = new ArrayList<Property>();
         property = new Property(PropertyColor.railroad, "B. & O. Railroad");
         thisProperties.add(property);
-        this.cards.add(new PropertyCard(cardId++, "propertyCard", 2, List.of(State), thisProperties));
+        this.cards.add(new PropertyCard(cardId++, "railroadProperty", 2, List.of(State), thisProperties));
         
         // Reading Railroad
         thisProperties = new ArrayList<Property>();
         property = new Property(PropertyColor.railroad, "Reading Railroad");
         thisProperties.add(property);
-        this.cards.add(new PropertyCard(cardId++, "propertyCard", 2, List.of(State), thisProperties));
+        this.cards.add(new PropertyCard(cardId++, "railroadProperty", 2, List.of(State), thisProperties));
         
         // Pennsylvania Railroad
         thisProperties = new ArrayList<Property>();
         property = new Property(PropertyColor.railroad, "Pennsylvania Railroad");
         thisProperties.add(property);
-        this.cards.add(new PropertyCard(cardId++, "propertyCard", 2, List.of(State), thisProperties));
+        this.cards.add(new PropertyCard(cardId++, "railroadProperty", 2, List.of(State), thisProperties));
         
         // Títulos Curinga
         // Darkblue & Green Wild Card
@@ -294,12 +294,12 @@ public class Deck {
         for (PropertyColor pc : PropertyColor.values()) {
             rentColors.add(pc);
         }
-        State neededStates[] = {State.SelectPropertyColor, State.SelectTargetPlayer};
+        State neededStates[] = {State.SelectYourProperty, State.SelectTargetPlayer};
         this.cards.add(new RentCard(cardId++, "rentCard",3, neededStates,rentColors));
         this.cards.add(new RentCard(cardId++, "rentCard",3, neededStates,rentColors));
         this.cards.add(new RentCard(cardId++, "rentCard",3, neededStates,rentColors));
 
-        State neededStates[] = {State.SelectPropertyColor};
+        State neededStates[] = {State.SelectYourProperty};
         // Green & Darkblue RentCard
         PropertyColor rentColors[] = {PropertyColor.green, PropertyColor.darkblue};
         this.cards.add(new RentCard(cardId++, "rentCard",1, neededStates,rentColors));
