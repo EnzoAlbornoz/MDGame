@@ -175,14 +175,14 @@ public class FSMGame {
             }
         }
 
-        //TODO: should applyCardEffect now
+        //TODO: deveria chamar applyCardEffect() agora
     }
 
     public void decreaseActions(){ 
         actionsQty -= 1;
         if (actionsQty > 0){
             currentState = State.SelectCard;
-            //enviarJogada()
+            //playerInterface.sendPlay();
         } else {
             currentState = State.EndTurn;
             endTurn();

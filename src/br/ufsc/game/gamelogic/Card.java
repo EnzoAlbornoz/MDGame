@@ -22,6 +22,10 @@ public abstract class Card {
 			this.neededStates.add(state);
 		}
 	}
+
+	public Card(int id, String label, int value, ArrayList<State> neededStates){
+		this(id,label,value,neededStates.toArray(new State[0]));
+	}
 	// Interface
 	public int getNeededStates() {
 		return 0;
