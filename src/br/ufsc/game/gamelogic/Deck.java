@@ -11,6 +11,7 @@ public class Deck {
 	protected Stack<Card> cards;
 	// Constructor
     public Deck() {   // popular o deck com as cartas
+        this.cards = new Stack<>();
         int cardId = 0;
 
         //  CRIANDO CARTAS DINHEIRO
@@ -104,7 +105,6 @@ public class Deck {
         thisProperties.add(property);
         this.cards.add(new PropertyCard(cardId++, "propertyCard", 1, List.of(State), thisProperties));
         
-
         // Titulos de cor laranja
         // New York Avenue
         thisProperties = new ArrayList<Property>();
@@ -324,11 +324,74 @@ public class Deck {
         PropertyColor rentColors[] = {PropertyColor.red, PropertyColor.yellow};
         this.cards.add(new RentCard(cardId++, "rentCard",1, neededStates,rentColors));
         this.cards.add(new RentCard(cardId++, "rentCard",1, neededStates,rentColors));
+       
+        // Cartas de ação
+        // Deal Breaker
+        GameAction cardAction; // rouba conjunto completo
+        State neededStates[] = {State.SelectTargetProperty};
+        this.cards.add(new ActionCard(cardId++, "dealBreaker", 5, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "dealBreaker", 5, neededStates, cardAction));
 
+        // Debt Collector
+        // cardAction = new GameAction();  // Rouba 5M de um jogador
+        State neededStates[] = {State.SelectTargetPlayer};
+        this.cards.add(new ActionCard(cardId++, "debtCollector", 3, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "debtCollector", 3, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "debtCollector", 3, neededStates, cardAction));
+        
+        // Double the rent!
+        // cardAction = new GameAction();  // Dobra aluguel da carta aluguel usada
+        State neededStates[] = {State.SelectYourProperty};
+        this.cards.add(new ActionCard(cardId++, "doubleTheRent", 1, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "doubleTheRent", 1, neededStates, cardAction));
+        
+        // Forced Deal
+        // cardAction = new GameAction();  // Troca propriedade com um jogador, n pode ser parte de conjunto completo
+        State neededStates[] = {State.SelectYourProperty, SelectTargetProperty};
+        this.cards.add(new ActionCard(cardId++, "forcedDeal", 3, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "forcedDeal", 3, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "forcedDeal", 3, neededStates, cardAction));
+        
+        // Hotel
+        // cardAction = new GameAction();  // Aumenta aluguel de um conjunto completo em 4M, exceto railroad e utility
+        State neededStates[] = {State.SelectYourProperty};
+        this.cards.add(new ActionCard(cardId++, "hotel", 4, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "hotel", 4, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "hotel", 4, neededStates, cardAction));
+        
+        // House
+        // cardAction = new GameAction();  // Aumenta aluguel de um conjunto completo em 3M, exceto railroad e utility
+        State neededStates[] = {State.SelectYourProperty};
+        this.cards.add(new ActionCard(cardId++, "house", 3, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "house", 3, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "house", 3, neededStates, cardAction));
+        
+        // It's my Birthday
+        // cardAction = new GameAction();  // Todos os jogadores te dão 2M
+        this.cards.add(new ActionCard(cardId++, "itsMyBirthday", 2, List.of(State), cardAction));
+        this.cards.add(new ActionCard(cardId++, "itsMyBirthday", 2, List.of(State), cardAction));
+        this.cards.add(new ActionCard(cardId++, "itsMyBirthday", 2, List.of(State), cardAction));
+        
+        // Pass Go
+        // cardAction = new GameAction();  // Compra 2 cartas do deck
+        for (int i = 0; i < 10; i++){
+            this.cards.add(new ActionCard(cardId++, "passGo", 1, List.of(State), cardAction));
+        }
+        
+        // Sly Deal
+        // cardAction = new GameAction();  // Rouba propriedade que n faz parte de conjunto completo
+        State neededStates[] = {SelectTargetProperty};
+        this.cards.add(new ActionCard(cardId++, "slyDeal", 3, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "slyDeal", 3, neededStates, cardAction));
+        this.cards.add(new ActionCard(cardId++, "slyDeal", 3, neededStates, cardAction));
+        
+
+       //  SHUFFLING DECK
+        Collections.shuffle(this.cards);
     }
 	// Interface
 	public Card removeFromDeck() {
-		return cards.pop();
+		return this.cards.pop();
 	}
 	// Methods
 }
