@@ -12,61 +12,61 @@ public class Property {
         this.color = color;
         this.label = label;
         switch (color) {
-            case(PropertyColor.brown):
+            case brown:
                 this.rent1 = 1;
                 this.rent2 = 2;
                 this.rent3 = 2;
                 this.fullRent = 2;                
                 break;
-            case(PropertyColor.darkblue):
+            case darkblue:
                 this.rent1 = 3;
                 this.rent2 = 8;
                 this.rent3 = 8;
                 this.fullRent = 8;                
                 break;
-            case(PropertyColor.green):
+            case green:
                 this.rent1 = 2;
                 this.rent2 = 4;
                 this.rent3 = 7;
                 this.fullRent = 7;                
                 break;
-            case(PropertyColor.lightblue):
+            case lightblue:
                 this.rent1 = 1;
                 this.rent2 = 2;
                 this.rent3 = 3;
                 this.fullRent = 3;                
                 break;
-            case(PropertyColor.orange):
+            case orange:
                 this.rent1 = 1;
                 this.rent2 = 3;
                 this.rent3 = 3;
                 this.fullRent = 5;                
                 break;
-            case(PropertyColor.purple):
+            case purple:
                 this.rent1 = 1;
                 this.rent2 = 2;
                 this.rent3 = 4;
                 this.fullRent = 4;                
                 break;
-            case(PropertyColor.railroad):
+            case railroad:
                 this.rent1 = 1;
                 this.rent2 = 2;
                 this.rent3 = 3;
                 this.fullRent = 4;                
                 break;
-            case(PropertyColor.red):
+            case red:
                 this.rent1 = 2;
                 this.rent2 = 3;
                 this.rent3 = 6;
                 this.fullRent = 6;                
                 break;
-            case(PropertyColor.utility):
+            case utility:
                 this.rent1 = 1;
                 this.rent2 = 2;
                 this.rent3 = 2;
                 this.fullRent = 2;                
                 break;
-            case(PropertyColor.yellow):
+            case yellow:
                 this.rent1 = 2;
                 this.rent2 = 4;
                 this.rent3 = 6;
