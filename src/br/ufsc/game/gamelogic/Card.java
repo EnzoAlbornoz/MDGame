@@ -27,12 +27,8 @@ public abstract class Card {
 		this(id,label,value,neededStates.toArray(new State[0]));
 	}
 	// Interface
-	public int getNeededStates() {
-		return 0;
-	}
-
-	public void setNeededStates(ArrayList<State> neededStates) {
-
+	public ArrayList<State> getNeededStates() {
+		return neededStates;
 	}
 
 	public int getValue() {

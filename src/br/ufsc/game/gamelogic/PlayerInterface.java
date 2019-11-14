@@ -13,7 +13,30 @@ import br.ufsc.game.engine.logic.GameObject;
 public class PlayerInterface /*implements Updatable, Drawable*/ {
 
 	protected HashMap<String, GameObject> problemDomain;
+	FSMGame fsmGame;
 
+	public PlayerInterface(int clientId, int playersQuantity){
+		this.fsmGame = new FSMGame(clientId, playersQuantity);
+	}
 
+	public FSMGame getFSMGame(){
+		return fsmGame;
+	}
+
+	/*
+	public PlayerInterface(FSMGame fsmGame){
+		this.fsmGame = fsmGame;
+	}
+	*/
+
+	public boolean doesEndTurnBtnAppear(){
+		return fsmGame.doesEndTurnButtonAppear();
+		//return true;
+	}
 	
+	public void endTurn(){
+		if(fsmGame != null){
+			fsmGame.endTurn();
+		}
+	}
 }

@@ -7,11 +7,13 @@ import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
 
 import br.ufsc.game.engine.interfaces.Drawable;
+import br.ufsc.game.engine.interfaces.GameAction;
 import br.ufsc.game.engine.interfaces.Updatable;
 import br.ufsc.game.engine.logic.GameButton;
 import br.ufsc.game.engine.logic.GameImage;
 import br.ufsc.game.engine.logic.GameObject;
 import br.ufsc.game.engine.states.GameScene;
+import br.ufsc.game.gamelogic.PlayerInterface;
 import br.ufsc.game.network.NetGamesInterface;
 
 /**
@@ -21,6 +23,10 @@ public class CoreGame extends GameScene {
 
     public CoreGame(NetGamesInterface nGamesInterface) {
         super();
+
+        playerInterface = new PlayerInterface(nGamesInterface.getPlayerId(), nGamesInterface.getPlayersQuantity());
+        nGamesInterface.setFSMGame(playerInterface.getFSMGame());
+
         // this.gameObjects.put("backgroundImage", new GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
         //this.gameObjects.put("logo", new GameImage("/br/ufsc/game/resources/images/Logo.png"));
         this.gameExtras.put("ngInterface", nGamesInterface);
@@ -39,6 +45,9 @@ public class CoreGame extends GameScene {
 
         this.loaded();
     }
+
+    //atributoooooooo
+    PlayerInterface playerInterface;
 
     @Override
     public void entering() {
@@ -63,6 +72,11 @@ public class CoreGame extends GameScene {
     @Override
     public void update() {
         gameUpdatables.forEach((uObject) -> uObject.update());
+
+        //endTurnBtn
+        boolean appear = playerInterface.doesEndTurnBtnAppear();
+        int x = appear? 10 : 99999999;
+        gameObjects.get("endTurn").setX(x);
     }
 
     @Override
@@ -153,6 +167,13 @@ public class CoreGame extends GameScene {
 	        }
         }
 
+        //defining endTurnBtn Action
+        ((GameButton) gameObjects.get("endTurn")).setOnClick(new GameAction() {
+            @Override
+            public void doAction(Object[] args) {
+                playerInterface.endTurn();
+            }
+        });
         
     	//gameObjects.get("logo").setX((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("logo").getWidth()     /2));
         //gameObjects.get("logo").setY(100);

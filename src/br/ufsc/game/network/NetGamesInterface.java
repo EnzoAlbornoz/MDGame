@@ -2,6 +2,7 @@ package br.ufsc.game.network;
 
 import javax.swing.JOptionPane;
 
+import br.ufsc.game.gamelogic.FSMGame;
 import br.ufsc.inf.leobr.cliente.Jogada;
 import br.ufsc.inf.leobr.cliente.OuvidorProxy;
 import br.ufsc.inf.leobr.cliente.Proxy;
@@ -25,6 +26,8 @@ public class NetGamesInterface implements OuvidorProxy {
 	protected boolean connected;
 	protected boolean matchRunning;
 	protected Integer playerId;
+	protected FSMGame fsmGame;
+	protected int playersQuantity;
 
 	// Constructor
 	public NetGamesInterface() {
@@ -33,6 +36,18 @@ public class NetGamesInterface implements OuvidorProxy {
 		this.proxy.addOuvinte(this);
 		this.connected = false;
 		this.matchRunning = false;
+	}
+
+	public FSMGame getFSMGame(){
+		return fsmGame;
+	}
+
+	public void setFSMGame(FSMGame fsmGame){
+		this.fsmGame = fsmGame;
+	}
+
+	public int getPlayersQuantity(){
+		return playersQuantity;
 	}
 
 	// Interface
@@ -89,15 +104,16 @@ public class NetGamesInterface implements OuvidorProxy {
 	}
 
 	public void beginMatch(int playersQuantity) throws NaoConectadoException {
+		this.playersQuantity = playersQuantity;
 		this.proxy.iniciarPartida(playersQuantity);
 	}
 	
 	@Override
-	public void iniciarNovaPartida(Integer posicao) {
+	public void iniciarNovaPartida(Integer clientId) {
 		this.matchRunning = true;		
-		this.playerId = posicao;
-		String message = "Partida Iniciada com Sucesso";
-		JOptionPane.showMessageDialog(null, message,
+		this.playerId = clientId;
+		String message = "Partida Iniciada com Sucesso. Teu número é ";
+		JOptionPane.showMessageDialog(null, message + clientId,
 			"Partida Iniciada", JOptionPane.INFORMATION_MESSAGE);
 	}
 

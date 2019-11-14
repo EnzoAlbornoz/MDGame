@@ -9,6 +9,29 @@ public class PropertyGroup {
     protected int hotelQty;
     protected int neededQty;
 
+    public PropertyGroup(PropertyColor color){
+        this.color = color;
+        propCards = new ArrayList<>();
+        houseQty = 0;
+        hotelQty = 0;
+        switch (color)
+        {
+            case brown:
+            case darkblue:
+            case utility: neededQty = 2; break;
+
+            case green:
+            case lightblue:
+            case orange: 
+            case purple:
+            case red:
+            case yellow: neededQty = 3; break;
+
+            case railroad: neededQty = 4; break;
+
+            case joker: neededQty = -1; break;
+        }
+    }
 
     public int getHotelQty(){
         return this.hotelQty;

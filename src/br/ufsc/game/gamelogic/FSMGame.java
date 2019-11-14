@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import br.ufsc.game.network.NetGamesInterface;
 import br.ufsc.game.network.PlayerPacket;
 
 public class FSMGame {
-    //comment means it was not implemented yet
     protected State currentState;
     protected GameField gameField;
     protected int actionsQty;
@@ -20,6 +20,18 @@ public class FSMGame {
     protected int selectedPlayerId;
     protected boolean actionsEnabled;
     protected PlayerInterface playerInterface;
+    protected NetGamesInterface netGamesInterface;
+
+    public FSMGame(int clientId, int playersQuantity){ //playerNumber serah o numero desse jogador, tipo se ele eh o 1, eh o primeiro a jogar
+        currentState = State.IsItMyTurn;
+        gameField = new GameField(playersQuantity);
+        actionsQty = 3;
+        //lastUsedCard = cartaViradaParaBaixo, se for necessário
+        this.clientId = clientId;
+        selectedPlayerId = clientId;
+        actionsEnabled = clientId == 1; // quero depois trocar esse enabled por verificar estado ao inves de verificar essa booleana (Cainã)
+        //playerInterface = new PlayerInterface(this); // essa interface aponta de volta pra FSMGame
+    }
 
     public void buyCards(){
         this.gameField.setDeck(this.gameField.getPlayers().get(0).addCards(this.gameField.getDeck()));
@@ -31,7 +43,8 @@ public class FSMGame {
         players.add(currentPlayer);
         this.gameField.setPlayers(players);
         currentState = State.WaitForPlays;
-        //playerInterface.endTurn(); CHAMAR QUANDO ESTIVER IMPLEMENTADO
+        PlayerPacket playerPacket = new PlayerPacket(this.lastUsedCard, this.gameField);
+        netGamesInterface.sendPlay(playerPacket);
     }
     
     public void actionsEnable(boolean a){ //eu acho que eh melhor saber pelo estado se as ações estão habilitadas ou não, na verdade (Cainã)
@@ -191,7 +204,13 @@ public class FSMGame {
     public void setSelectedPlayer(int pid) {
         selectedPlayerId = pid;
     }
-    boolean isItMyTurn(){
-        return gameField.getPlayers().get(0).id == clientId;
+    void isItMyTurn(){
+        boolean is = gameField.getPlayers().get(0).id == clientId;
+        if (is){
+            gameField.getPlayers().get(0).addCards(gameField.getDeck());
+            currentState = State.SelectCard;
+        } else {
+            currentState = State.WaitForPlays;
+        }
     }
 }

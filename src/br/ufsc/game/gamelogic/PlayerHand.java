@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class PlayerHand {
     protected ArrayList<Card> cards;
 
+    public PlayerHand(){
+        cards = new ArrayList<>();
+    }
+
     public ArrayList<Card> getCards(){
         return this.cards;
     }
