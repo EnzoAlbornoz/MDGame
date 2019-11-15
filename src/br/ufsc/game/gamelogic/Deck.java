@@ -237,34 +237,90 @@ public class Deck {
 	}
     // Methods
     private GameAction getDealBreakerAction() {
-        return null;
+        return new GameAction(){
+        
+            @Override
+            public void doAction(Object[] args) {
+                // TODO Auto-generated method stub
+                
+            }
+        };
     }
 
     private GameAction getDebtCollectorAction() {
-        return null;
+        return new GameAction(){
+        
+            @Override
+            public void doAction(Object[] args) {
+                // TODO Auto-generated method stub
+                
+            }
+        };
     }
 
     private GameAction getForcedDealAction() {
-        return null;
+        return new GameAction(){
+        
+            @Override
+            public void doAction(Object[] args) {
+                // TODO Auto-generated method stub
+                
+            }
+        };
     }
 
     private GameAction getHotelAction() {
-        return null;
+        return new GameAction(){
+        
+            @Override
+            public void doAction(Object[] args) {
+                // TODO Auto-generated method stub
+                
+            }
+        };
     }
 
     private GameAction getHouseAction() {
-        return null;
+        return new GameAction(){
+        
+            @Override
+            public void doAction(Object[] args) {
+                // TODO Auto-generated method stub
+                
+            }
+        };
     }
 
     private GameAction getBirthdayAction() {
-        return null;
+        return new GameAction(){
+        
+            @Override
+            public void doAction(Object[] args) {
+                // TODO Auto-generated method stub
+                
+            }
+        };
     }
 
     private GameAction getPassGoAction() {
-        return null;
+        return new GameAction(){
+        
+            @Override
+            public void doAction(Object[] args) {
+                // TODO Auto-generated method stub
+                
+            }
+        };
     }
 
     private GameAction getSlyAction() {
-        return null;
+        return new GameAction(){
+        
+            @Override
+            public void doAction(Object[] args) {
+                // TODO Auto-generated method stub
+                
+            }
+        };
     }
 }
