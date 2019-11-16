@@ -303,7 +303,7 @@ public class Deck {
             @Override
             public void doAction(Object[] args) {
                 // TODO Auto-generated method stub
-                
+                System.out.println("birthday called");
             }
         };
     }
@@ -330,10 +330,18 @@ public class Deck {
         };
     }
 
-    /* pra testar o deck qualquer hora dessas...
+    // exemplo de chamada de efeito da carta
+    /*
     public static void main(String[] args) {
         Deck deck = new Deck();
-        System.out.println(deck.removeFromDeck().getLabel());
+        //System.out.println(deck.removeFromDeck().getLabel());
+        Card birthday = deck.removeFromDeck();
+        while (! birthday.getLabel().equals("itsMyBirthday")){
+            birthday = deck.removeFromDeck();
+        }
+        birthday = (ActionCard) birthday;
+        System.out.println(birthday.getLabel());
+        birthday.applyEffect(0,0,0);
     }
     */
 }

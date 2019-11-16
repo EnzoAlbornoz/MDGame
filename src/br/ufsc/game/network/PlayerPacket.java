@@ -6,7 +6,7 @@ import br.ufsc.inf.leobr.cliente.Jogada;
 /**
  * PlayerPacket
  */
-public class PlayerPacket implements Jogada {
+public class PlayerPacket{
 
 	// Variables
 	protected Card lastUsedCard;

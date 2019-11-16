@@ -88,6 +88,7 @@ public class Game {
 
 			frames++;
 			
+			/*
 			// Log FPS
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
@@ -95,6 +96,7 @@ public class Game {
 				frames = 0;
 				updates = 0;
 			}
+			*/
 		}
 	}
 }

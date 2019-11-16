@@ -13,7 +13,7 @@ public class GameField {
 	public GameField(int playersQuantity){
 		deck = new Deck();
 		players = new ArrayList<>();
-		for (int i=0; i < playersQuantity; i ++){
+		for (int i=1; i <= playersQuantity; i ++){
 			Player p = new Player("player"+i, i);
 			players.add(p);
 			p.addCards(deck);
