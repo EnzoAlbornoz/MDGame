@@ -3,6 +3,7 @@ package br.ufsc.game.scenes;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
@@ -27,26 +28,29 @@ public class CoreGame extends GameScene {
         playerInterface = new PlayerInterface(nGamesInterface);
         nGamesInterface.setFSMGame(playerInterface.getFSMGame());
 
-        // this.gameObjects.put("backgroundImage", new GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
-        //this.gameObjects.put("logo", new GameImage("/br/ufsc/game/resources/images/Logo.png"));
+        // this.gameObjects.put("backgroundImage", new
+        // GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
+        // this.gameObjects.put("logo", new
+        // GameImage("/br/ufsc/game/resources/images/Logo.png"));
         this.gameExtras.put("ngInterface", nGamesInterface);
         this.gameObjects.put("lastUsedCard", new GameImage("/br/ufsc/game/resources/images/house.png"));
-        this.gameObjects.put("endTurn",new GameButton("/br/ufsc/game/resources/images/endTurn.png"));
-        for (int i =0; i < 7; i++) {
-        	this.gameObjects.put("card"+i,new GameButton("/br/ufsc/game/resources/images/house.png"));
+        this.gameObjects.put("endTurn", new GameButton("/br/ufsc/game/resources/images/endTurn.png"));
+        for (int i = 0; i < 7; i++) {
+            this.gameObjects.put("card" + i, new GameButton("/br/ufsc/game/resources/images/house.png"));
         }
-        for (int i =0; i < 4; i++) {
-        	this.gameObjects.put("playerImg"+i,new GameButton("/br/ufsc/game/resources/images/player"+i+".png"));
+        for (int i = 1; i < 5; i++) {
+            this.gameObjects.put("playerIcon" + i,
+                    new GameButton("/br/ufsc/game/resources/images/player" + i + ".png"));
         }
 
-        for (int i =0; i < 10; i++) {
-        	this.gameObjects.put("prop"+i,new GameButton("/br/ufsc/game/resources/images/prop0"+i+".png"));
+        for (int i = 0; i < 10; i++) {
+            this.gameObjects.put("prop" + i, new GameButton("/br/ufsc/game/resources/images/prop0" + i + ".png"));
         }
 
         this.loaded();
     }
 
-    //atributoooooooo
+    // atributoooooooo
     PlayerInterface playerInterface;
 
     @Override
@@ -73,10 +77,26 @@ public class CoreGame extends GameScene {
     public void update() {
         gameUpdatables.forEach((uObject) -> uObject.update());
 
-        //endTurnBtn
+        // endTurnBtn
         boolean appear = playerInterface.doesEndTurnBtnAppear();
-        int x = appear? 10 : 99999999;
+        int x = appear ? 10 : 99999999;
         gameObjects.get("endTurn").setX(x);
+
+        // playerImg icons
+        
+        for (int i = 1; i < 5; i++) {
+            GameButton icon = (GameButton) gameObjects.get("playerIcon"+i);
+            boolean selected = playerInterface.isIconSelected(i);
+            String path;
+            if (selected) {
+                path = "/br/ufsc/game/resources/images/player" + i + "selected.png";
+            } else {
+                path = "/br/ufsc/game/resources/images/player" + i + ".png";
+            }
+            try { icon.loadImage(path);
+            } catch (IOException e) { e.printStackTrace(); }
+        }
+        
     }
 
     @Override
@@ -146,11 +166,11 @@ public class CoreGame extends GameScene {
 	        gameObjects.get("card"+i).setY(y);
 	        x += 180;
         }
-        //positioning playerImg
+        //positioning playerIcon
         x = 1280-177; y = 25;
-        for (int i =0; i < 4; i++) {
-        	gameObjects.get("playerImg"+i).setX(x);
-	        gameObjects.get("playerImg"+i).setY(y);
+        for (int i = 1; i < 5; i++) {
+        	gameObjects.get("playerIcon"+i).setX(x);
+	        gameObjects.get("playerIcon"+i).setY(y);
 	        y += 100;
         }
         

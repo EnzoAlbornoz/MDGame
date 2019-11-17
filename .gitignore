@@ -5,3 +5,6 @@ bin/*
 # Ignore vpp.bak files
 docs/vpp/*.vpp.bak*
 docs/vpp/*.vpp.lck*
+# Ignore Caina's particular files
+src/br/ufsc/game/Test.java
+src/br/ufsc/game/Test2.java

@@ -47,6 +47,7 @@ public class SerializablePacket implements Jogada {
                 zone.add(pGroup.getPropQty());
             }
             playerZones.add(zone); //save it in the attribute
+            //TODO: deserealize hotels and houses
         }
 
         playersQty = p.gameField.getPlayers().size();
@@ -114,6 +115,7 @@ public class SerializablePacket implements Jogada {
                 int qty = zone.remove(0);
                 properties.get(j).setPropQty(qty);
             }
+
         }
 
         //dont change the hands, because the hands of other players dont matter much

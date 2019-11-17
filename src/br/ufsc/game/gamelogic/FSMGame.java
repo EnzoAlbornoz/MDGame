@@ -124,8 +124,8 @@ public class FSMGame {
 
     //public PlayerPacket calculatePlay(PlayerPacket p){}   // acho que n precisa
 
-    public boolean isIconSelected(String id){
-        return id.equals(""+selectedPlayerId);
+    public boolean isIconSelected(int id){
+        return id == selectedPlayerId;
     }
 
     //return player at position 0 index for the UI to calculate arrow position

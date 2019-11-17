@@ -34,4 +34,8 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 			fsmGame.endTurn();
 		}
 	}
+
+	public boolean isIconSelected(int id) {
+		return fsmGame.isIconSelected(id);
+	}
 }
