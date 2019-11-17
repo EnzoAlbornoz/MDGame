@@ -14,7 +14,6 @@ public class ActionCard extends Card {
 	public ActionCard(int id, String label, int value, State[] neededStates, GameAction action) {
 		super(id, label, value, neededStates);
 		this.action = action;
-		type = Type.actionCard;
 	}
 	
 	// Interface
@@ -22,8 +21,8 @@ public class ActionCard extends Card {
 		return action;
 	}
 	@Override
-	public void applyEffect(int targetPropertiy, int yourProperty, int selectedPlayer) {
-		Object[] argObjects = {targetPropertiy,yourProperty,selectedPlayer};
+	public void applyEffect(PlayerPacket playerPacket, int targetPropertiy, int yourProperty, int selectedPlayer) {
+		Object[] argObjects = {playerPacket,targetPropertiy,yourProperty,selectedPlayer};
 		getAction().doAction(argObjects);
 	}
 	// Methods

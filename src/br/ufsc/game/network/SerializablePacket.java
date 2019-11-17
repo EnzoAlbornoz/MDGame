@@ -60,20 +60,25 @@ public class SerializablePacket implements Jogada {
         //lastUsedCard implementation can certainly get better
         MoneyCard lastUsedCard = new MoneyCard(ids.remove(0),"lastUsed",666,new ArrayList<State>());
 
+        log("deserealizando deck");
         //deserializing deck
         Deck deck = new Deck(); //create a new deck with all the cards of the game
         while (ids.size()>0){ //while there are saved ids
+            log("size: "+ids.size());
             int id = ids.remove(ids.size()-1);
             for (int i = 0; i < deck.getCards().size(); i++) {
+                //log("i: "+i);
                 if (deck.getCards().get(i).getId() == id){ //search in the created deck for an equal card to copy
-                    i = deck.getCards().size();// break loop
+                    //log("i push: "+i);
                     cards.push(deck.getCards().get(i));
+                    i = deck.getCards().size();// break loop
                 }
             }
         }
         deck = new Deck(cards); // i hope it does not loses any reference
         gameField.setDeck(deck);
 
+        log("tirando players indesejados");
         //remove players with index too high. (Game is starting with more players than it should for
         //the players that do not start in position 0)
         while(players.size() > playersQty){
@@ -88,11 +93,13 @@ public class SerializablePacket implements Jogada {
             players.remove(index);
         }
 
+        log("ajeitando ordem dos jogadores");
         //fix order: rotate left until player0 match proper id
         while(players.get(0).getId() != idOfPlayer0){
             players.add(players.remove(0));
         }
 
+        log("copiando playerZones");
         //for each player, set his zone
         for (int i = 0; i < players.size(); i++){
             ArrayList<Integer> zone = playerZones.remove(0);//this zone came from other player
@@ -114,6 +121,14 @@ public class SerializablePacket implements Jogada {
 
         PlayerPacket p = new PlayerPacket(lastUsedCard, gameField);
 
+        log("player at 0: "+p.gameField.getPlayers().get(0).getId());
+        log("player at 1: "+p.gameField.getPlayers().get(1).getId());
+        
+        log("deserealizado com sucesso kkk");
         return p;
+    }
+
+    void log(String s){
+        System.out.println(s);
     }
 }

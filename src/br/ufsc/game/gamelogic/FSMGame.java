@@ -101,7 +101,7 @@ public class FSMGame {
             int completedGroups = 0;
 
             for (PropertyGroup pg : player.getZone().getProperties()) { 
-                if (pg.getNeeded() == pg.getPropCards().size()) {
+                if (pg.getNeeded() >= pg.getPropCards().size()) {
                     completedGroups++;
                 }
             }

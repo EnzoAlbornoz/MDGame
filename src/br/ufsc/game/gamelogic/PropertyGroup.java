@@ -68,4 +68,111 @@ public class PropertyGroup {
     public ArrayList<PropertyCard> getPropCards(){
         return this.propCards;
     }
+
+    public int getRentMountant(){
+        int mountant = 0;
+        switch (color)
+        {
+            case utility: //equal brown
+            case brown:
+                if(propQty == 1){
+                    mountant = 1;
+                } else if (propQty >= 2){
+                    mountant = 2;
+                } break;
+            case darkblue:
+                if(propQty == 1){
+                    mountant = 3;
+                } else if (propQty >= 2){
+                    mountant = 8;
+                } break;
+            case green:
+                if(propQty == 1){
+                    mountant = 2;
+                } else if (propQty == 2){
+                    mountant = 4;
+                } else if (propQty >= 3){
+                    mountant = 7;
+                } break;
+            case lightblue:
+                if(propQty == 1){
+                    mountant = 1;
+                } else if (propQty == 2){
+                    mountant = 2;
+                } else if (propQty >= 3){
+                    mountant = 3;
+                } break;
+            case orange:
+                if(propQty == 1){
+                    mountant = 1;
+                } else if (propQty == 2){
+                    mountant = 3;
+                } else if (propQty >= 3){
+                    mountant = 5;
+                } break;
+            case purple:
+                if(propQty == 1){
+                    mountant = 1;
+                } else if (propQty == 2){
+                    mountant = 2;
+                } else if (propQty >= 3){
+                    mountant = 4;
+                } break;
+            case red:
+                if(propQty == 1){
+                    mountant = 2;
+                } else if (propQty == 2){
+                    mountant = 3;
+                } else if (propQty >= 3){
+                    mountant = 6;
+                } break;
+            case yellow:
+                if(propQty == 1){
+                    mountant = 2;
+                } else if (propQty == 2){
+                    mountant = 4;
+                } else if (propQty >= 3){
+                    mountant = 6;
+                } break;
+            case railroad:
+                if(propQty == 1){
+                    mountant = 1;
+                } else if (propQty == 2){
+                    mountant = 2;
+                } else if (propQty == 3){
+                    mountant = 3;
+                } else if (propQty >= 4){
+                    mountant = 4;
+                } break;
+
+            case joker: // does not make sense
+        }
+        return mountant;
+    }
+
+    public int getPropPrice(){
+        int propPrice = 2;
+        switch (color)
+        {
+            case brown:
+            case lightblue:
+                propPrice = 1; break;
+                
+            case red:
+            case yellow: 
+                propPrice = 3; break;
+
+            case darkblue:
+            case green:
+                propPrice = 4; break;
+            
+            default:
+                propPrice = 2; break;
+            /*
+            case utility: case orange: case purple: case railroad:
+                propPrice = 2; break;
+            */
+        }
+        return propPrice;
+    }
 }

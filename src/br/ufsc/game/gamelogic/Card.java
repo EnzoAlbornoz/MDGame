@@ -2,21 +2,18 @@ package br.ufsc.game.gamelogic;
 
 import java.util.ArrayList;
 
+import br.ufsc.game.network.PlayerPacket;
+
 /**
  * Card
  */
 public abstract class Card {
-
-	public enum Type {
-		moneyCard, propertyCard, rentCard, actionCard;
-	}
 
 	// Variables
 	protected int id;
 	protected String label;
 	protected int value;
 	protected ArrayList<State> neededStates;
-	protected Type type;
 
 	// Constructor
 	public Card(int id,String label,int value, State[] neededStates) {
@@ -57,6 +54,6 @@ public abstract class Card {
 		return type;
 	}
 
-	public abstract void applyEffect(int targetProperty,int yourProperty, int selectedPlayer);
+	public abstract void applyEffect(PlayerPacket playerPacket, int targetProperty,int yourProperty, int selectedPlayer);
 	// Methods
 }
