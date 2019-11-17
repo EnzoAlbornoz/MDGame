@@ -6,6 +6,7 @@ import java.util.HashMap;
 import br.ufsc.game.engine.interfaces.Drawable;
 import br.ufsc.game.engine.interfaces.Updatable;
 import br.ufsc.game.engine.logic.GameObject;
+import br.ufsc.game.network.NetGamesInterface;
 
 /**
  * PlayerInterface
@@ -15,19 +16,13 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 	protected HashMap<String, GameObject> problemDomain;
 	FSMGame fsmGame;
 
-	public PlayerInterface(int clientId, int playersQuantity){
-		this.fsmGame = new FSMGame(clientId, playersQuantity);
+	public PlayerInterface(NetGamesInterface nGamesInterface){
+		this.fsmGame = new FSMGame(nGamesInterface, this);
 	}
 
 	public FSMGame getFSMGame(){
 		return fsmGame;
 	}
-
-	/*
-	public PlayerInterface(FSMGame fsmGame){
-		this.fsmGame = fsmGame;
-	}
-	*/
 
 	public boolean doesEndTurnBtnAppear(){
 		return fsmGame.doesEndTurnButtonAppear();

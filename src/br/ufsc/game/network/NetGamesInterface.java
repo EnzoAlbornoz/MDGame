@@ -27,7 +27,9 @@ public class NetGamesInterface implements OuvidorProxy {
 	protected boolean matchRunning;
 	protected Integer playerId;
 	protected FSMGame fsmGame;
-	protected int playersQuantity;
+	//quem começar terah a quantidade atualizada.. os outros vão pegar a quantidade de jogadores
+	//quando receberem a primeira jogada, mas atualmente, isso não eh alterado aqui.
+	protected int playersQuantity = 4;
 
 	// Constructor
 	public NetGamesInterface() {
@@ -52,6 +54,17 @@ public class NetGamesInterface implements OuvidorProxy {
 
 	// Interface
 	public void joinSession(String playerName) {
+		boolean PreguicaDeDigitarIP = true;
+		if (PreguicaDeDigitarIP){
+			try {
+				this.proxy.conectar("localhost", playerName);
+				this.connected = true;
+			} catch (JahConectadoException e) {}
+			  catch (NaoPossivelConectarException e) {}
+			  catch (ArquivoMultiplayerException e) {}
+			return;
+		}
+
 		// Adicionado para compatibilidade - Necessário alterar modelagem
 		String ip = JOptionPane.showInputDialog(null, "Insira o IP do Servidor", "Login", JOptionPane.QUESTION_MESSAGE);
 		try {
@@ -129,8 +142,7 @@ public class NetGamesInterface implements OuvidorProxy {
 	}
 	@Override
 	public void receberJogada(Jogada jogada) {
-		// System.out.println(jogada);
-		// TODO
+		PlayerPacket playerPacket = ( (SerializablePacket) jogada).generatePlayerPacket();
 	}
 	@Override
 	public void tratarConexaoPerdida() {

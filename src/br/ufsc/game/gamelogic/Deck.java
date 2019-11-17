@@ -60,7 +60,9 @@ public class Deck {
             for(String cardName : cardsNames) {
                 final String cname = "property".concat(cardName.replaceAll(" ", "").replaceAll("\\.", ""));
                 Property prop = new Property(color, cardName);
-                this.cards.add(new PropertyCard(this.cards.size()+1,cname,propValuesMap.get(color).intValue(),new State[]{},(ArrayList<Property>)Arrays.asList(prop)));
+                ArrayList<Property> properties = new ArrayList<Property>(); //commented part caused exception during
+                properties.add(prop);
+                this.cards.add(new PropertyCard(this.cards.size()+1,cname,propValuesMap.get(color).intValue(),new State[]{},properties/*(ArrayList<Property>)Arrays.asList(prop)*/));
             }
         });
         cardId = this.cards.size();
@@ -70,12 +72,12 @@ public class Deck {
         wildCardStates.add(State.SelectYourProperty);
 
         final String[] wcList = {
-            "wildCardDBG","wildCardLBB","wildCardRainbow",
-            "wildCardOP" ,"wildCardGRR","wildCardLBRR",
-            "wildCardURR","wildCardYR"
+            /*1*/"wildCardDBG",/*1*/"wildCardLBB",/*2*/"wildCardRainbow",
+            /*2*/"wildCardOP" ,/*1*/"wildCardGRR",/*1*/"wildCardLBRR",
+            /*1*/"wildCardURR",/*2*/"wildCardYR" // comments correspond to rptQty
         };
-        final int[] wcValues = {4,1,0,2,4,2,3};
-        final int[] rptQty   = {1,1,2,2,1,1,2};
+        final int[] wcValues = {4,1,0,2,4,4,2,3};
+        final int[] rptQty   = {1,1,2,2,1,1,1,2};
         final ArrayList<List<Property>> wcProps = new ArrayList<>();
         // DarkBlue & Green Wild Card
         wcProps.add(Arrays.asList(
@@ -132,13 +134,16 @@ public class Deck {
         // Build itself
         for(int i = 0; i < wcList.length; i++ ) {
             for(int j = 0; j < rptQty[i];j++) {
+                ArrayList<Property> ptys = new ArrayList<>();
+                ptys.addAll(wcProps.get(i));
                 this.cards.add(
                     new PropertyCard(
                         cardId++,
                         wcList[i],
                         wcValues[i],
                         (ArrayList<State>) wildCardStates.clone(),
-                        (ArrayList<Property>) wcProps.get(i)
+                        ptys
+                        //(ArrayList<Property>) wcProps.get(i) deu erro assim
                     )
                 );
             }
@@ -189,17 +194,18 @@ public class Deck {
         };
         int[] gaQty = {2,3,3,3,3,3,10,3};
         String[] gaMet = {
-            "getDealBreakerAction",
-            "getDebtCollectorAction",
-            "getForcedDealAction",
-            "getHotelAction",
-            "getHouseAction",
-            "getBirthdayAction",
-            "getPassGoAction",
-            "getSlyAction"
+            "getDealBreakerAction", //selectTargerProperty
+            "getDebtCollectorAction", //selectTargetPlayer
+            "getForcedDealAction", //State.SelectYourProperty, State.SelectTargetPlayer, State.SelectTargetProperty
+            "getHotelAction", //selectYoutProperty
+            "getHouseAction", //selectYoutProperty
+            "getBirthdayAction", //{}
+            "getPassGoAction", //{}
+            "getSlyAction" //State.SelectTargetPlayer, State.SelectTargetProperty
         };
         int[] gaVal = {5,3,3,4,3,2,01,3};
         State[][] gaStates = {
+            {State.SelectTargetProperty},
             {State.SelectTargetPlayer},
             {State.SelectYourProperty, State.SelectTargetPlayer, State.SelectTargetProperty},
             {State.SelectYourProperty},
@@ -236,7 +242,7 @@ public class Deck {
 		return this.cards.pop();
 	}
     // Methods
-    private GameAction getDealBreakerAction() {
+    public GameAction getDealBreakerAction() {
         return new GameAction(){
         
             @Override
@@ -247,7 +253,7 @@ public class Deck {
         };
     }
 
-    private GameAction getDebtCollectorAction() {
+    public GameAction getDebtCollectorAction() {
         return new GameAction(){
         
             @Override
@@ -258,7 +264,7 @@ public class Deck {
         };
     }
 
-    private GameAction getForcedDealAction() {
+    public GameAction getForcedDealAction() {
         return new GameAction(){
         
             @Override
@@ -269,7 +275,7 @@ public class Deck {
         };
     }
 
-    private GameAction getHotelAction() {
+    public GameAction getHotelAction() {
         return new GameAction(){
         
             @Override
@@ -280,7 +286,7 @@ public class Deck {
         };
     }
 
-    private GameAction getHouseAction() {
+    public GameAction getHouseAction() {
         return new GameAction(){
         
             @Override
@@ -291,7 +297,18 @@ public class Deck {
         };
     }
 
-    private GameAction getBirthdayAction() {
+    public GameAction getBirthdayAction() {
+        return new GameAction(){
+        
+            @Override
+            public void doAction(Object[] args) {
+                // TODO Auto-generated method stub
+                System.out.println("birthday called");
+            }
+        };
+    }
+
+    public GameAction getPassGoAction() {
         return new GameAction(){
         
             @Override
@@ -302,7 +319,7 @@ public class Deck {
         };
     }
 
-    private GameAction getPassGoAction() {
+    public GameAction getSlyAction() {
         return new GameAction(){
         
             @Override
@@ -313,14 +330,18 @@ public class Deck {
         };
     }
 
-    private GameAction getSlyAction() {
-        return new GameAction(){
-        
-            @Override
-            public void doAction(Object[] args) {
-                // TODO Auto-generated method stub
-                
-            }
-        };
+    // exemplo de chamada de efeito da carta
+    /*
+    public static void main(String[] args) {
+        Deck deck = new Deck();
+        //System.out.println(deck.removeFromDeck().getLabel());
+        Card birthday = deck.removeFromDeck();
+        while (! birthday.getLabel().equals("itsMyBirthday")){
+            birthday = deck.removeFromDeck();
+        }
+        birthday = (ActionCard) birthday;
+        System.out.println(birthday.getLabel());
+        birthday.applyEffect(0,0,0);
     }
+    */
 }

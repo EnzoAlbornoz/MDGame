@@ -24,7 +24,7 @@ public class CoreGame extends GameScene {
     public CoreGame(NetGamesInterface nGamesInterface) {
         super();
 
-        playerInterface = new PlayerInterface(nGamesInterface.getPlayerId(), nGamesInterface.getPlayersQuantity());
+        playerInterface = new PlayerInterface(nGamesInterface);
         nGamesInterface.setFSMGame(playerInterface.getFSMGame());
 
         // this.gameObjects.put("backgroundImage", new GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
@@ -119,12 +119,12 @@ public class CoreGame extends GameScene {
     protected void loaded() {
         gameObjects.forEach((key,gObject) -> {
             if(gObject instanceof Drawable) {
-            	System.out.println("Added Drawable");
+            	//System.out.println("Added Drawable");
                 this.gameDrawables.add((Drawable) gObject);
             }
             
             if(gObject instanceof Updatable) {
-                System.out.println("Added Updatable");
+                //System.out.println("Added Updatable");
                 this.gameUpdatables.add((Updatable) gObject);
             }
         });

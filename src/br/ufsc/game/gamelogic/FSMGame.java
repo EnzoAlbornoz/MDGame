@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import br.ufsc.game.network.NetGamesInterface;
 import br.ufsc.game.network.PlayerPacket;
+import br.ufsc.game.network.SerializablePacket;
 
 public class FSMGame {
     protected State currentState;
@@ -22,21 +23,47 @@ public class FSMGame {
     protected PlayerInterface playerInterface;
     protected NetGamesInterface netGamesInterface;
 
-    public FSMGame(int clientId, int playersQuantity){ //playerNumber serah o numero desse jogador, tipo se ele eh o 1, eh o primeiro a jogar
-        currentState = State.IsItMyTurn;
-        gameField = new GameField(playersQuantity);
-        actionsQty = 3;
-        //lastUsedCard = cartaViradaParaBaixo, se for necessário
-        this.clientId = clientId;
-        selectedPlayerId = clientId;
-        actionsEnabled = clientId == 1; // quero depois trocar esse enabled por verificar estado ao inves de verificar essa booleana (Cainã)
-        //playerInterface = new PlayerInterface(this); // essa interface aponta de volta pra FSMGame
+    void log(String string){
+        System.out.println("logger says:" + string);
     }
 
-    public void buyCards(){
+    public FSMGame(NetGamesInterface nGamesInterface, PlayerInterface vplayerInterface){ //playerNumber serah o numero desse jogador, tipo se ele eh o 1, eh o primeiro a jogar
+        // set up variables
+        clientId = nGamesInterface.getPlayerId();
+        int playersQuantity = nGamesInterface.getPlayersQuantity();
+        netGamesInterface = nGamesInterface;
+        actionsQty = 3;
+        selectedPlayerId = clientId;
+        playerInterface = vplayerInterface; // essa interface aponta de volta pra FSMGame
+        currentState = State.IsItMyTurn;
+        lastUsedCard = new MoneyCard(666, "label", 666, new ArrayList<State>());
+        actionsEnabled = clientId == 1; // quero depois trocar esse enabled por verificar estado ao inves de verificar essa booleana (Cainã)
+
+        //instantiate an enormous part of the game
+        gameField = new GameField(playersQuantity);
+        
+        //remember you once did something that was right: (if it's still working)
+        log("ClientId: "+ clientId);
+        log("playersQuantity: "+playersQuantity);
+
+        // start playing
+        isItMyTurn();
+    }
+    void isItMyTurn(){
+        boolean is = gameField.getPlayers().get(0).id == clientId;
+        log("0 id: "+gameField.getPlayers().get(0).id+"; clientId: "+clientId);
+        if (is){
+            gameField.getPlayers().get(0).addCards(gameField.getDeck());
+            log("cards in hand: "+gameField.getPlayers().get(0).getHand().getCards().size());
+            currentState = State.SelectCard;
+        } else {
+            currentState = State.WaitForPlays;
+        }
+        log("Current State -> "+currentState);
+    }
+    public void buyCards(){ //talvez não precise desse método
         this.gameField.setDeck(this.gameField.getPlayers().get(0).addCards(this.gameField.getDeck()));
     }
-    
     public void endTurn(){
         Player currentPlayer = gameField.getPlayers().remove(0);
         ArrayList<Player> players = gameField.getPlayers();
@@ -44,7 +71,8 @@ public class FSMGame {
         this.gameField.setPlayers(players);
         currentState = State.WaitForPlays;
         PlayerPacket playerPacket = new PlayerPacket(this.lastUsedCard, this.gameField);
-        netGamesInterface.sendPlay(playerPacket);
+        SerializablePacket serializablePacket = new SerializablePacket(playerPacket);
+        netGamesInterface.sendPlay(serializablePacket);
     }
     
     public void actionsEnable(boolean a){ //eu acho que eh melhor saber pelo estado se as ações estão habilitadas ou não, na verdade (Cainã)
@@ -125,7 +153,15 @@ public class FSMGame {
     public String getPlayerID(){
         return ""+clientId; //acho que pode mudar o tipo de retorno para int
     }
+    //boolean mostrouEstado = false;
     public boolean doesEndTurnButtonAppear(){
+        /*
+        if( ! mostrouEstado ){
+            System.out.println(clientId + "<-id; estado-> "+currentState );
+
+        }
+        */
+
         return currentState == State.SelectCard;
     }
     public void useCard(int index){
@@ -203,14 +239,5 @@ public class FSMGame {
     }
     public void setSelectedPlayer(int pid) {
         selectedPlayerId = pid;
-    }
-    void isItMyTurn(){
-        boolean is = gameField.getPlayers().get(0).id == clientId;
-        if (is){
-            gameField.getPlayers().get(0).addCards(gameField.getDeck());
-            currentState = State.SelectCard;
-        } else {
-            currentState = State.WaitForPlays;
-        }
     }
 }

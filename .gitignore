@@ -1,5 +1,6 @@
 # Ignore Bin files
-bin
+bin/*.class
+bin/*
 *.class
 # Ignore vpp.bak files
 docs/vpp/*.vpp.bak*
