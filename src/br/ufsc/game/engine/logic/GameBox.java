@@ -44,12 +44,12 @@ public class GameBox extends GameObject implements Updatable, Drawable {
 		gMap.forEach((k,go) -> {
 			Integer maxWidth = dim.get(0);
 			Integer maxHeight = dim.get(1);
-			if (maxWidth < go.getX() + go.getWidth()) {
-				maxWidth = go.getX() + go.getWidth();
+			if (maxWidth < (go.getX() - this.getX()) + go.getWidth()) {
+				maxWidth = (go.getX() - this.getX()) + go.getWidth();
 				dim.set(0, maxWidth);
 			}
-			if (maxHeight < go.getY() + go.getHeight()) {
-				maxHeight = go.getY() + go.getHeight();
+			if (maxHeight < (go.getY() - this.getY()) + go.getHeight()) {
+				maxHeight = (go.getY() - this.getY()) + go.getHeight();
 				dim.set(1, maxHeight);
 			}
 		});
