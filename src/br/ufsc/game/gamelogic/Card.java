@@ -50,10 +50,6 @@ public abstract class Card {
 		return this.neededStates.contains(state);
 	}
 
-	public Type getType(){
-		return type;
-	}
-
 	public abstract void applyEffect(PlayerPacket playerPacket, int targetProperty,int yourProperty, int selectedPlayer);
 	// Methods
 }

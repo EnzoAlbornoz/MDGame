@@ -1,6 +1,7 @@
 package br.ufsc.game.gamelogic;
 
 import br.ufsc.game.engine.interfaces.GameAction;
+import br.ufsc.game.network.PlayerPacket;
 
 /**
  * ActionCard
