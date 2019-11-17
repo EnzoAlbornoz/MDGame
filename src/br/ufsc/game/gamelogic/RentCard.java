@@ -16,6 +16,7 @@ public class RentCard extends Card {
 		for (PropertyColor color : colors) {
 			this.colors.add(color);
 		}
+		type = Type.rentCard;
 	}
 	// Interface
 	@Override
@@ -24,7 +25,9 @@ public class RentCard extends Card {
 		
 	}
 	// Methods
-
+	public ArrayList<PropertyColor> getColors(){
+		return colors;
+	}
 
 	
 }

@@ -27,6 +27,10 @@ public class FSMGame {
         System.out.println("logger says:" + string);
     }
 
+    public GameField getGameField(){
+        return gameField;
+    }
+
     public FSMGame(NetGamesInterface nGamesInterface, PlayerInterface vplayerInterface){ //playerNumber serah o numero desse jogador, tipo se ele eh o 1, eh o primeiro a jogar
         // set up variables
         clientId = nGamesInterface.getPlayerId();

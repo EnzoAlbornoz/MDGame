@@ -7,11 +7,17 @@ import java.util.ArrayList;
  */
 public abstract class Card {
 
+	public enum Type {
+		moneyCard, propertyCard, rentCard, actionCard;
+	}
+
 	// Variables
 	protected int id;
 	protected String label;
 	protected int value;
 	protected ArrayList<State> neededStates;
+	protected Type type;
+
 	// Constructor
 	public Card(int id,String label,int value, State[] neededStates) {
 		this.id = id;
@@ -45,6 +51,10 @@ public abstract class Card {
 
 	public boolean hasState(State state) {
 		return this.neededStates.contains(state);
+	}
+
+	public Type getType(){
+		return type;
 	}
 
 	public abstract void applyEffect(int targetProperty,int yourProperty, int selectedPlayer);

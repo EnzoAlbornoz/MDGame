@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class PropertyGroup {
     protected PropertyColor color;
-    protected ArrayList<PropertyCard> propCards;
+    protected ArrayList<PropertyCard> propCards; // acho q simplificaria tirar isso
+    protected int propQty; // e usar soh isso
     protected int houseQty;
     protected int hotelQty;
     protected int neededQty;
@@ -12,6 +13,7 @@ public class PropertyGroup {
     public PropertyGroup(PropertyColor color){
         this.color = color;
         propCards = new ArrayList<>();
+        propQty = 0;
         houseQty = 0;
         hotelQty = 0;
         switch (color)
@@ -33,6 +35,12 @@ public class PropertyGroup {
         }
     }
 
+    public int getPropQty(){
+        return this.propQty;
+    }
+    public void setPropQty(int qty){
+        propQty = qty;
+    }
     public int getHotelQty(){
         return this.hotelQty;
     }

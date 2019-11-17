@@ -9,10 +9,12 @@ public class MoneyCard extends Card{
 
 	public MoneyCard(int id, String label, int value, State[] neededStates) {
 		super(id, label, value, neededStates);
+		type = Type.moneyCard;
 	}
 
 	public MoneyCard(int id, String label, int value, ArrayList<State> neededStates) {
 		super(id, label, value, neededStates);
+		type = Type.moneyCard;
 	}
 
 	@Override

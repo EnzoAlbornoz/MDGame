@@ -15,7 +15,13 @@ import br.ufsc.game.engine.interfaces.GameAction;
  */
 public class Deck {
 	// Variables
-	protected Stack<Card> cards;
+    protected Stack<Card> cards;
+    
+    //constructor to deserealization
+    public Deck(Stack<Card> vcards){
+        this.cards = vcards;
+    }
+
 	// Constructor
     public Deck() {   // popular o deck com as cartas
         this.cards = new Stack<>();
@@ -239,8 +245,15 @@ public class Deck {
     }
 	// Interface
 	public Card removeFromDeck() {
-		return this.cards.pop();
-	}
+        if (cards.size()>0){
+            return this.cards.pop();
+        } else {
+            return null;
+        }
+    }
+    public Stack<Card> getCards(){
+        return cards;
+    }
     // Methods
     public GameAction getDealBreakerAction() {
         return new GameAction(){

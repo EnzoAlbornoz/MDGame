@@ -8,10 +8,12 @@ public class PropertyCard extends Card {
     public PropertyCard(int id, String label, int value, State[] neededStates, ArrayList<Property> properties) {
         super(id, label, value, neededStates);
         this.properties = properties;
+        type = Type.propertyCard;
     }
     public PropertyCard(int id, String label, int value, ArrayList<State> neededStates, ArrayList<Property> properties) {
         super(id,label,value,neededStates);
         this.properties = properties;
+        type = Type.propertyCard;
     }
 
 	@Override

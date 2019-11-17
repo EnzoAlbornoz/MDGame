@@ -14,6 +14,7 @@ public class ActionCard extends Card {
 	public ActionCard(int id, String label, int value, State[] neededStates, GameAction action) {
 		super(id, label, value, neededStates);
 		this.action = action;
+		type = Type.actionCard;
 	}
 	
 	// Interface
