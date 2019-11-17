@@ -38,4 +38,8 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 	public boolean isIconSelected(int id) {
 		return fsmGame.isIconSelected(id);
 	}
+
+	public int getClientIDofPlayer0(){
+		return fsmGame.getClientIDofPlayer0();
+	}
 }

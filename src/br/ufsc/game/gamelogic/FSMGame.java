@@ -129,7 +129,7 @@ public class FSMGame {
     }
 
     //return player at position 0 index for the UI to calculate arrow position
-    public int calculateArrowPosition(){
+    public int getClientIDofPlayer0(){
         return gameField.getPlayers().get(0).id;
     }
 

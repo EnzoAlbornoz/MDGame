@@ -73,67 +73,6 @@ public class CoreGame extends GameScene {
 
     }
 
-    @Override
-    public void update() {
-        gameUpdatables.forEach((uObject) -> uObject.update());
-
-        // endTurnBtn
-        boolean appear = playerInterface.doesEndTurnBtnAppear();
-        int x = appear ? 10 : 99999999;
-        gameObjects.get("endTurn").setX(x);
-
-        // playerImg icons
-        
-        for (int i = 1; i < 5; i++) {
-            GameButton icon = (GameButton) gameObjects.get("playerIcon"+i);
-            boolean selected = playerInterface.isIconSelected(i);
-            String path;
-            if (selected) {
-                path = "/br/ufsc/game/resources/images/player" + i + "selected.png";
-            } else {
-                path = "/br/ufsc/game/resources/images/player" + i + ".png";
-            }
-            try { icon.loadImage(path);
-            } catch (IOException e) { e.printStackTrace(); }
-        }
-        
-    }
-
-    @Override
-    public void draw(Graphics2D g) {
-    	int x, y;
-		gameDrawables.stream().sorted((d1,d2)->{return ((GameObject)d1).getZ() - ((GameObject)d2).getZ();}).forEach((dObject) -> dObject.draw(g));
-
-        g.setColor(Color.black);
-        g.setFont(new Font("ComicSans", Font.BOLD, 27));
-        g.drawString("You Are: P2", 10, 45);
-        g.drawString("->", 1050, 375); // +/- 100 to change player
-        
-        x = 1280-75; y = 85;
-        for (int i =0; i < 4; i++) {
-        	g.drawString("$0m", x, y);
-        y+=100;
-        }
-        
-        int xi = 230;
-        x = xi; y = 70;
-        for (int i =0; i < 10; i++) {
-	        //gameObjects.get("prop"+i).setX(x);
-	        //gameObjects.get("prop"+i).setY(y);
-        	int dyi = 35, dy=dyi;
-        	g.drawString("x3", x+35, y+dy); dy+=dyi;
-        	g.drawString("completo", x, y+dy); dy+=dyi;
-        	g.drawString("casa", x, y+dy); dy+=dyi;
-        	g.drawString("hotel", x, y+dy);
-	        x += 150;
-	        if(i==4) {
-	        	y+=200;
-	        	x=xi;
-	        	dy=dyi;
-	        }
-        }
-        
-    }
 
     @Override
     protected void loaded() {
@@ -195,22 +134,70 @@ public class CoreGame extends GameScene {
             }
         });
         
-    	//gameObjects.get("logo").setX((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("logo").getWidth()     /2));
-        //gameObjects.get("logo").setY(100);
-        
-        //gameObjects.get("playBtn").setX((int) (Game.getGame().getGameSettings().getWidth()/2) - (gameObjects.get("playBtn").getWidth()  /2));
-    	//gameObjects.get("playBtn").setY((int) (Game.getGame().getGameSettings().getHeight()/2) - (gameObjects.get("playBtn").getHeight() /2));
-        
-        /*
-        ((GameButton)(gameObjects.get("playBtn"))).setOnClick(new GameAction(){   
-            @Override
-            public void doAction(Object[] args) {
-                System.out.println("Moving Scene");
-                GameSceneManager.getInstance().pushState(new LoginScene());
-            }
-        });
-        */
 	}
+
+    @Override
+    public void update() {
+        gameUpdatables.forEach((uObject) -> uObject.update());
+
+        // endTurnBtn
+        boolean appear = playerInterface.doesEndTurnBtnAppear();
+        int x = appear ? 10 : 99999999;
+        gameObjects.get("endTurn").setX(x);
+
+        // playerImg icons
+        
+        for (int i = 1; i < 5; i++) {
+            GameButton icon = (GameButton) gameObjects.get("playerIcon"+i);
+            boolean selected = playerInterface.isIconSelected(i);
+            String path;
+            if (selected) {
+                path = "/br/ufsc/game/resources/images/player" + i + "selected.png";
+            } else {
+                path = "/br/ufsc/game/resources/images/player" + i + ".png";
+            }
+            try { icon.loadImage(path);
+            } catch (IOException e) { e.printStackTrace(); }
+        }
+        
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+    	int x, y;
+		gameDrawables.stream().sorted((d1,d2)->{return ((GameObject)d1).getZ() - ((GameObject)d2).getZ();}).forEach((dObject) -> dObject.draw(g));
+
+        g.setColor(Color.white);
+        g.setFont(new Font("ComicSans", Font.BOLD, 27));
+        g.drawString("You Are: P2", 10, 45);
+        g.drawString("->", 1050, (playerInterface.getClientIDofPlayer0()-1)*100+75); // +/- 100 to change player
+        
+        x = 1280-75; y = 85;
+        for (int i =0; i < 4; i++) {
+        	g.drawString("$0m", x, y);
+        y+=100;
+        }
+        
+        int xi = 230;
+        x = xi; y = 70;
+        for (int i =0; i < 10; i++) {
+	        //gameObjects.get("prop"+i).setX(x);
+	        //gameObjects.get("prop"+i).setY(y);
+        	int dyi = 35, dy=dyi;
+        	g.drawString("x3", x+35, y+dy); dy+=dyi;
+        	g.drawString("completo", x, y+dy); dy+=dyi;
+        	g.drawString("casa", x, y+dy); dy+=dyi;
+        	g.drawString("hotel", x, y+dy);
+	        x += 150;
+	        if(i==4) {
+	        	y+=200;
+	        	x=xi;
+	        	dy=dyi;
+	        }
+        }
+        
+    }
+
 
     
 }
