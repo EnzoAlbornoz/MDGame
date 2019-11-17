@@ -57,8 +57,11 @@ public class FSMGame {
         boolean is = gameField.getPlayers().get(0).id == clientId;
         log("0 id: "+gameField.getPlayers().get(0).id+"; clientId: "+clientId);
         if (is){
-            gameField.getPlayers().get(0).addCards(gameField.getDeck());
-            log("cards in hand: "+gameField.getPlayers().get(0).getHand().getCards().size());
+            if(actionsQty >= 3){
+                gameField.getPlayers().get(0).addCards(gameField.getDeck());
+                log("cards in hand: "+gameField.getPlayers().get(0).getHand().getCards().size());
+            }
+            actionsEnable(true);
             currentState = State.SelectCard;
         } else {
             currentState = State.WaitForPlays;
@@ -69,6 +72,7 @@ public class FSMGame {
         this.gameField.setDeck(this.gameField.getPlayers().get(0).addCards(this.gameField.getDeck()));
     }
     public void endTurn(){
+        actionsQty = 3;
         Player currentPlayer = gameField.getPlayers().remove(0);
         ArrayList<Player> players = gameField.getPlayers();
         players.add(currentPlayer);
@@ -83,9 +87,14 @@ public class FSMGame {
         actionsEnabled = a;
     }
    
-    public void updateInformation(PlayerPacket pc){
-        this.gameField = pc.getGameField();
-        this.lastUsedCard = pc.getLastUsedCard();
+    public void receivePlay(PlayerPacket playerPacket){
+        copyGameField(playerPacket.getGameField());
+        copyLastCardUsed(playerPacket.getLastUsedCard());
+        isItMyTurn();
+        if (gameEnded()){
+            //maneira provisoria de acabar a partida. O ideal seria o caso de uso endMatch
+            netGamesInterface.finalizarPartidaComErro("A partida acabou. O último a jogar venceu!");
+        }
     }
 
     public void copyGameField(GameField gf){
@@ -101,7 +110,8 @@ public class FSMGame {
             int completedGroups = 0;
 
             for (PropertyGroup pg : player.getZone().getProperties()) { 
-                if (pg.getNeeded() >= pg.getPropCards().size()) {
+                //log("at gameEnded(): pgColor: "+pg.getColor()+"; needed: "+pg.getNeeded()+"; qty: "+pg.getPropQty());
+                if (pg.getPropQty() >= pg.getNeeded()) {
                     completedGroups++;
                 }
             }
@@ -157,15 +167,7 @@ public class FSMGame {
     public String getPlayerID(){
         return ""+clientId; //acho que pode mudar o tipo de retorno para int
     }
-    //boolean mostrouEstado = false;
     public boolean doesEndTurnButtonAppear(){
-        /*
-        if( ! mostrouEstado ){
-            System.out.println(clientId + "<-id; estado-> "+currentState );
-
-        }
-        */
-
         return currentState == State.SelectCard;
     }
     public void useCard(int index){

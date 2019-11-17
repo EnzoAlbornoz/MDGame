@@ -18,7 +18,6 @@ public class PropertyCard extends Card {
 
 	@Override
 	public void applyEffect(PlayerPacket playerPacket,int targetPropertiy, int yourProperty, int selectedPlayer) {
-		// TODO Auto-generated method stub
         PropertyCard card = (PropertyCard) playerPacket.getLastUsedCard();
         PropertyGroup selectedProperty =
             playerPacket.getGameField().getPlayers().get(0).getZone().getProperties().get(yourProperty);

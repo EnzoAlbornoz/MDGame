@@ -143,6 +143,7 @@ public class NetGamesInterface implements OuvidorProxy {
 	@Override
 	public void receberJogada(Jogada jogada) {
 		PlayerPacket playerPacket = ( (SerializablePacket) jogada).generatePlayerPacket(fsmGame.getGameField());
+		fsmGame.receivePlay(playerPacket);
 	}
 	@Override
 	public void tratarConexaoPerdida() {

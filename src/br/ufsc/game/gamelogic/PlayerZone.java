@@ -34,12 +34,15 @@ public class PlayerZone{
         bank = money;
     }
 
+
     public int howManyPropCards(PropertyColor c) {
         for (PropertyGroup propertyGroup : properties) {
             if (propertyGroup.getColor() == c) {
-                return propertyGroup.getPropCards().size();
+                return propertyGroup.getPropQty();
+                //return propertyGroup.getPropCards().size();
             }
         }
         return 0;
     }
+
 }
