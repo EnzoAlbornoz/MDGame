@@ -43,10 +43,12 @@ public class GameObject {
 	}
 
 	public void setX(int posX) {
-		this.posX = posX;
+		if(posX >= 0)
+			this.posX = posX;
 	}
 
 	public void setY(int posY) {
+		if(posY >= 0)
 		this.posY = posY;
 	}
 

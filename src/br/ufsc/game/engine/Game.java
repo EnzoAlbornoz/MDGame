@@ -57,6 +57,9 @@ public class Game {
 	}
 	// Methods
 	private void run() {
+		// FPS Lock
+		final boolean FPS_LOCK = true;
+		boolean do_render = false;
 			// Build Based on Minecraft Loop
 		// Pre-Allocate Variable
 		long lastTime = System.nanoTime();
@@ -69,6 +72,8 @@ public class Game {
 		int updates = 0;
 		// Main Loop
 		while (isRunning) {
+			do_render = false;
+
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -79,14 +84,17 @@ public class Game {
 				gMouse.update();
 				delta--;
 				updates++;
+				if(FPS_LOCK) {
+					do_render = true;
+				}
 			}
 
-			if(isRunning) {
+			if(isRunning && ((FPS_LOCK && do_render) || !FPS_LOCK)) {
 				gStateManager.peekState().draw(gWindow.getGameGraphics());
 				gWindow.render();
+				frames++;
 			}
 
-			frames++;
 			
 			// Log FPS
 			if(System.currentTimeMillis() - timer > 1000) {
