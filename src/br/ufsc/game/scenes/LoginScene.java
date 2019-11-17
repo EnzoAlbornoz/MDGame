@@ -102,14 +102,19 @@ public class LoginScene extends GameScene {
         
             @Override
             public void doAction(Object[] args) {
-                String playerName = "";
+                boolean preguicaDeDigitarNome = false;
+                if (preguicaDeDigitarNome){
+                    ((NetGamesInterface) gameExtras.get("ngInterface")).joinSession("a");
+                } else {
+                    String playerName = "";
 
-                String message = "Por favor insira seu nome";
-                while(playerName.isEmpty()) {
-                    playerName = JOptionPane.showInputDialog(null, message, "Login", JOptionPane.QUESTION_MESSAGE);
-                }
-                if(playerName != null) {
-                    ((NetGamesInterface) gameExtras.get("ngInterface")).joinSession(playerName);
+                    String message = "Por favor insira seu nome";
+                    while(playerName.isEmpty()) {
+                        playerName = JOptionPane.showInputDialog(null, message, "Login", JOptionPane.QUESTION_MESSAGE);
+                    }
+                    if(playerName != null) {
+                        ((NetGamesInterface) gameExtras.get("ngInterface")).joinSession(playerName);
+                    }
                 }
             }
         });
@@ -119,6 +124,14 @@ public class LoginScene extends GameScene {
             @Override
             public void doAction(Object[] args) {
                 if(((NetGamesInterface) gameExtras.get("ngInterface")).isConnected()) {
+                    boolean preguicaDeDizerQSao2Player = true;
+                    if(preguicaDeDizerQSao2Player){
+                        try {
+                            ((NetGamesInterface) gameExtras.get("ngInterface")).beginMatch(2);
+                        } catch (NaoConectadoException e) {}
+                        return;
+                    }
+                    
                     int playersNum = 0;
                     do {
                         String message = "Insira a quantidade de jogadores que irão jogar [2 - 5]";
