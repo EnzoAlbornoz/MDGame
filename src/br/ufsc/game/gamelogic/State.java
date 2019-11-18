@@ -5,16 +5,12 @@ package br.ufsc.game.gamelogic;
  */
 public enum State {
 
-	IsItMyTurn,
-	BuyCards,
+	Start,
 	SelectCard,
-	UseCard,
 	UseOrStore,
 	SelectYourProperty,
 	SelectTargetPlayer,
 	SelectTargetProperty,
-	ApplyCardEffects,
-	EndTurn,
 	WaitForPlays
 
 }

@@ -39,7 +39,7 @@ public class FSMGame {
         actionsQty = 3;
         selectedPlayerId = clientId;
         playerInterface = vplayerInterface; // essa interface aponta de volta pra FSMGame
-        currentState = State.IsItMyTurn;
+        currentState = State.Start;
         lastUsedCard = new MoneyCard(666, "label", 666, new ArrayList<State>());
         actionsEnabled = clientId == 1; // quero depois trocar esse enabled por verificar estado ao inves de verificar essa booleana (Cainã)
 
