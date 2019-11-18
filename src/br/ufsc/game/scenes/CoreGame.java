@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -28,10 +29,6 @@ public class CoreGame extends GameScene {
         playerInterface = new PlayerInterface(nGamesInterface);
         nGamesInterface.setFSMGame(playerInterface.getFSMGame());
 
-        // this.gameObjects.put("backgroundImage", new
-        // GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
-        // this.gameObjects.put("logo", new
-        // GameImage("/br/ufsc/game/resources/images/Logo.png"));
         this.gameExtras.put("ngInterface", nGamesInterface);
         this.gameObjects.put("lastUsedCard", new GameImage("/br/ufsc/game/resources/images/house.png"));
         this.gameObjects.put("endTurn", new GameButton("/br/ufsc/game/resources/images/endTurn.png"));
@@ -39,8 +36,16 @@ public class CoreGame extends GameScene {
             this.gameObjects.put("card" + i, new GameButton("/br/ufsc/game/resources/images/house.png"));
         }
         for (int i = 1; i < 5; i++) {
+            ArrayList<Integer> id = new ArrayList<>();
+            id.add(i);
             this.gameObjects.put("playerIcon" + i,
                     new GameButton("/br/ufsc/game/resources/images/player" + i + ".png"));
+            ((GameButton) gameObjects.get("playerIcon" + i)).setOnClick(new GameAction() {
+                @Override
+                public void doAction(Object[] args) {
+                    playerInterface.setSelectedPlayer(id.get(0));
+                }
+            });
         }
 
         for (int i = 0; i < 10; i++) {
@@ -197,7 +202,5 @@ public class CoreGame extends GameScene {
         }
         
     }
-
-
     
 }

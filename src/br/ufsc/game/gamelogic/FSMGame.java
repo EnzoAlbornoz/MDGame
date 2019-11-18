@@ -244,6 +244,8 @@ public class FSMGame {
         }
     }
     public void setSelectedPlayer(int pid) {
-        selectedPlayerId = pid;
+        if (pid <= gameField.getPlayers().size()){
+            selectedPlayerId = pid;
+        }
     }
 }
