@@ -41,25 +41,35 @@ public class Deck {
         // Criando Titulos de Posses
         HashMap<PropertyColor,String[]> propertiesMap = new HashMap<>();
         HashMap<PropertyColor,Integer> propValuesMap = new HashMap<>();
-        propertiesMap.put(PropertyColor.brown,    new String[]{"Baltic Avenue","Mediterranean Avenue"});
+        //propertiesMap.put(PropertyColor.brown,    new String[]{"Baltic Avenue","Mediterranean Avenue"});
+        propertiesMap.put(PropertyColor.brown,    new String[]{"property-brown","property-brown"});
         propValuesMap.put(PropertyColor.brown,1);
-        propertiesMap.put(PropertyColor.darkblue, new String[]{"Boardwalk","Park Place"});
+        //propertiesMap.put(PropertyColor.darkblue, new String[]{"Boardwalk","Park Place"});
+        propertiesMap.put(PropertyColor.darkblue, new String[]{"property-blue","property-blue"});
         propValuesMap.put(PropertyColor.darkblue,4);
-        propertiesMap.put(PropertyColor.green,    new String[]{"North Caroline Avenue","Pacific Avenue","Pennsylvanya Avenue"});
+        //propertiesMap.put(PropertyColor.green,    new String[]{"North Caroline Avenue","Pacific Avenue","Pennsylvanya Avenue"});
+        propertiesMap.put(PropertyColor.green,    new String[]{"property-green","property-green","property-green"});
         propValuesMap.put(PropertyColor.green,4);
-        propertiesMap.put(PropertyColor.lightblue,new String[]{"Connecticut Avenue","Oriental Avenue","Vermont Avenue"});
+        //propertiesMap.put(PropertyColor.lightblue,new String[]{"Connecticut Avenue","Oriental Avenue","Vermont Avenue"});
+        propertiesMap.put(PropertyColor.lightblue,new String[]{"property-light-blue","property-light-blue","property-light-blue"});
         propValuesMap.put(PropertyColor.lightblue,1);
-        propertiesMap.put(PropertyColor.orange,   new String[]{"New York Avenue","St. James Place","Tennessee Avenue"});
+        //propertiesMap.put(PropertyColor.orange,   new String[]{"New York Avenue","St. James Place","Tennessee Avenue"});
+        propertiesMap.put(PropertyColor.orange,   new String[]{"property-orange","property-orange","property-orange"});
         propValuesMap.put(PropertyColor.orange,2);
-        propertiesMap.put(PropertyColor.purple,   new String[]{"St. James Place","Virginia Avenue","States Avenue"});
+        //propertiesMap.put(PropertyColor.purple,   new String[]{"St. James Place","Virginia Avenue","States Avenue"});
+        propertiesMap.put(PropertyColor.purple,   new String[]{"property-pink","property-pink","property-pink"});
         propValuesMap.put(PropertyColor.purple,2);
-        propertiesMap.put(PropertyColor.red,      new String[]{"Kentucky Avenue","Indiana Avenue","Illinois Avenue"});
+        //propertiesMap.put(PropertyColor.red,      new String[]{"Kentucky Avenue","Indiana Avenue","Illinois Avenue"});
+        propertiesMap.put(PropertyColor.red,      new String[]{"property-red","property-red","property-red"});
         propValuesMap.put(PropertyColor.red,3);
-        propertiesMap.put(PropertyColor.yellow,   new String[]{"Ventnor Avenue","Marvin Gardens","Atlantic Avenue"});
+        //propertiesMap.put(PropertyColor.yellow,   new String[]{"Ventnor Avenue","Marvin Gardens","Atlantic Avenue"});
+        propertiesMap.put(PropertyColor.yellow,   new String[]{"property-yellow","property-yellow","property-yellow"});
         propValuesMap.put(PropertyColor.yellow,3);
-        propertiesMap.put(PropertyColor.utility,  new String[]{"Water Works","Eletric Company"});
+        //propertiesMap.put(PropertyColor.utility,  new String[]{"Water Works","Eletric Company"});
+        propertiesMap.put(PropertyColor.utility,  new String[]{"property-light-green","property-light-green"});
         propValuesMap.put(PropertyColor.utility,2);
-        propertiesMap.put(PropertyColor.railroad, new String[]{"Short Line","B. & O. Railroad","Reading Railroad","Pennsylvania Railroad"});
+        //propertiesMap.put(PropertyColor.railroad, new String[]{"Short Line","B. & O. Railroad","Reading Railroad","Pennsylvania Railroad"});
+        propertiesMap.put(PropertyColor.railroad, new String[]{"property-black","property-black","property-black","property-black"});
         propValuesMap.put(PropertyColor.railroad,2);
 
         propertiesMap.forEach((color, cardsNames) -> {
@@ -68,7 +78,8 @@ public class Deck {
                 Property prop = new Property(color, cardName);
                 ArrayList<Property> properties = new ArrayList<Property>(); //commented part caused exception during
                 properties.add(prop);
-                this.cards.add(new PropertyCard(this.cards.size()+1,cname,propValuesMap.get(color).intValue(),new State[]{},properties/*(ArrayList<Property>)Arrays.asList(prop)*/));
+                //this.cards.add(new PropertyCard(this.cards.size()+1,cname,propValuesMap.get(color).intValue(),new State[]{},properties/*(ArrayList<Property>)Arrays.asList(prop)*/));
+                this.cards.add(new PropertyCard(this.cards.size()+1,cardName,propValuesMap.get(color).intValue(),new State[]{},properties/*(ArrayList<Property>)Arrays.asList(prop)*/));
             }
         });
         cardId = this.cards.size();
@@ -78,9 +89,13 @@ public class Deck {
         wildCardStates.add(State.SelectYourProperty);
 
         final String[] wcList = {
-            /*1*/"wildCardDBG",/*1*/"wildCardLBB",/*2*/"wildCardRainbow",
-            /*2*/"wildCardOP" ,/*1*/"wildCardGRR",/*1*/"wildCardLBRR",
-            /*1*/"wildCardURR",/*2*/"wildCardYR" // comments correspond to rptQty
+            /*1*/"property-green-or-blue",/*1*/"property-black-or-light-blue",/*2*/"property-wildcard",
+            /*2*/"property-orange-or-pink" ,/*1*/"property-green-or-black",/*1*/"property-light-blue-or-black",
+            /*1*/"property-black-or-light-green",/*2*/"property-red-or-yellow" // comments correspond to rptQty
+            ///*1*/"wildCardDBG",/*1*/"wildCardLBB",/*2*/"wildCardRainbow",
+            ///*2*/"wildCardOP" ,/*1*/"wildCardGRR",/*1*/"wildCardLBRR",
+            ///*1*/"wildCardURR",/*2*/"wildCardYR" // comments correspond to rptQty
+            
         };
         final int[] wcValues = {4,1,0,2,4,4,2,3};
         final int[] rptQty   = {1,1,2,2,1,1,1,2};
@@ -171,9 +186,12 @@ public class Deck {
             {   PropertyColor.railroad, PropertyColor.utility   },
             {   PropertyColor.red,       PropertyColor.yellow   },
         };
-        String[] rentNames = {"rentRainbow","rentGDB",
-                              "rentBLB",     "rentPO",
-                              "rentRRU",     "rentRY"}; 
+        String[] rentNames = {"rent-all-colour","rent-blue-or-green",
+        "rent-light-blue-or-brown",     "rent-orange-or-pink",
+        "rent-black-or-light-green",     "rent-red-or-yellow"}; 
+        //String[] rentNames = {"rentRainbow","rentGDB",
+         //                     "rentBLB",     "rentPO",
+          //                    "rentRRU",     "rentRY"}; 
         int[] rentValues = {3,1,1,1,1,1};
         int[] rentCopies = {3,2,2,2,2,2};
 
@@ -192,11 +210,17 @@ public class Deck {
         }
 
         // Cartas de Ação
-        String[] gaNm = {
+        /*String[] gaNm = {
             "dealBreaker","debtCollector",
             "forcedDeal","hotel",
             "house","itsMyBirthday",
             "passGo","slyDeal"
+        };*/
+        String[] gaNm = {
+            "deal-breaker","debt-collector",
+            "forced-deal","hotel",
+            "house","birthday",
+            "pass-go","sly-deal"
         };
         int[] gaQty = {2,3,3,3,3,3,10,3};
         String[] gaMet = {
@@ -344,17 +368,18 @@ public class Deck {
     }
 
     // exemplo de chamada de efeito da carta
-    /*
+    
     public static void main(String[] args) {
         Deck deck = new Deck();
         //System.out.println(deck.removeFromDeck().getLabel());
-        Card birthday = deck.removeFromDeck();
+        /*Card birthday = deck.removeFromDeck();
         while (! birthday.getLabel().equals("itsMyBirthday")){
             birthday = deck.removeFromDeck();
         }
         birthday = (ActionCard) birthday;
         System.out.println(birthday.getLabel());
         birthday.applyEffect(0,0,0);
+        */
     }
-    */
+    
 }

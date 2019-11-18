@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -22,25 +23,32 @@ import br.ufsc.game.network.NetGamesInterface;
  */
 public class CoreGame extends GameScene {
 
+    boolean[] iconSelected = {false,false,false,false,false,false};//melhor sobrar que faltar
+    String[] cardPaths = {"blabla","blabla","blabla","blabla","blabla","blabla","blabla","blabla"};
+
     public CoreGame(NetGamesInterface nGamesInterface) {
         super();
 
         playerInterface = new PlayerInterface(nGamesInterface);
         nGamesInterface.setFSMGame(playerInterface.getFSMGame());
 
-        // this.gameObjects.put("backgroundImage", new
-        // GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
-        // this.gameObjects.put("logo", new
-        // GameImage("/br/ufsc/game/resources/images/Logo.png"));
         this.gameExtras.put("ngInterface", nGamesInterface);
-        this.gameObjects.put("lastUsedCard", new GameImage("/br/ufsc/game/resources/images/house.png"));
+        this.gameObjects.put("lastUsedCard", new GameImage("/br/ufsc/game/resources/images/back.png"));
         this.gameObjects.put("endTurn", new GameButton("/br/ufsc/game/resources/images/endTurn.png"));
         for (int i = 0; i < 7; i++) {
-            this.gameObjects.put("card" + i, new GameButton("/br/ufsc/game/resources/images/house.png"));
+            this.gameObjects.put("card" + i, new GameButton("/br/ufsc/game/resources/images/back.png"));
         }
         for (int i = 1; i < 5; i++) {
+            ArrayList<Integer> id = new ArrayList<>();
+            id.add(i);
             this.gameObjects.put("playerIcon" + i,
                     new GameButton("/br/ufsc/game/resources/images/player" + i + ".png"));
+            ((GameButton) gameObjects.get("playerIcon" + i)).setOnClick(new GameAction() {
+                @Override
+                public void doAction(Object[] args) {
+                    playerInterface.setSelectedPlayer(id.get(0));
+                }
+            });
         }
 
         for (int i = 0; i < 10; i++) {
@@ -146,19 +154,34 @@ public class CoreGame extends GameScene {
         gameObjects.get("endTurn").setX(x);
 
         // playerImg icons
-        
         for (int i = 1; i < 5; i++) {
             GameButton icon = (GameButton) gameObjects.get("playerIcon"+i);
             boolean selected = playerInterface.isIconSelected(i);
             String path;
-            if (selected) {
-                path = "/br/ufsc/game/resources/images/player" + i + "selected.png";
-            } else {
-                path = "/br/ufsc/game/resources/images/player" + i + ".png";
+            if (selected != iconSelected[i]){
+                if (selected) {
+                    path = "/br/ufsc/game/resources/images/player" + i + "selected.png";
+                } else {
+                    path = "/br/ufsc/game/resources/images/player" + i + ".png";
+                }
+                try { icon.loadImage(path);
+                } catch (IOException e) { e.printStackTrace(); }
+                iconSelected[i] = selected;
             }
-            try { icon.loadImage(path);
-            } catch (IOException e) { e.printStackTrace(); }
         }
+
+        
+        for (int i =0; i < 7; i++) {
+            String cardName = playerInterface.witchCardIsThis(i);
+            String path = "/br/ufsc/game/resources/images/" + cardName + ".png";
+            GameButton card = (GameButton) gameObjects.get("card"+i);
+            if (!path.equals(cardPaths[i])){
+                log("carta na mao at "+i+": " +path);
+                try { card.loadImage(path);
+                } catch (IOException e) { e.printStackTrace();}
+                cardPaths[i]=path;
+            }
+        } 
         
     }
 
@@ -197,7 +220,9 @@ public class CoreGame extends GameScene {
         }
         
     }
-
-
     
+
+    void log(String s){
+        System.out.println(s);
+    }
 }

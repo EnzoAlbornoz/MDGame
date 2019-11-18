@@ -63,7 +63,11 @@ public class Player {
         // esse metodo eh usado no UpdateUI, o propósito original na verdade era retornar o path da imagem da carta,
         // para que a UI soubesse que imagem mostrar. Mas de repente eh melhor mesmo retornar a label e colocar na cena
         //uma estrutura de dados pra saber o path de acordo com a label
-        public String wichCardIsThis(int posInHand){ 
-            return this.hand.getCards().get(posInHand).getLabel();
+        public String wichCardIsThis(int posInHand){
+            if(posInHand < hand.getCards().size()){
+                return this.hand.getCards().get(posInHand).getLabel();
+            } else {
+                return "back";
+            }
         }
 }

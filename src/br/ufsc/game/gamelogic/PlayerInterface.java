@@ -42,4 +42,13 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 	public int getClientIDofPlayer0(){
 		return fsmGame.getClientIDofPlayer0();
 	}
+
+	public void setSelectedPlayer(int i) {
+		fsmGame.setSelectedPlayer(i);
+	}
+
+	public String witchCardIsThis(int i) {
+		return fsmGame.witchCardIsThis(i);
+	}
+
 }
