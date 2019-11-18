@@ -10,6 +10,7 @@ public class GameField {
 	protected Deck deck;
 	protected ArrayList<Player> players;
 
+	/*
 	//constructed to be used when deserializing
 	public GameField(Deck vdeck, int playersQuantity){
 		deck = vdeck;
@@ -19,18 +20,16 @@ public class GameField {
 		for (int i=1; i <= playersQuantity; i ++){
 			Player p = new Player("player"+i, i);
 			players.add(p);
-			p.addCards(deck);
 		}
 		//above is garbage
 	}
-
+	*/
 	public GameField(int playersQuantity){
 		deck = new Deck();
 		players = new ArrayList<>();
 		for (int i=1; i <= playersQuantity; i ++){
 			Player p = new Player("player"+i, i);
 			players.add(p);
-			p.addCards(deck);
 		}
 	}
 

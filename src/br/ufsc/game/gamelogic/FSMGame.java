@@ -22,6 +22,7 @@ public class FSMGame {
     protected boolean actionsEnabled;
     protected PlayerInterface playerInterface;
     protected NetGamesInterface netGamesInterface;
+    protected Player you;
 
     void log(String string){
         System.out.println("logger says:" + string);
@@ -46,6 +47,12 @@ public class FSMGame {
         //instantiate an enormous part of the game
         gameField = new GameField(playersQuantity);
         
+        for (int i = 0; i < gameField.players.size(); i++ ){
+            if(gameField.players.get(i).getId()==clientId){
+                you = gameField.players.get(i); i = 99999; //break loop
+            }
+        }
+
         //remember you once did something that was right: (if it's still working)
         log("ClientId: "+ clientId);
         log("playersQuantity: "+playersQuantity);
@@ -58,8 +65,7 @@ public class FSMGame {
         log("0 id: "+gameField.getPlayers().get(0).id+"; clientId: "+clientId);
         if (is){
             if(actionsQty >= 3){
-                gameField.getPlayers().get(0).addCards(gameField.getDeck());
-                log("cards in hand: "+gameField.getPlayers().get(0).getHand().getCards().size());
+                buyCards();
             }
             actionsEnable(true);
             currentState = State.SelectCard;
@@ -70,6 +76,7 @@ public class FSMGame {
     }
     public void buyCards(){ //talvez não precise desse método
         this.gameField.setDeck(this.gameField.getPlayers().get(0).addCards(this.gameField.getDeck()));
+        log("cards in hand: "+gameField.getPlayers().get(0).getHand().getCards().size());
     }
     public void endTurn(){
         actionsQty = 3;
@@ -81,6 +88,7 @@ public class FSMGame {
         PlayerPacket playerPacket = new PlayerPacket(this.lastUsedCard, this.gameField);
         SerializablePacket serializablePacket = new SerializablePacket(playerPacket);
         netGamesInterface.sendPlay(serializablePacket);
+        receivePlay(playerPacket);
     }
     
     public void actionsEnable(boolean a){ //eu acho que eh melhor saber pelo estado se as ações estão habilitadas ou não, na verdade (Cainã)
@@ -88,6 +96,7 @@ public class FSMGame {
     }
    
     public void receivePlay(PlayerPacket playerPacket){
+        log("receivedPlay");
         copyGameField(playerPacket.getGameField());
         copyLastCardUsed(playerPacket.getLastUsedCard());
         isItMyTurn();
@@ -159,7 +168,7 @@ public class FSMGame {
         return 0;
     }
     public String witchCardIsThis(int index){ //index could be called posInHand
-        return gameField.players.get(0).wichCardIsThis(index);
+        return you.wichCardIsThis(index);
     }
     public String getLastUsedCard(){
         return lastUsedCard.label;

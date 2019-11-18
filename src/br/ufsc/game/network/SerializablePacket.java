@@ -3,19 +3,12 @@ package br.ufsc.game.network;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import br.ufsc.game.engine.interfaces.GameAction;
-import br.ufsc.game.gamelogic.ActionCard;
 import br.ufsc.game.gamelogic.Card;
 import br.ufsc.game.gamelogic.Deck;
 import br.ufsc.game.gamelogic.GameField;
 import br.ufsc.game.gamelogic.MoneyCard;
 import br.ufsc.game.gamelogic.Player;
-import br.ufsc.game.gamelogic.PlayerZone;
-import br.ufsc.game.gamelogic.Property;
-import br.ufsc.game.gamelogic.PropertyCard;
-import br.ufsc.game.gamelogic.PropertyColor;
 import br.ufsc.game.gamelogic.PropertyGroup;
-import br.ufsc.game.gamelogic.RentCard;
 import br.ufsc.game.gamelogic.State;
 import br.ufsc.inf.leobr.cliente.Jogada;
 

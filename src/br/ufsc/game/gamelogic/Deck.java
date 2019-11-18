@@ -57,7 +57,7 @@ public class Deck {
         propertiesMap.put(PropertyColor.orange,   new String[]{"property-orange","property-orange","property-orange"});
         propValuesMap.put(PropertyColor.orange,2);
         //propertiesMap.put(PropertyColor.purple,   new String[]{"St. James Place","Virginia Avenue","States Avenue"});
-        propertiesMap.put(PropertyColor.purple,   new String[]{"property-purple","property-purple","property-purple"});
+        propertiesMap.put(PropertyColor.purple,   new String[]{"property-pink","property-pink","property-pink"});
         propValuesMap.put(PropertyColor.purple,2);
         //propertiesMap.put(PropertyColor.red,      new String[]{"Kentucky Avenue","Indiana Avenue","Illinois Avenue"});
         propertiesMap.put(PropertyColor.red,      new String[]{"property-red","property-red","property-red"});
@@ -80,7 +80,6 @@ public class Deck {
                 properties.add(prop);
                 //this.cards.add(new PropertyCard(this.cards.size()+1,cname,propValuesMap.get(color).intValue(),new State[]{},properties/*(ArrayList<Property>)Arrays.asList(prop)*/));
                 this.cards.add(new PropertyCard(this.cards.size()+1,cardName,propValuesMap.get(color).intValue(),new State[]{},properties/*(ArrayList<Property>)Arrays.asList(prop)*/));
-                System.out.println(cardName);
             }
         });
         cardId = this.cards.size();

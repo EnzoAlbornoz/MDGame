@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Deck",
+            "request": "launch",
+            "mainClass": "br.ufsc.game.gamelogic.Deck",
+            "projectName": "MDEngine"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Test",
             "request": "launch",
             "mainClass": "br.ufsc.game.Test",
