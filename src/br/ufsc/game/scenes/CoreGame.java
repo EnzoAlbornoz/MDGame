@@ -29,14 +29,22 @@ public class CoreGame extends GameScene {
     public CoreGame(NetGamesInterface nGamesInterface) {
         super();
 
-        playerInterface = new PlayerInterface(nGamesInterface);
+        playerInterface = new PlayerInterface(nGamesInterface, this);
         nGamesInterface.setFSMGame(playerInterface.getFSMGame());
 
         this.gameExtras.put("ngInterface", nGamesInterface);
         this.gameObjects.put("lastUsedCard", new GameImage("/br/ufsc/game/resources/images/back.png"));
         this.gameObjects.put("endTurn", new GameButton("/br/ufsc/game/resources/images/endTurn.png"));
         for (int i = 0; i < 7; i++) {
+            ArrayList<Integer> id = new ArrayList<>();
+            id.add(i);
             this.gameObjects.put("card" + i, new GameButton("/br/ufsc/game/resources/images/back.png"));
+            ((GameButton) gameObjects.get("card"+i)).setOnClick(new GameAction() {
+                @Override
+                public void doAction(Object[] args) {
+                    playerInterface.useCard(id.get(0));
+                }
+            });
         }
         for (int i = 1; i < 5; i++) {
             ArrayList<Integer> id = new ArrayList<>();
@@ -221,6 +229,10 @@ public class CoreGame extends GameScene {
         
     }
     
+    public boolean useOrStoreCard(){
+        int resposta = JOptionPane.showConfirmDialog(null, "Use Card? If not, it will be sold.");
+		return (resposta == JOptionPane.YES_OPTION);
+    }
 
     void log(String s){
         System.out.println(s);

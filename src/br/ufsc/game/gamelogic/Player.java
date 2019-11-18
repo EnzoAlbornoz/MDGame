@@ -47,7 +47,7 @@ public class Player {
         }
 
         // Não necessário parametro com numero de cartas
-        public Deck addCards(Deck deck){ // Necessário jogador ter visão do deck, ou retornar quantidade adicionada
+        public Deck addCards(Deck deck){
             if (this.hand.getCards().size() == 0){
                 for (int i = 0; i < 5; i++) {
                     this.storeCard(deck.removeFromDeck());
@@ -64,10 +64,32 @@ public class Player {
         // para que a UI soubesse que imagem mostrar. Mas de repente eh melhor mesmo retornar a label e colocar na cena
         //uma estrutura de dados pra saber o path de acordo com a label
         public String wichCardIsThis(int posInHand){
-            if(posInHand < hand.getCards().size()){
-                return this.hand.getCards().get(posInHand).getLabel();
+            if(this.hand.getCards() == null){
+                log("cards is null at Player.witchCardIsThis!!!");
+                return "back";
+            }
+
+            if(this.hand == null){
+                log("hand is null at Player.witchCardIsThis!!!");
+                return "back";
+            }
+
+            if(posInHand>=0 && posInHand < hand.getCards().size()){
+                PlayerHand h = this.hand;
+                log(h);
+                ArrayList<Card> cds = h.getCards();
+                log(cds);
+                Card c = cds.get(posInHand);
+                log(c);
+                String label = c.getLabel();
+                log(label);
+                return label;
             } else {
                 return "back";
             }
+        }
+
+        void log(Object s){
+            //System.out.println(s);
         }
 }

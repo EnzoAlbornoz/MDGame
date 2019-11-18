@@ -25,13 +25,19 @@ public class SerializablePacket implements Jogada {
 
         // ids list starts with lastUsedCard
         Card c = p.getLastUsedCard();
+        int cidx = p.getGameField().getDeck().getCards().size();
 
         //and then continues with all the deck
-        while(c!=null){ // c is null when removed from empty deck
+        while(cidx > 0){ // c is null when removed from empty deck
+            cidx--;
             ids.add(c.getId());
-            c = p.getGameField().getDeck().removeFromDeck();
+            c = p.getGameField().getDeck().getCards().get(cidx);
         }
         
+        for(int g = 0; g < 5; g++){
+            log(">>> cardId: "+ids.get(g));
+        }
+
         //serializing playerZones
         for (Player player : p.getGameField().getPlayers() ) {//foreach player
             ArrayList<Integer> zone = new ArrayList<>(); //create array<int> that represents the zone
@@ -50,15 +56,16 @@ public class SerializablePacket implements Jogada {
     public PlayerPacket generatePlayerPacket(GameField gameField){
         Stack<Card> cards = new Stack<>();
         ArrayList<Player> players = gameField.getPlayers();
-
-        //lastUsedCard implementation can certainly get better
-        MoneyCard lastUsedCard = new MoneyCard(ids.remove(0),"lastUsed",666,new ArrayList<State>());
+       
+        for(int g = 0; g < 5; g++){
+            log(">>> cardId: "+ids.get(g));
+        }
 
         log("deserealizando deck");
         //deserializing deck
         Deck deck = new Deck(); //create a new deck with all the cards of the game
         while (ids.size()>0){ //while there are saved ids
-            log("size: "+ids.size());
+            //log("size: "+ids.size());
             int id = ids.remove(ids.size()-1);
             for (int i = 0; i < deck.getCards().size(); i++) {
                 //log("i: "+i);
@@ -69,8 +76,13 @@ public class SerializablePacket implements Jogada {
                 }
             }
         }
-        deck = new Deck(cards); // i hope it does not loses any reference
-        gameField.setDeck(deck);
+        Deck deck2 = new Deck(cards); // i hope it does not loses any reference
+        for(int g = deck2.getCards().size()-1; g > deck2.getCards().size()-6; g--){
+            log(">>> deck2cardId.get("+g+"): "+deck2.getCards().get(g).getId());
+        }
+
+        Card lastUsedCard = deck2.removeFromDeck();
+        gameField.setDeck(deck2);
 
         log("tirando players indesejados");
         //remove players with index too high. (Game is starting with more players than it should for
@@ -124,6 +136,6 @@ public class SerializablePacket implements Jogada {
     }
 
     void log(String s){
-        //System.out.println(s);
+        System.out.println(s);
     }
 }

@@ -23,7 +23,7 @@ public class RentCard extends Card {
 	}
 	// Interface
 	@Override //by 'you' I mean the player that is making the play right at this moment
-	public void applyEffect(PlayerPacket playerPacket,int targetPropertiy, int yourProperty, int selectedPlayer) {
+	public void applyEffect(PlayerPacket playerPacket,int targetProperty, int yourProperty, int selectedPlayer) {
 
 		//set up some references
 		ArrayList<Player> players = playerPacket.getGameField().getPlayers();

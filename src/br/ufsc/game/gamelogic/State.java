@@ -9,7 +9,7 @@ public enum State {
 	BuyCards,
 	SelectCard,
 	UseCard,
-	Store,
+	UseOrStore,
 	SelectYourProperty,
 	SelectTargetPlayer,
 	SelectTargetProperty,

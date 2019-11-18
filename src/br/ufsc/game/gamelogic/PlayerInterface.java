@@ -1,12 +1,9 @@
 package br.ufsc.game.gamelogic;
 
-import java.awt.Graphics2D;
 import java.util.HashMap;
-
-import br.ufsc.game.engine.interfaces.Drawable;
-import br.ufsc.game.engine.interfaces.Updatable;
 import br.ufsc.game.engine.logic.GameObject;
 import br.ufsc.game.network.NetGamesInterface;
+import br.ufsc.game.scenes.CoreGame;
 
 /**
  * PlayerInterface
@@ -15,8 +12,10 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 
 	protected HashMap<String, GameObject> problemDomain;
 	FSMGame fsmGame;
+	CoreGame coreGame;
 
-	public PlayerInterface(NetGamesInterface nGamesInterface){
+	public PlayerInterface(NetGamesInterface nGamesInterface, CoreGame vcoreGame){
+		this.coreGame = vcoreGame;
 		this.fsmGame = new FSMGame(nGamesInterface, this);
 	}
 
@@ -51,4 +50,12 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 		return fsmGame.witchCardIsThis(i);
 	}
 
+	public void useCard(int index){
+		fsmGame.useCard(index);
+	}
+
+	public void useOrStoreCard(){
+		boolean store = ! coreGame.useOrStoreCard();
+		fsmGame.store(store);
+	}
 }

@@ -1,7 +1,6 @@
 package br.ufsc.game.gamelogic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import br.ufsc.game.network.NetGamesInterface;
@@ -12,8 +11,8 @@ public class FSMGame {
     protected State currentState;
     protected GameField gameField;
     protected int actionsQty;
-    protected PropertyGroup yourProperty;
-    protected PropertyGroup targetsProperty;
+    protected int yourProperty;
+    protected int targetsProperty;
     protected boolean store;
     protected boolean use;
     protected Card lastUsedCard;
@@ -62,7 +61,7 @@ public class FSMGame {
     }
     void isItMyTurn(){
         boolean is = gameField.getPlayers().get(0).id == clientId;
-        log("0 id: "+gameField.getPlayers().get(0).id+"; clientId: "+clientId);
+        log("is it my turn? 0 id: "+gameField.getPlayers().get(0).id+"; clientId: "+clientId);
         if (is){
             if(actionsQty >= 3){
                 buyCards();
@@ -74,21 +73,22 @@ public class FSMGame {
         }
         log("Current State -> "+currentState);
     }
-    public void buyCards(){ //talvez não precise desse método
-        this.gameField.setDeck(this.gameField.getPlayers().get(0).addCards(this.gameField.getDeck()));
+    public void buyCards(){
+        this.gameField.getPlayers().get(0).addCards(this.gameField.getDeck());
         log("cards in hand: "+gameField.getPlayers().get(0).getHand().getCards().size());
     }
     public void endTurn(){
+        //update state
+        setState(State.WaitForPlays);
         actionsQty = 3;
+
+        //reorder players
         Player currentPlayer = gameField.getPlayers().remove(0);
         ArrayList<Player> players = gameField.getPlayers();
         players.add(currentPlayer);
         this.gameField.setPlayers(players);
-        currentState = State.WaitForPlays;
-        PlayerPacket playerPacket = new PlayerPacket(this.lastUsedCard, this.gameField);
-        SerializablePacket serializablePacket = new SerializablePacket(playerPacket);
-        netGamesInterface.sendPlay(serializablePacket);
-        receivePlay(playerPacket);
+
+        sendPlay();
     }
     
     public void actionsEnable(boolean a){ //eu acho que eh melhor saber pelo estado se as ações estão habilitadas ou não, na verdade (Cainã)
@@ -99,6 +99,13 @@ public class FSMGame {
         log("receivedPlay");
         copyGameField(playerPacket.getGameField());
         copyLastCardUsed(playerPacket.getLastUsedCard());
+
+        log("actionsQty: "+actionsQty);
+        log("lastUsedCard: "+lastUsedCard.getLabel());
+        log("yourMoney: "+you.getMoney());
+        log("deck: "+gameField.getDeck());
+        log("deckSize : "+gameField.getDeck().getCards().size());
+
         isItMyTurn();
         if (gameEnded()){
             //maneira provisoria de acabar a partida. O ideal seria o caso de uso endMatch
@@ -180,75 +187,97 @@ public class FSMGame {
         return currentState == State.SelectCard;
     }
     public void useCard(int index){
-        Card card = gameField.players.get(0).hand.getCards().get(index);
+        if( currentState != State.SelectCard ){ return; }
+        if(index >= gameField.players.get(0).hand.getCards().size()) { return; }
+
+        ArrayList<Card> cardsInHand = gameField.players.get(0).hand.getCards();
+
+        Card card = cardsInHand.get(index);
         setLastUsedCard(card);
 
-        currentState = State.Store;
-        //playerInterface.useOrStoreCard(); TODO: CHAMAR ESSE METODO QUANDO ESTIVER IMPLEMENTADO
+        cardsInHand.remove(index);
+
+        setState(State.UseOrStore);
+        playerInterface.useOrStoreCard();
 
     }
     public void setLastUsedCard(Card card){
         this.lastUsedCard = card;
     }
     public void store(boolean willStore){ //DIAGRAMA: parametro nao estava no diagrama de classes
-        Player currentPlayer = gameField.getPlayers().get(0);
-        int money = currentPlayer.getZone().getBank();
-        money += lastUsedCard.getValue();
-        currentPlayer.getZone().setBank(money);
-        decreaseActions();
+        if (willStore){
+            Player currentPlayer = gameField.getPlayers().get(0);
+            int money = currentPlayer.getZone().getBank();
+            money += lastUsedCard.getValue();
+            currentPlayer.getZone().setBank(money);
+            decreaseActions();
+        } else {
+            setState(State.SelectYourProperty);
+            if ( ! lastUsedCard.getNeededStates().contains(State.SelectYourProperty)){
+                selectYourProperty(PropertyColor.joker);//im selecting an arbitrary color
+            }
+        }
     }
 
     // when I wanna go to the selectTatgetPlayer state and I just selected my propertyColor (if needed)
-    public void selectTargetPlayer(PropertyColor c){ //could be called selectYourProperty
+    //public void selectTargetPlayer(PropertyColor c){ //could be called selectYourProperty
+    public void selectYourProperty(PropertyColor c){
         //saving myProperty selected
         ArrayList<PropertyGroup> properties = gameField.players.get(0).zone.getProperties();
         for (int i = 0; i < properties.size(); i++) {
             if(properties.get(i).getColor() == c){
-                yourProperty = properties.get(i);
+                //yourProperty = properties.get(i);
+                yourProperty = i;
                 i = properties.size();
             }
         }
         //updating state
-        currentState = State.SelectTargetPlayer;
+        setState(State.SelectTargetPlayer);
+
+        //if it does not need next state, call next state without waiting for input
         ArrayList<State> needed = lastUsedCard.neededStates;
         boolean needs = needed.contains(State.SelectTargetPlayer);
         if ( ! needs ){
-            selectTargetProperty(""+clientId); //select myself as target player once that it target isn't needed
+            selectTargetPlayer(clientId); //select myself as target player once that it target isn't needed
         }
     }
     // means i wanna go to selectTargetProperty state and I just selected my string targetPlayer==id (if needed)
-    public void selectTargetProperty(String id){ //maybe it could be always integer or always String
+    public void selectTargetPlayer(int id){ //maybe it could be always integer or always String
         // saving player target selected
-        selectedPlayerId = Integer.parseInt(id);
+        selectedPlayerId = id;
 
         //update state
+        setState(State.SelectTargetProperty);
         ArrayList<State> needed = lastUsedCard.neededStates;
         boolean needs = needed.contains(State.SelectTargetProperty);
         if ( ! needs){
-            setTargetProperty(PropertyColor.joker); //select joker as targetProperty, since it isn't needed
+            selectTargetProperty(PropertyColor.joker); //select joker as targetProperty, since it isn't needed
         }
     }
 
-    public void setTargetProperty(PropertyColor c){
+    public void selectTargetProperty(PropertyColor c){
         //saving targetProperty selected
         ArrayList<PropertyGroup> properties = gameField.players.get(0).zone.getProperties();
         for (int i = 0; i < properties.size(); i++) {
             if(properties.get(i).getColor() == c){
-                targetsProperty = properties.get(i);
+                //targetsProperty = properties.get(i);
+                targetsProperty = i;
                 i = properties.size();
             }
         }
 
-        //TODO: deveria chamar applyCardEffect() agora
+        PlayerPacket playerPacket = new PlayerPacket(lastUsedCard, gameField);
+        lastUsedCard.applyEffect(playerPacket, targetsProperty, yourProperty, selectedPlayerId);
+
+        decreaseActions();
     }
 
     public void decreaseActions(){ 
         actionsQty -= 1;
         if (actionsQty > 0){
-            currentState = State.SelectCard;
-            //playerInterface.sendPlay();
+            setState(State.SelectCard);
+            sendPlay();
         } else {
-            currentState = State.EndTurn;
             endTurn();
         }
     }
@@ -256,5 +285,16 @@ public class FSMGame {
         if (pid <= gameField.getPlayers().size()){
             selectedPlayerId = pid;
         }
+    }
+
+    void setState(State state){
+        log("Update state from *"+currentState+"* to *"+state+"*.");
+        currentState = state;
+    }
+    void sendPlay(){
+        PlayerPacket playerPacket = new PlayerPacket(this.lastUsedCard, this.gameField);
+        SerializablePacket serializablePacket = new SerializablePacket(playerPacket);
+        netGamesInterface.sendPlay(serializablePacket);
+        receivePlay(playerPacket); //when receive play, it checks for gameEnded
     }
 }

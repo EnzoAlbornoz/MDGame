@@ -1,7 +1,5 @@
 package br.ufsc.game.gamelogic;
 
-import java.util.ArrayList;
-
 public class PropertyGroup {
     protected PropertyColor color;
     //protected ArrayList<PropertyCard> propCards; // acho q simplificaria tirar isso

@@ -19,8 +19,25 @@ public class PropertyCard extends Card {
 	@Override
 	public void applyEffect(PlayerPacket playerPacket,int targetPropertiy, int yourProperty, int selectedPlayer) {
         PropertyCard card = (PropertyCard) playerPacket.getLastUsedCard();
-        PropertyGroup selectedProperty =
-            playerPacket.getGameField().getPlayers().get(0).getZone().getProperties().get(yourProperty);
+        ArrayList<PropertyGroup> yourProperties =
+            playerPacket.getGameField().getPlayers().get(0).getZone().getProperties();
+        PropertyGroup selectedProperty = yourProperties.get(yourProperty);
+        
+        boolean cheating = true;
+        for (int k = 0; k < card.getProperties().size(); k++){
+            if (card.getProperties().get(k).getColor() == selectedProperty.getColor()){
+                cheating = false;
+            }
+        }
+        if (cheating) {
+            PropertyColor validColor = card.getProperties().get(0).getColor();
+            int j = 0;
+            while(validColor != yourProperties.get(j).getColor()){
+                j++;
+            }
+            selectedProperty = yourProperties.get(j);
+        }
+
         for (int i = 0; i < card.getProperties().size(); i++){
             if(selectedProperty.getColor() == card.getProperties().get(i).getColor()){
                 selectedProperty.setPropQty(selectedProperty.getPropQty()+1);
