@@ -207,7 +207,8 @@ public class CoreGame extends GameScene {
         g.setColor(Color.white);
         g.setFont(new Font("ComicSans", Font.BOLD, 27));
         int clientId = playerInterface.getClientID();
-        g.drawString("You Are: "+clientId, 10, 45);
+        g.drawString("You Are: P"+clientId, 10, 45);
+        g.drawString("State: "+ playerInterface.getState(),500,45);
         g.drawString("->", 1050, (playerInterface.getClientIDofPlayer0()-1)*100+75); // +/- 100 to change player
         
         x = 1280-75; y = 85;
@@ -222,13 +223,16 @@ public class CoreGame extends GameScene {
         int xi = 230;
         x = xi; y = 70;
         for (int i =0; i < 10; i++) {
-	        //gameObjects.get("prop"+i).setX(x);
-	        //gameObjects.get("prop"+i).setY(y);
-        	int dyi = 35, dy=dyi;
-        	g.drawString("x3", x+35, y+dy); dy+=dyi;
-        	g.drawString("completo", x, y+dy); dy+=dyi;
-        	g.drawString("casa", x, y+dy); dy+=dyi;
-        	g.drawString("hotel", x, y+dy);
+            int propQty = playerInterface.HowManyPropCards(i);
+            int dyi = 35, dy=dyi;
+            
+            if (propQty > 50){ //50 is added if complete: its like a code to not make other method
+                g.drawString("completo", x, y+dy); dy+=dyi;
+                propQty -= 50;
+            }
+        	g.drawString("x"+propQty, x+35, y+dy); dy+=dyi;
+        	//g.drawString("casa", x, y+dy); dy+=dyi;
+        	//g.drawString("hotel", x, y+dy);
 	        x += 150;
 	        if(i==4) {
 	        	y+=200;

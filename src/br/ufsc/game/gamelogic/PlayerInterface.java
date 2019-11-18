@@ -66,4 +66,12 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 	public int getClientID() {
 		return fsmGame.getClientId();
 	}
+
+	public int HowManyPropCards(int id) {
+		return fsmGame.howManyPropCards(id);
+	}
+
+	public State getState(){
+		return fsmGame.getState();
+	}
 }

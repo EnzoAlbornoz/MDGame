@@ -158,20 +158,26 @@ public class FSMGame {
         }
         return -1;
     }
-    public int howManyPropCards(int id) {
-        // Feito :D
-        Player player = gameField.getPlayers()
-            .stream().filter((p)->(p.getId() == id))
-            .collect(Collectors.toList())
-            .get(0);
-        if(player != null) {
-            int totalCards = 0;
-            for (PropertyColor pc : PropertyColor.values()) {   // n deveria ser foreach ?
-                totalCards += player.howManyPropCards(pc);
+    Player getPlayerById(int id){
+        Player player = gameField.getPlayers().get(0);
+        for (int i = 0; i < gameField.getPlayers().size(); i++){
+            Player p = gameField.getPlayers().get(i);
+            if (p.getId() == selectedPlayerId){
+                player = p; i = 999999; //break loop
+                //log("player found. Id: "+selectedPlayerId);
+                return p;
             }
-            return totalCards;
-        } 
-        return 0;
+        }
+        return player;
+    }
+    public int howManyPropCards(int i) {
+        Player player = getPlayerById(selectedPlayerId);
+        PropertyGroup pg =player.getZone().getProperties().get(i);
+        int propQty = player.getZone().getProperties().get(i).getPropQty();
+        boolean completa = propQty >= pg.getNeeded();
+        //return 50 extra if is complete, its like a code to not make other method
+        propQty = completa ? propQty+50 : propQty;
+        return propQty;
     }
     public String witchCardIsThis(int index){ //index could be called posInHand
         return you.wichCardIsThis(index);
@@ -299,5 +305,9 @@ public class FSMGame {
 
 	public int getClientId() {
 		return clientId;
-	}
+    }
+    
+    public State getState(){
+        return currentState;
+    }
 }
