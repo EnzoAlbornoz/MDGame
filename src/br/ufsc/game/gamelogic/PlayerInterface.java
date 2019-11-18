@@ -58,4 +58,12 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 		boolean store = ! coreGame.useOrStoreCard();
 		fsmGame.store(store);
 	}
+
+	public int getPlayersMoney(int id) {
+		return fsmGame.getPlayersMoney(id);
+	}
+
+	public int getClientID() {
+		return fsmGame.getClientId();
+	}
 }

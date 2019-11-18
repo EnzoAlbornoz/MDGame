@@ -46,7 +46,7 @@ public class CoreGame extends GameScene {
                 }
             });
         }
-        for (int i = 1; i < 5; i++) {
+        for (int i =1; i < 5; i++) {
             ArrayList<Integer> id = new ArrayList<>();
             id.add(i);
             this.gameObjects.put("playerIcon" + i,
@@ -121,13 +121,6 @@ public class CoreGame extends GameScene {
 	        gameObjects.get("card"+i).setY(y);
 	        x += 180;
         }
-        //positioning playerIcon
-        x = 1280-177; y = 25;
-        for (int i = 1; i < 5; i++) {
-        	gameObjects.get("playerIcon"+i).setX(x);
-	        gameObjects.get("playerIcon"+i).setY(y);
-	        y += 100;
-        }
         
         //positioning playerZones
         int xi = 230;
@@ -191,6 +184,19 @@ public class CoreGame extends GameScene {
             }
         } 
         
+        //positioning playerIcon
+        x = 1280-177; int y = 25;
+        for (int i =1; i < 5; i++) {
+            int m$ = playerInterface.getPlayersMoney(i);
+            if (m$ > -1){
+                gameObjects.get("playerIcon"+i).setX(x);
+                gameObjects.get("playerIcon"+i).setY(y);
+                y += 100;
+            } else {
+                gameObjects.get("playerIcon"+i).setX(x+999999); //some com ele
+            }
+        }
+
     }
 
     @Override
@@ -200,13 +206,17 @@ public class CoreGame extends GameScene {
 
         g.setColor(Color.white);
         g.setFont(new Font("ComicSans", Font.BOLD, 27));
-        g.drawString("You Are: P2", 10, 45);
+        int clientId = playerInterface.getClientID();
+        g.drawString("You Are: "+clientId, 10, 45);
         g.drawString("->", 1050, (playerInterface.getClientIDofPlayer0()-1)*100+75); // +/- 100 to change player
         
         x = 1280-75; y = 85;
-        for (int i =0; i < 4; i++) {
-        	g.drawString("$0m", x, y);
-        y+=100;
+        for (int i =1; i < 5; i++) {
+            int m$ = playerInterface.getPlayersMoney(i);
+            if (m$ > -1){
+                g.drawString("$"+m$+"m", x, y);
+            }
+            y+=100;
         }
         
         int xi = 230;

@@ -150,13 +150,12 @@ public class FSMGame {
     }
 
     public int getPlayersMoney(int id){
-        Player player = gameField.getPlayers()
-            .stream().filter((p)->(p.getId() == id))
-            .collect(Collectors.toList())
-            .get(0);
-        if(player != null) {
-            return player.getMoney();
-        } 
+        for (int i = 0; i < gameField.getPlayers().size(); i++){
+            Player p = gameField.getPlayers().get(i);
+            if (p.getId() == id){
+                return p.getMoney();
+            }
+        }
         return -1;
     }
     public int howManyPropCards(int id) {
@@ -297,4 +296,8 @@ public class FSMGame {
         netGamesInterface.sendPlay(serializablePacket);
         receivePlay(playerPacket); //when receive play, it checks for gameEnded
     }
+
+	public int getClientId() {
+		return clientId;
+	}
 }
