@@ -3,5 +3,4 @@ public int getClientID() na playerInterface e FSMGame, e colocar no updateUI q v
 para escrever o "You Are x"
 
 todo code:
-sly deal: tirou de lah mas nao pôs aki
-rent with no money to pay changed the icon position and made player who used's money desappear
+descobrir por que algumas vezes mostra a lastUsedCard errada

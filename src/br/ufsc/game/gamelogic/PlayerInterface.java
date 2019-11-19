@@ -92,4 +92,8 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 	public int getHotelQty(int i) {
 		return fsmGame.getHotelQty(i);
 	}
+
+	public String getLastUsedCard() {
+		return fsmGame.getLastUsedCard();
+	}
 }

@@ -292,7 +292,7 @@ public class Deck {
                 //rouba um set de propriedades inteiro, com casinhas e tudo
                 PlayerPacket playerPacket = (PlayerPacket) args[0];
                 int tPr = (int) args[1]; //target property
-                int yPr = (int) args[2]; //your property
+                //int yPr = (int) args[2]; //your property
                 int sPl = (int) args[3]; //selected player
 
                 ArrayList<Player> players = playerPacket.getGameField().getPlayers();
@@ -300,7 +300,7 @@ public class Deck {
                 //selected player Index
                 int sPlIdx = getIndexByPlayerId(sPl, players);
 
-                PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(yPr);
+                PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(tPr);
                 PropertyGroup targetProperty = players.get(sPlIdx).getZone().getProperties().get(tPr);
 
                 yourProperty.setPropQty(yourProperty.getPropQty()+targetProperty.getPropQty());
@@ -469,7 +469,7 @@ public class Deck {
             public void doAction(Object[] args) { //similar to deal braker
                 PlayerPacket playerPacket = (PlayerPacket) args[0];
                 int tPr = (int) args[1]; //target property
-                int yPr = (int) args[2]; //your property
+                //int yPr = (int) args[2]; //your property
                 int sPl = (int) args[3]; //selected player
 
                 ArrayList<Player> players = playerPacket.getGameField().getPlayers();
@@ -477,7 +477,7 @@ public class Deck {
                 //selected player Index
                 int sPlIdx = getIndexByPlayerId(sPl, players);
 
-                PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(yPr);
+                PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(tPr);
                 PropertyGroup targetProperty = players.get(sPlIdx).getZone().getProperties().get(tPr);
 
                 //full set is not allowed by this card rule

@@ -40,7 +40,7 @@ public class FSMGame {
         selectedPlayerId = clientId;
         playerInterface = vplayerInterface; // essa interface aponta de volta pra FSMGame
         currentState = State.Start;
-        lastUsedCard = new MoneyCard(666, "label", 666, new ArrayList<State>());
+        lastUsedCard = new MoneyCard(666, "back", 666, new ArrayList<State>());
         actionsEnabled = clientId == 1; // quero depois trocar esse enabled por verificar estado ao inves de verificar essa booleana (Cainã)
 
         //instantiate an enormous part of the game
@@ -207,7 +207,7 @@ public class FSMGame {
     public void setLastUsedCard(Card card){
         this.lastUsedCard = card;
     }
-    public void store(boolean willStore){ //DIAGRAMA: parametro nao estava no diagrama de classes
+    public void store(boolean willStore){
         if (willStore){
             Player currentPlayer = gameField.getPlayers().get(0);
             int money = currentPlayer.getZone().getBank();
@@ -302,7 +302,8 @@ public class FSMGame {
         PlayerPacket playerPacket = new PlayerPacket(this.lastUsedCard, this.gameField);
         SerializablePacket serializablePacket = new SerializablePacket(playerPacket);
         netGamesInterface.sendPlay(serializablePacket);
-        receivePlay(playerPacket); //when receive play, it checks for gameEnded
+        //when receive play, it checks for gameEnded, and to make evident serialization errors, call:
+        netGamesInterface.receberJogada(serializablePacket);
     }
 
 	public int getClientId() {

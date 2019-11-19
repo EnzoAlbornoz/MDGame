@@ -31,7 +31,7 @@ public class PlayerZone{
     }
 
     public void setBank(int money){ //NOVO METODO
-        bank = money;
+        bank = money > 0 ? money : 0;
     }
 
 

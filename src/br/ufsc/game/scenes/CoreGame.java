@@ -25,6 +25,7 @@ public class CoreGame extends GameScene {
 
     boolean[] iconSelected = {false,false,false,false,false,false};//melhor sobrar que faltar
     String[] cardPaths = {"blabla","blabla","blabla","blabla","blabla","blabla","blabla","blabla"};
+    String lastUsedCardPath = "blablabla";
 
     public CoreGame(NetGamesInterface nGamesInterface) {
         super();
@@ -180,7 +181,16 @@ public class CoreGame extends GameScene {
             }
         }
 
-        
+        //lastUsedCard
+        GameImage lastUsedCard = (GameImage) gameObjects.get("lastUsedCard");
+        String lastUsedCardName = playerInterface.getLastUsedCard();
+        String lpath = "/br/ufsc/game/resources/images/" + lastUsedCardName + ".png";
+        if (!lpath.equals(lastUsedCardPath)){
+            try { lastUsedCard.loadImage(lpath);
+            } catch (IOException e) { e.printStackTrace();}
+            lastUsedCardPath = lpath;
+        }
+
         //cards
         for (int i =0; i < 7; i++) {
             String cardName = playerInterface.witchCardIsThis(i);
