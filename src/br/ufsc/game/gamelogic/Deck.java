@@ -238,7 +238,7 @@ public class Deck {
         };
         int[] gaVal = {5,3,3,4,3,2,01,3};
         State[][] gaStates = {
-            {State.SelectTargetProperty},
+            {State.SelectTargetPlayer,State.SelectTargetProperty},
             {State.SelectTargetPlayer},
             {State.SelectYourProperty, State.SelectTargetPlayer, State.SelectTargetProperty},
             {State.SelectYourProperty},
@@ -297,8 +297,11 @@ public class Deck {
 
                 ArrayList<Player> players = playerPacket.getGameField().getPlayers();
 
+                //selected player Index
+                int sPlIdx = getIndexByPlayerId(sPl, players);
+
                 PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(yPr);
-                PropertyGroup targetProperty = players.get(sPl).getZone().getProperties().get(tPr);
+                PropertyGroup targetProperty = players.get(sPlIdx).getZone().getProperties().get(tPr);
 
                 yourProperty.setPropQty(yourProperty.getPropQty()+targetProperty.getPropQty());
                 targetProperty.setPropQty(0);
@@ -326,16 +329,22 @@ public class Deck {
                 int rentMountant = 5;
                 ArrayList<Player> players = gameField.getPlayers();
                 //similar to getPlayerById from fsmGame
-                int targetIndex = -1;
-                for (int i = 0; i < gameField.getPlayers().size(); i++){
-                    Player p = gameField.getPlayers().get(i);
-                    if (p.getId() == selectedPlayerId){
-                        targetIndex = i; i = 999999; //break loop
-                    }
-                }
+                int targetIndex = getIndexByPlayerId(selectedPlayerId, players);
+
                 RentCard.takeMoney(rentMountant, players, targetIndex);
             }
         };
+    }
+
+    int getIndexByPlayerId(int id, ArrayList<Player> players){
+        int targetIndex = -1;
+        for (int i = 0; i < players.size(); i++){
+            Player p = players.get(i);
+            if (p.getId() == id){
+                targetIndex = i; i = 999999; //break loop
+            }
+        }
+        return targetIndex;
     }
 
     public GameAction getForcedDealAction() {
@@ -351,9 +360,12 @@ public class Deck {
 
                 ArrayList<Player> players = playerPacket.getGameField().getPlayers();
 
+                //these letters means selected Player Index
+                int sPlIdx = getIndexByPlayerId(sPl, players);
+
                 // remove cards
                 PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(yPr);
-                PropertyGroup targetProperty = players.get(sPl).getZone().getProperties().get(tPr);
+                PropertyGroup targetProperty = players.get(sPlIdx).getZone().getProperties().get(tPr);
 
                 boolean validPlay = 
                             yourProperty.getPropQty() > 0 &&
@@ -368,9 +380,9 @@ public class Deck {
 
                 // add cards (swapped tPr with yPr)
                 PropertyGroup yourProperty2 = players.get(0).getZone().getProperties().get(tPr);
-                PropertyGroup targetProperty2 = players.get(sPl).getZone().getProperties().get(yPr);
-                yourProperty2.setPropQty(yourProperty.getPropQty()+1);
-                targetProperty2.setPropQty(targetProperty.getPropQty()+1);
+                PropertyGroup targetProperty2 = players.get(sPlIdx).getZone().getProperties().get(yPr);
+                yourProperty2.setPropQty(yourProperty2.getPropQty()+1);
+                targetProperty2.setPropQty(targetProperty2.getPropQty()+1);
             }
         };
     }
@@ -455,7 +467,6 @@ public class Deck {
         
             @Override // steal a single property from other player, can't be full set
             public void doAction(Object[] args) { //similar to deal braker
-                //rouba um set de propriedades inteiro, com casinhas e tudo
                 PlayerPacket playerPacket = (PlayerPacket) args[0];
                 int tPr = (int) args[1]; //target property
                 int yPr = (int) args[2]; //your property
@@ -463,8 +474,11 @@ public class Deck {
 
                 ArrayList<Player> players = playerPacket.getGameField().getPlayers();
 
+                //selected player Index
+                int sPlIdx = getIndexByPlayerId(sPl, players);
+
                 PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(yPr);
-                PropertyGroup targetProperty = players.get(sPl).getZone().getProperties().get(tPr);
+                PropertyGroup targetProperty = players.get(sPlIdx).getZone().getProperties().get(tPr);
 
                 //full set is not allowed by this card rule
                 boolean validPlay = targetProperty.getPropQty() > 0 &&

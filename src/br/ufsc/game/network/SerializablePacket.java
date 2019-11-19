@@ -44,9 +44,13 @@ public class SerializablePacket implements Jogada {
         for (Player player : p.getGameField().getPlayers() ) {//foreach player
             ArrayList<Integer> zone = new ArrayList<>(); //create array<int> that represents the zone
             zone.add(player.getZone().getBank()); //first put his money
-            for (PropertyGroup pGroup: player.getZone().getProperties()){ //then all the Qtys, 3 by 3
+            for (PropertyGroup pGroup: player.getZone().getProperties()){ //then all the Qtys
                 zone.add(pGroup.getPropQty());
+            }
+            for (PropertyGroup pGroup: player.getZone().getProperties()){
                 zone.add(pGroup.getHouseQty());
+            }
+            for (PropertyGroup pGroup: player.getZone().getProperties()){
                 zone.add(pGroup.getHotelQty());
             }
             playerZones.add(zone); //save it in the attribute
@@ -123,14 +127,19 @@ public class SerializablePacket implements Jogada {
 
             //set his properties
             ArrayList<PropertyGroup> properties = players.get(i).getZone().getProperties();
-            for(int j=0; j < properties.size(); j+=3){
+            for(int j=0; j < 10; j++){
                 int qty = zone.remove(0);
                 properties.get(j).setPropQty(qty);
-                qty = zone.remove(0);
+            }
+            for(int j=0; j < 10; j++){
+                int qty = zone.remove(0);
                 properties.get(j).setHouseQty(qty);
-                qty = zone.remove(0);
+            }
+            for(int j=0; j < 10; j++){
+                int qty = zone.remove(0);
                 properties.get(j).setHotelQty(qty);
             }
+            
 
         }
 

@@ -74,7 +74,7 @@ public class RentCard extends Card {
 			players.get(targetIndex).getZone().getProperties();
 		int i = 0;
 		// if the player had enough money, targetBank >= 0, otherwise, lets take his properties
-		while (targetBank < 0 || i >= targetProperties.size()){
+		while (targetBank < 0 || i >= targetProperties.size()-1){
 
 			//propQty is the number of target's Proprieties of the color correspondent to 'i'
 			int propQty = targetProperties.get(i).getPropQty(); 
@@ -90,7 +90,11 @@ public class RentCard extends Card {
 			i++;
 		}
 		//update the bank of both players involved
-		you.getZone().setBank(you.getMoney()+mountant);
-		players.get(targetIndex).getZone().setBank(targetBank);
+		int win = you.getMoney()+mountant;
+		win = win >= 0 ? win : 0;
+		int loose = targetBank;
+		loose = loose >= 0 ? loose : 0;
+		you.getZone().setBank(win);
+		players.get(targetIndex).getZone().setBank(loose);
 	}
 }

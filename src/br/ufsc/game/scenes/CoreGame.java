@@ -181,6 +181,7 @@ public class CoreGame extends GameScene {
         }
 
         
+        //cards
         for (int i =0; i < 7; i++) {
             String cardName = playerInterface.witchCardIsThis(i);
             String path = "/br/ufsc/game/resources/images/" + cardName + ".png";
