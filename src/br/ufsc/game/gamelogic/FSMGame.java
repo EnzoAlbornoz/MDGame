@@ -164,8 +164,6 @@ public class FSMGame {
             Player p = gameField.getPlayers().get(i);
             if (p.getId() == selectedPlayerId){
                 player = p; i = 999999; //break loop
-                //log("player found. Id: "+selectedPlayerId);
-                return p;
             }
         }
         return player;
@@ -314,4 +312,13 @@ public class FSMGame {
     public State getState(){
         return currentState;
     }
+
+	public int getHouseQty(int i) {
+        Player selectedPlayer = getPlayerById(selectedPlayerId);
+		return selectedPlayer.getZone().getProperties().get(i).getHouseQty();
+    }
+    public int getHotelQty(int i) {
+        Player selectedPlayer = getPlayerById(selectedPlayerId);
+		return selectedPlayer.getZone().getProperties().get(i).getHotelQty();
+	}
 }

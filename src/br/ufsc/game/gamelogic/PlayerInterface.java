@@ -85,4 +85,11 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 		fsmGame.selectYourProperty(propertyColor);
 		fsmGame.selectTargetProperty(propertyColor);
 	}
+
+	public int getHouseQty(int i) {
+		return fsmGame.getHouseQty(i);
+	}
+	public int getHotelQty(int i) {
+		return fsmGame.getHotelQty(i);
+	}
 }

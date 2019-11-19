@@ -51,34 +51,7 @@ public class RentCard extends Card {
 
 			// check if you should take this player's money
 			if ( (!isSingleTarget) || players.get(k).getId()==selectedPlayer ) {
-				// mountant is the money you will take from this player (remember u can also steal properties)
-				int mountant = rentMountant;
-				
-				int targetBank = players.get(k).getMoney();
-				targetBank -= mountant;
-
-				ArrayList<PropertyGroup> targetProperties = 
-					players.get(k).getZone().getProperties();
-				int i = 0;
-				// if the player had enough money, targetBank >= 0, otherwise, lets take his properties
-				while (targetBank < 0 || i >= targetProperties.size()){
-
-					//propQty is the number of target's Proprieties of the color correspondent to 'i'
-					int propQty = targetProperties.get(i).getPropQty(); 
-					if ( propQty > 0){ // you can't rob someone who has nothing
-						// take his propriety and add to your zone
-						targetProperties.get(i).setPropQty(propQty-1);
-						yourProperties.get(i).setPropQty(yourProperties.get(i).getPropQty()+1);
-
-						int propPrice = targetProperties.get(i).getPropPrice();
-						mountant -= propPrice; //you earn less money, cause you got a property
-						targetBank += propPrice; //his debt is forgiven by the cost of the property
-					}
-					i++;
-				}
-				//update the bank of both players involved
-				you.getZone().setBank(you.getMoney()+mountant);
-				players.get(k).getZone().setBank(targetBank);
+				takeMoney(rentMountant, players, k); //k is the index of the player you want to take money from
 			}
 		}
 	}
@@ -87,5 +60,37 @@ public class RentCard extends Card {
 		return colors;
 	}
 
-	
+	public static void takeMoney(int rentMountant, ArrayList<Player> players, int targetIndex){
+		Player you = players.get(0);
+		ArrayList<PropertyGroup> yourProperties = you.getZone().getProperties();
+
+		// mountant is the money you will take from this player (remember u can also steal properties)
+		int mountant = rentMountant;
+				
+		int targetBank = players.get(targetIndex).getMoney();
+		targetBank -= mountant;
+
+		ArrayList<PropertyGroup> targetProperties = 
+			players.get(targetIndex).getZone().getProperties();
+		int i = 0;
+		// if the player had enough money, targetBank >= 0, otherwise, lets take his properties
+		while (targetBank < 0 || i >= targetProperties.size()){
+
+			//propQty is the number of target's Proprieties of the color correspondent to 'i'
+			int propQty = targetProperties.get(i).getPropQty(); 
+			if ( propQty > 0){ // you can't rob someone who has nothing
+				// take his propriety and add to your zone
+				targetProperties.get(i).setPropQty(propQty-1);
+				yourProperties.get(i).setPropQty(yourProperties.get(i).getPropQty()+1);
+
+				int propPrice = targetProperties.get(i).getPropPrice();
+				mountant -= propPrice; //you earn less money, cause you got a property
+				targetBank += propPrice; //his debt is forgiven by the cost of the property
+			}
+			i++;
+		}
+		//update the bank of both players involved
+		you.getZone().setBank(you.getMoney()+mountant);
+		players.get(targetIndex).getZone().setBank(targetBank);
+	}
 }

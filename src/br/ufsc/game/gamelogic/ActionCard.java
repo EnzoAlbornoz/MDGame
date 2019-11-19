@@ -22,8 +22,8 @@ public class ActionCard extends Card {
 		return action;
 	}
 	@Override
-	public void applyEffect(PlayerPacket playerPacket, int targetPropertiy, int yourProperty, int selectedPlayer) {
-		Object[] argObjects = {playerPacket,targetPropertiy,yourProperty,selectedPlayer};
+	public void applyEffect(PlayerPacket playerPacket, int targetProperty, int yourProperty, int selectedPlayer) {
+		Object[] argObjects = {playerPacket,targetProperty,yourProperty,selectedPlayer};
 		getAction().doAction(argObjects);
 	}
 	// Methods

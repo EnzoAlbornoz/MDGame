@@ -240,8 +240,9 @@ public class CoreGame extends GameScene {
                 propQty -= 50;
             }
         	g.drawString("x"+propQty, x+35, y+dy); dy+=dyi;
-        	//g.drawString("casa", x, y+dy); dy+=dyi;
-        	//g.drawString("hotel", x, y+dy);
+            g.drawString("house x"+playerInterface.getHouseQty(i),x,y+dy);
+            dy+=dyi;
+        	g.drawString("hotel x"+playerInterface.getHotelQty(i),x,y+dy);
 	        x += 150;
 	        if(i==4) {
 	        	y+=200;

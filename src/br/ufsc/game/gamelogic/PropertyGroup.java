@@ -48,10 +48,15 @@ public class PropertyGroup {
     }
 
     public void setHotelQty(int qty){
+        if (color == PropertyColor.railroad) return;
+        if (color == PropertyColor.utility) return;
+
         this.hotelQty = qty;
     }
 
     public void setHouseQty(int qty){
+        if (color == PropertyColor.railroad) return;
+        if (color == PropertyColor.utility) return;
         this.houseQty = qty;
     }
 
@@ -147,6 +152,9 @@ public class PropertyGroup {
 
             case joker: // does not make sense
         }
+        mountant += houseQty*3;
+        mountant += hotelQty*4;
+
         return mountant;
     }
 

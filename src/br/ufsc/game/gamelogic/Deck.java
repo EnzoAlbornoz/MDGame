@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Stack;
 
 import br.ufsc.game.engine.interfaces.GameAction;
+import br.ufsc.game.network.PlayerPacket;
 
 /**
  * Deck
@@ -280,14 +281,31 @@ public class Deck {
     public Stack<Card> getCards(){
         return cards;
     }
+
     // Methods
+    //obs: args = {PlayerPacket playerPacket, int targetProperty, int yourProperty, int selectedPlayer};
     public GameAction getDealBreakerAction() {
         return new GameAction(){
         
             @Override
             public void doAction(Object[] args) {
-                // TODO Auto-generated method stub
-                
+                //rouba um set de propriedades inteiro, com casinhas e tudo
+                PlayerPacket playerPacket = (PlayerPacket) args[0];
+                int tPr = (int) args[1]; //target property
+                int yPr = (int) args[2]; //your property
+                int sPl = (int) args[3]; //selected player
+
+                ArrayList<Player> players = playerPacket.getGameField().getPlayers();
+
+                PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(yPr);
+                PropertyGroup targetProperty = players.get(sPl).getZone().getProperties().get(tPr);
+
+                yourProperty.setPropQty(yourProperty.getPropQty()+targetProperty.getPropQty());
+                targetProperty.setPropQty(0);
+                yourProperty.setHouseQty(yourProperty.getHouseQty()+targetProperty.getHouseQty());
+                targetProperty.setHouseQty(0);
+                yourProperty.setHotelQty(yourProperty.getHotelQty()+targetProperty.getHotelQty());
+                targetProperty.setHotelQty(0);
             }
         };
     }
@@ -295,10 +313,27 @@ public class Deck {
     public GameAction getDebtCollectorAction() {
         return new GameAction(){
         
-            @Override
+            @Override // force a player to pay you $5m
             public void doAction(Object[] args) {
-                // TODO Auto-generated method stub
-                
+                PlayerPacket playerPacket = (PlayerPacket) args[0];
+                //int tPr = (int) args[1]; //target property
+                //int yPr = (int) args[2]; //your property
+                int sPl = (int) args[3]; //selected player
+
+                GameField gameField = playerPacket.getGameField();
+                int selectedPlayerId = sPl;
+
+                int rentMountant = 5;
+                ArrayList<Player> players = gameField.getPlayers();
+                //similar to getPlayerById from fsmGame
+                int targetIndex = -1;
+                for (int i = 0; i < gameField.getPlayers().size(); i++){
+                    Player p = gameField.getPlayers().get(i);
+                    if (p.getId() == selectedPlayerId){
+                        targetIndex = i; i = 999999; //break loop
+                    }
+                }
+                RentCard.takeMoney(rentMountant, players, targetIndex);
             }
         };
     }
@@ -306,10 +341,36 @@ public class Deck {
     public GameAction getForcedDealAction() {
         return new GameAction(){
         
-            @Override
+            // original: swap a propriety with another player (can't be full set)
+            @Override 
             public void doAction(Object[] args) {
-                // TODO Auto-generated method stub
-                
+                PlayerPacket playerPacket = (PlayerPacket) args[0];
+                int tPr = (int) args[1]; //target property
+                int yPr = (int) args[2]; //your property
+                int sPl = (int) args[3]; //selected player
+
+                ArrayList<Player> players = playerPacket.getGameField().getPlayers();
+
+                // remove cards
+                PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(yPr);
+                PropertyGroup targetProperty = players.get(sPl).getZone().getProperties().get(tPr);
+
+                boolean validPlay = 
+                            yourProperty.getPropQty() > 0 &&
+                            targetProperty.getPropQty() > 0 &&
+                            //property group shouldn't be complete, it's a rule of the card
+                            targetProperty.getPropQty() < targetProperty.getNeeded();
+
+                if ( ! validPlay ) return;
+
+                yourProperty.setPropQty(yourProperty.getPropQty()-1);
+                targetProperty.setPropQty(targetProperty.getPropQty()-1);
+
+                // add cards (swapped tPr with yPr)
+                PropertyGroup yourProperty2 = players.get(0).getZone().getProperties().get(tPr);
+                PropertyGroup targetProperty2 = players.get(sPl).getZone().getProperties().get(yPr);
+                yourProperty2.setPropQty(yourProperty.getPropQty()+1);
+                targetProperty2.setPropQty(targetProperty.getPropQty()+1);
             }
         };
     }
@@ -317,10 +378,19 @@ public class Deck {
     public GameAction getHotelAction() {
         return new GameAction(){
         
-            @Override
+            @Override // put a hotel in the propertyGroup
             public void doAction(Object[] args) {
-                // TODO Auto-generated method stub
+                PlayerPacket playerPacket = (PlayerPacket) args[0];
+                //int tPr = (int) args[1]; //target property
+                int yPr = (int) args[2]; //your property
+                //int sPl = (int) args[3]; //selected player
                 
+                PropertyGroup yourProperty =
+                playerPacket.getGameField().getPlayers().get(0).getZone().getProperties().get(yPr);
+                // setHotelQty() already verifies if it is railroad or utility
+                if (yourProperty.getPropQty() >= yourProperty.getNeeded()){
+                    yourProperty.setHotelQty(yourProperty.getHotelQty()+1);
+                }
             }
         };
     }
@@ -330,8 +400,17 @@ public class Deck {
         
             @Override
             public void doAction(Object[] args) {
-                // TODO Auto-generated method stub
+                PlayerPacket playerPacket = (PlayerPacket) args[0];
+                //int tPr = (int) args[1]; //target property
+                int yPr = (int) args[2]; //your property
+                //int sPl = (int) args[3]; //selected player
                 
+                PropertyGroup yourProperty =
+                playerPacket.getGameField().getPlayers().get(0).getZone().getProperties().get(yPr);
+                // setHouseQty() already verifies if it is railroad or utility
+                if (yourProperty.getPropQty() >= yourProperty.getNeeded()){
+                    yourProperty.setHouseQty(yourProperty.getHouseQty()+1);
+                }
             }
         };
     }
@@ -339,10 +418,20 @@ public class Deck {
     public GameAction getBirthdayAction() {
         return new GameAction(){
         
-            @Override
+            @Override //all the players give you $2m
             public void doAction(Object[] args) {
-                // TODO Auto-generated method stub
-                System.out.println("birthday called");
+                PlayerPacket playerPacket = (PlayerPacket) args[0];
+                //int tPr = (int) args[1]; //target property
+                //int yPr = (int) args[2]; //your property
+                //int sPl = (int) args[3]; //selected player
+
+                ArrayList<Player> players = playerPacket.getGameField().getPlayers();
+
+                int rentMountant = 2; 
+                for(int i = 1; i < players.size(); i++){ //start at 1 and don't steal from yourself
+                    int targetIndex = i;
+                    RentCard.takeMoney(rentMountant, players, targetIndex);
+                }
             }
         };
     }
@@ -350,10 +439,13 @@ public class Deck {
     public GameAction getPassGoAction() {
         return new GameAction(){
         
-            @Override
+            @Override // buy 2 cards
             public void doAction(Object[] args) {
-                // TODO Auto-generated method stub
-                
+                PlayerPacket playerPacket = (PlayerPacket) args[0];
+                //int tPr = (int) args[1]; //target property
+                //int yPr = (int) args[2]; //your property
+                //int sPl = (int) args[3]; //selected player
+                playerPacket.getGameField().getPlayers().get(0).addCards(playerPacket.getGameField().getDeck());
             }
         };
     }
@@ -361,10 +453,27 @@ public class Deck {
     public GameAction getSlyAction() {
         return new GameAction(){
         
-            @Override
-            public void doAction(Object[] args) {
-                // TODO Auto-generated method stub
-                
+            @Override // steal a single property from other player, can't be full set
+            public void doAction(Object[] args) { //similar to deal braker
+                //rouba um set de propriedades inteiro, com casinhas e tudo
+                PlayerPacket playerPacket = (PlayerPacket) args[0];
+                int tPr = (int) args[1]; //target property
+                int yPr = (int) args[2]; //your property
+                int sPl = (int) args[3]; //selected player
+
+                ArrayList<Player> players = playerPacket.getGameField().getPlayers();
+
+                PropertyGroup yourProperty = players.get(0).getZone().getProperties().get(yPr);
+                PropertyGroup targetProperty = players.get(sPl).getZone().getProperties().get(tPr);
+
+                //full set is not allowed by this card rule
+                boolean validPlay = targetProperty.getPropQty() > 0 &&
+                        targetProperty.getPropQty() < targetProperty.getNeeded();
+
+                if ( ! validPlay ) return;
+
+                yourProperty.setPropQty(yourProperty.getPropQty()+1);
+                targetProperty.setPropQty(targetProperty.getPropQty()-1);
             }
         };
     }
