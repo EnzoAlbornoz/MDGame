@@ -34,9 +34,11 @@ public class SerializablePacket implements Jogada {
             c = p.getGameField().getDeck().getCards().get(cidx);
         }
         
+        /*
         for(int g = 0; g < 5; g++){
             log(">>> cardId: "+ids.get(g));
         }
+        */
 
         //serializing playerZones
         for (Player player : p.getGameField().getPlayers() ) {//foreach player
@@ -57,10 +59,11 @@ public class SerializablePacket implements Jogada {
         Stack<Card> cards = new Stack<>();
         ArrayList<Player> players = gameField.getPlayers();
        
+        /*
         for(int g = 0; g < 5; g++){
             log(">>> cardId: "+ids.get(g));
         }
-
+        */
         log("deserealizando deck");
         //deserializing deck
         Deck deck = new Deck(); //create a new deck with all the cards of the game
@@ -77,9 +80,11 @@ public class SerializablePacket implements Jogada {
             }
         }
         Deck deck2 = new Deck(cards); // i hope it does not loses any reference
+        /*
         for(int g = deck2.getCards().size()-1; g > deck2.getCards().size()-6; g--){
             log(">>> deck2cardId.get("+g+"): "+deck2.getCards().get(g).getId());
         }
+        */
 
         Card lastUsedCard = deck2.removeFromDeck();
         gameField.setDeck(deck2);
@@ -128,9 +133,11 @@ public class SerializablePacket implements Jogada {
 
         PlayerPacket p = new PlayerPacket(lastUsedCard, gameField);
 
+        /*
         log("player at 0: "+p.gameField.getPlayers().get(0).getId());
         log("player at 1: "+p.gameField.getPlayers().get(1).getId());
-        
+        */
+
         log("deserealizado com sucesso kkk");
         return p;
     }

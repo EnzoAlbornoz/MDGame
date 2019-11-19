@@ -74,4 +74,14 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 	public State getState(){
 		return fsmGame.getState();
 	}
+
+	public void selectProperty(int index) {
+		//get player 0 since the player doesn't matter (its defined by the selectedPlayerId attribute of fsmGame)
+		PropertyColor propertyColor = 
+			fsmGame.getGameField().getPlayers().get(0).getZone().getProperties().get(index).getColor();
+		
+		//call both, and the wrong will return immediately because it's called at the wrong state
+		fsmGame.selectYourProperty(propertyColor);
+		fsmGame.selectTargetProperty(propertyColor);
+	}
 }

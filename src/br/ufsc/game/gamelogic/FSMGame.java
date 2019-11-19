@@ -224,9 +224,9 @@ public class FSMGame {
         }
     }
 
-    // when I wanna go to the selectTatgetPlayer state and I just selected my propertyColor (if needed)
-    //public void selectTargetPlayer(PropertyColor c){ //could be called selectYourProperty
     public void selectYourProperty(PropertyColor c){
+        if (currentState != State.SelectYourProperty) return;
+
         //saving myProperty selected
         ArrayList<PropertyGroup> properties = gameField.players.get(0).zone.getProperties();
         for (int i = 0; i < properties.size(); i++) {
@@ -261,6 +261,8 @@ public class FSMGame {
     }
 
     public void selectTargetProperty(PropertyColor c){
+        if (currentState != State.SelectTargetProperty) return;
+        
         //saving targetProperty selected
         ArrayList<PropertyGroup> properties = gameField.players.get(0).zone.getProperties();
         for (int i = 0; i < properties.size(); i++) {

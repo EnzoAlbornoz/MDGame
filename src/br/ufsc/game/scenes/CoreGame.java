@@ -60,7 +60,16 @@ public class CoreGame extends GameScene {
         }
 
         for (int i = 0; i < 10; i++) {
-            this.gameObjects.put("prop" + i, new GameButton("/br/ufsc/game/resources/images/prop0" + i + ".png"));
+            ArrayList<Integer> id = new ArrayList<>();
+            id.add(i);
+            this.gameObjects.put("prop" + i,
+                new GameButton("/br/ufsc/game/resources/images/prop0" + i + ".png"));
+            ((GameButton) gameObjects.get("prop" + i)).setOnClick(new GameAction() {
+                @Override
+                public void doAction(Object[] args) {
+                    playerInterface.selectProperty(id.get(0));
+                }
+            });
         }
 
         this.loaded();

@@ -1,0 +1,3 @@
+void selectProperty(int index) na playerInterface.
+public int getClientID() na playerInterface e FSMGame, e colocar no updateUI q vc usa esse método
+para escrever o "You Are x"
