@@ -44,6 +44,7 @@ public class PlayerInterface /*implements Updatable, Drawable*/ {
 
 	public void setSelectedPlayer(int i) {
 		fsmGame.setSelectedPlayer(i);
+		fsmGame.selectTargetPlayer(i);
 	}
 
 	public String witchCardIsThis(int i) {

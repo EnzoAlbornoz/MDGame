@@ -28,7 +28,7 @@ public class SerializablePacket implements Jogada {
         int cidx = p.getGameField().getDeck().getCards().size();
 
         //and then continues with all the deck
-        while(cidx > 0){ // c is null when removed from empty deck
+        while(cidx > 0){
             cidx--;
             ids.add(c.getId());
             c = p.getGameField().getDeck().getCards().get(cidx);

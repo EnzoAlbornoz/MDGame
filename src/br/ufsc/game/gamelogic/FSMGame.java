@@ -248,6 +248,8 @@ public class FSMGame {
     }
     // means i wanna go to selectTargetProperty state and I just selected my string targetPlayer==id (if needed)
     public void selectTargetPlayer(int id){ //maybe it could be always integer or always String
+        if (currentState != State.SelectTargetPlayer) return;
+        
         // saving player target selected
         selectedPlayerId = id;
 

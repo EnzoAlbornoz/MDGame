@@ -196,6 +196,8 @@ public class Deck {
         int[] rentCopies = {3,2,2,2,2,2};
 
         for(int i = 0; i < rentValues.length; i++) {
+            // you only need to select target in the rent-all-colour card. Others are 'spread'
+            if (i>0) rentStates[1] = State.SelectYourProperty;
             for (int c = 0; c < rentCopies[i]; c++) {
                 this.cards.add(
                     new RentCard(
@@ -269,11 +271,11 @@ public class Deck {
     }
 	// Interface
 	public Card removeFromDeck() {
-        if (cards.size()>0){
-            return this.cards.pop();
-        } else {
-            return null;
+        if (cards.size()<=0){
+            Deck deck2 = new Deck();
+            this.cards = deck2.cards;
         }
+        return this.cards.pop();
     }
     public Stack<Card> getCards(){
         return cards;
