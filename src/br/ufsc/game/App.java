@@ -12,7 +12,7 @@ public class App {
 		// Enable Better Rendering Performance
 		// System.setProperty("sun.java2d.opengl", "true");
 		GameSettings gs = new GameSettings("E-NGINE Game",1280,720,60);
-		//Game.setupGame(gs).launch(new MenuScene());
-		Game.setupGame(gs).launch(new LoginScene());
+		Game.setupGame(gs).launch(new MenuScene());
+		//Game.setupGame(gs).launch(new LoginScene());
 	}
 }

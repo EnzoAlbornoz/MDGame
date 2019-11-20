@@ -1,7 +1,6 @@
 package br.ufsc.game.gamelogic;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 import br.ufsc.game.network.NetGamesInterface;
 import br.ufsc.game.network.PlayerPacket;

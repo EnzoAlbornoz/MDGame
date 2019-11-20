@@ -6,10 +6,8 @@ import java.util.Stack;
 import br.ufsc.game.gamelogic.Card;
 import br.ufsc.game.gamelogic.Deck;
 import br.ufsc.game.gamelogic.GameField;
-import br.ufsc.game.gamelogic.MoneyCard;
 import br.ufsc.game.gamelogic.Player;
 import br.ufsc.game.gamelogic.PropertyGroup;
-import br.ufsc.game.gamelogic.State;
 import br.ufsc.inf.leobr.cliente.Jogada;
 
 public class SerializablePacket implements Jogada {
@@ -54,7 +52,6 @@ public class SerializablePacket implements Jogada {
                 zone.add(pGroup.getHotelQty());
             }
             playerZones.add(zone); //save it in the attribute
-            //TODO: deserealize hotels and houses
         }
 
         playersQty = p.gameField.getPlayers().size();

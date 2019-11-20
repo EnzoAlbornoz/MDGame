@@ -54,6 +54,7 @@ public class NetGamesInterface implements OuvidorProxy {
 
 	// Interface
 	public void joinSession(String playerName) {
+		/*
 		boolean PreguicaDeDigitarIP = true;
 		if (PreguicaDeDigitarIP){
 			try {
@@ -64,6 +65,7 @@ public class NetGamesInterface implements OuvidorProxy {
 			  catch (ArquivoMultiplayerException e) {}
 			return;
 		}
+		*/
 
 		// Adicionado para compatibilidade - Necessário alterar modelagem
 		String ip = JOptionPane.showInputDialog(null, "Insira o IP do Servidor", "Login", JOptionPane.QUESTION_MESSAGE);
