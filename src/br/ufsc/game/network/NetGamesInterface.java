@@ -3,6 +3,7 @@ package br.ufsc.game.network;
 import javax.swing.JOptionPane;
 
 import br.ufsc.game.gamelogic.FSMGame;
+import br.ufsc.game.gamelogic.PlayerInterface;
 import br.ufsc.inf.leobr.cliente.Jogada;
 import br.ufsc.inf.leobr.cliente.OuvidorProxy;
 import br.ufsc.inf.leobr.cliente.Proxy;
@@ -54,20 +55,6 @@ public class NetGamesInterface implements OuvidorProxy {
 
 	// Interface
 	public void joinSession(String playerName) {
-		/*
-		boolean PreguicaDeDigitarIP = true;
-		if (PreguicaDeDigitarIP){
-			try {
-				this.proxy.conectar("localhost", playerName);
-				this.connected = true;
-			} catch (JahConectadoException e) {}
-			  catch (NaoPossivelConectarException e) {}
-			  catch (ArquivoMultiplayerException e) {}
-			return;
-		}
-		*/
-
-		// Adicionado para compatibilidade - Necessário alterar modelagem
 		String ip = JOptionPane.showInputDialog(null, "Insira o IP do Servidor", "Login", JOptionPane.QUESTION_MESSAGE);
 		try {
 			this.proxy.conectar(ip, playerName);
@@ -143,9 +130,9 @@ public class NetGamesInterface implements OuvidorProxy {
 		
 	}
 	@Override
-	public void receberJogada(Jogada jogada) {
-		PlayerPacket playerPacket = ( (SerializablePacket) jogada).generatePlayerPacket(fsmGame.getGameField());
-		fsmGame.receivePlay(playerPacket);
+	public void receberJogada(Jogada jogada) {	
+		PlayerPacket playerPacket = ( (SerializablePacket) jogada).generatePlayerPacket(this.getFSMGame().getGameField());
+		this.getFSMGame().receivePlay(playerPacket);
 	}
 	@Override
 	public void tratarConexaoPerdida() {

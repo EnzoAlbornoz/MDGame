@@ -494,21 +494,21 @@ public class Deck {
 
     // exemplo de chamada de efeito da carta
     
-    public static void main(String[] args) {
-        Deck deck = new Deck();
-        log(deck.getCards().get(deck.getCards().size()-1).getLabel());
-        log(deck.removeFromDeck().getLabel());
-        log("se eh igual, remove do size-1");
-        //System.out.println(deck.removeFromDeck().getLabel());
-        /*Card birthday = deck.removeFromDeck();
-        while (! birthday.getLabel().equals("itsMyBirthday")){
-            birthday = deck.removeFromDeck();
-        }
-        birthday = (ActionCard) birthday;
-        System.out.println(birthday.getLabel());
-        birthday.applyEffect(0,0,0);
-        */
-    }
+    // public static void main(String[] args) {
+    //     Deck deck = new Deck();
+    //     log(deck.getCards().get(deck.getCards().size()-1).getLabel());
+    //     log(deck.removeFromDeck().getLabel());
+    //     log("se eh igual, remove do size-1");
+    //     //System.out.println(deck.removeFromDeck().getLabel());
+    //     /*Card birthday = deck.removeFromDeck();
+    //     while (! birthday.getLabel().equals("itsMyBirthday")){
+    //         birthday = deck.removeFromDeck();
+    //     }
+    //     birthday = (ActionCard) birthday;
+    //     System.out.println(birthday.getLabel());
+    //     birthday.applyEffect(0,0,0);
+    //     */
+    // }
 
     static void log(String s){
         System.out.println(s);

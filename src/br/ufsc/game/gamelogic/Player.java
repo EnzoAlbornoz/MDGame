@@ -14,7 +14,6 @@ public class Player {
         this.zone = new PlayerZone();
         this.name = name;
         this.id = id;
-        // this.displayColor = 0; possivelmente uma função pra n repetir cor
     }
 
 
@@ -65,31 +64,27 @@ public class Player {
         //uma estrutura de dados pra saber o path de acordo com a label
         public String wichCardIsThis(int posInHand){
             if(this.hand.getCards() == null){
-                log("cards is null at Player.witchCardIsThis!!!");
+                
                 return "back";
             }
 
             if(this.hand == null){
-                log("hand is null at Player.witchCardIsThis!!!");
+                
                 return "back";
             }
 
             if(posInHand>=0 && posInHand < hand.getCards().size()){
                 PlayerHand h = this.hand;
-                log(h);
+                
                 ArrayList<Card> cds = h.getCards();
-                log(cds);
+                
                 Card c = cds.get(posInHand);
-                log(c);
+                
                 String label = c.getLabel();
-                log(label);
+                
                 return label;
             } else {
                 return "back";
             }
-        }
-
-        void log(Object s){
-            //System.out.println(s);
         }
 }

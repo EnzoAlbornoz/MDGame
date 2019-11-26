@@ -2,11 +2,10 @@ package br.ufsc.game.network;
 
 import br.ufsc.game.gamelogic.Card;
 import br.ufsc.game.gamelogic.GameField;
-import br.ufsc.inf.leobr.cliente.Jogada;
 /**
  * PlayerPacket
  */
-public class PlayerPacket{
+public class PlayerPacket {
 
 	// Variables
 	protected Card lastUsedCard;
@@ -15,10 +14,6 @@ public class PlayerPacket{
 	public PlayerPacket(Card lastUsedCard, GameField gameField) {
 		this.lastUsedCard = lastUsedCard;
 		this.gameField = gameField;
-	}
-	// Interface
-	public void calculatePlay() {
-
 	}
 
 	public Card getLastUsedCard() {

@@ -67,7 +67,6 @@ public class SerializablePacket implements Jogada {
             log(">>> cardId: "+ids.get(g));
         }
         */
-        log("deserealizando deck");
         //deserializing deck
         Deck deck = new Deck(); //create a new deck with all the cards of the game
         while (ids.size()>0){ //while there are saved ids
@@ -92,7 +91,6 @@ public class SerializablePacket implements Jogada {
         Card lastUsedCard = deck2.removeFromDeck();
         gameField.setDeck(deck2);
 
-        log("tirando players indesejados");
         //remove players with index too high. (Game is starting with more players than it should for
         //the players that do not start in position 0)
         while(players.size() > playersQty){
@@ -107,13 +105,11 @@ public class SerializablePacket implements Jogada {
             players.remove(index);
         }
 
-        log("ajeitando ordem dos jogadores");
         //fix order: rotate left until player0 match proper id
         while(players.get(0).getId() != idOfPlayer0){
             players.add(players.remove(0));
         }
 
-        log("copiando playerZones");
         //for each player, set his zone
         for (int i = 0; i < players.size(); i++){
             ArrayList<Integer> zone = playerZones.remove(0);//this zone came from other player
@@ -149,12 +145,6 @@ public class SerializablePacket implements Jogada {
         log("player at 0: "+p.gameField.getPlayers().get(0).getId());
         log("player at 1: "+p.gameField.getPlayers().get(1).getId());
         */
-
-        log("deserealizado com sucesso kkk");
         return p;
-    }
-
-    void log(String s){
-        System.out.println(s);
     }
 }

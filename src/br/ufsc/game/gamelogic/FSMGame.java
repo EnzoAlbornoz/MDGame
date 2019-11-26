@@ -293,11 +293,11 @@ public class FSMGame {
         }
     }
 
-    void setState(State state){
+    protected void setState(State state){
         log("Update state from *"+currentState+"* to *"+state+"*.");
         currentState = state;
     }
-    void sendPlay(){
+    protected void sendPlay(){
         PlayerPacket playerPacket = new PlayerPacket(this.lastUsedCard, this.gameField);
         SerializablePacket serializablePacket = new SerializablePacket(playerPacket);
         netGamesInterface.sendPlay(serializablePacket);
