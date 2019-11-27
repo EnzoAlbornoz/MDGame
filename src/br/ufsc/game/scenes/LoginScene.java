@@ -29,6 +29,7 @@ public class LoginScene extends GameScene {
         
         this.gameObjects.put("backgroundImage", new GameImage("/br/ufsc/game/resources/images/BlackBackgroundFelt.jpg"));
         this.gameObjects.put("loginBtn",new GameButton("/br/ufsc/game/resources/images/ButtonLogin.png"));
+        this.gameObjects.put("logoutBtn",new GameButton("/br/ufsc/game/resources/images/ButtonLogout.png"));
         this.gameObjects.put("beginBtn",new GameButton("/br/ufsc/game/resources/images/ButtonBegin.png"));
         this.gameExtras.put("ngInterface", new NetGamesInterface());
         this.loaded();
@@ -95,8 +96,23 @@ public class LoginScene extends GameScene {
         gameObjects.get("beginBtn").setY((int) gameObjects.get("loginBtn").getY() 
             + (gameObjects.get("loginBtn").getHeight() /2)
             + 25);
+        gameObjects.get("logoutBtn").setX((int) (Game.getGame().getGameSettings().getWidth()/2) 
+            - (gameObjects.get("logoutBtn").getWidth()  /2));
+        gameObjects.get("logoutBtn").setY((int) gameObjects.get("beginBtn").getY() 
+            + (gameObjects.get("logoutBtn").getHeight() /2)
+            + 25);
+        
 
         gameObjects.get("backgroundImage").setZ(1);;
+
+
+        ((GameButton) gameObjects.get("logoutBtn")).setOnClick(new GameAction() {
+        
+            @Override
+            public void doAction(Object[] args) {
+                ((NetGamesInterface) gameExtras.get("ngInterface")).disconnect();
+            }
+        });
 
         ((GameButton) gameObjects.get("loginBtn")).setOnClick(new GameAction() {
         

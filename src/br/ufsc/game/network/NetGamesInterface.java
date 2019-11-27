@@ -90,7 +90,15 @@ public class NetGamesInterface implements OuvidorProxy {
 		if(isConnected()) {
 			try {
 				this.proxy.desconectar();
-			} catch (NaoConectadoException e) {}
+				String message = "Desconectado com sucesso."
+				JOptionPane.showMessageDialog(null, message, "Desconectando", JOptionPane.INFORMATION_MESSAGE);
+				this.connected = false;
+			} catch (NaoConectadoException e) {
+				String message = "Você não está conectado."
+				JOptionPane.showMessageDialog(null, message, "Erro - Não conectado", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+
 		}
 	}
 
